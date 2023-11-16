@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/16 15:04:18 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/16 16:07:52 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,15 @@ typedef struct s_list
 	t_token_info	info;
 }	t_list;
 
-# define DQUOTE     1
-# define DQUOTE_END 2
-# define QUOTE      4
-# define QUOTE_END  8
-# define OPERATOR   16
-# define DOLLAR     32
-# define COMMAND    64
-# define COMMENT    128
+# define DQUOTE      1
+# define DQUOTE_END  2
+# define QUOTE       4
+# define QUOTE_END   8
+# define OPERATOR    16
+# define DOLLAR      32
+# define COMMAND     64
+# define COMMAND_END 128
+# define COMMENT     256
 
 void	error_end(char *str);
 void	parse_token_add(t_list **list, char *new_token, int new_flags);
