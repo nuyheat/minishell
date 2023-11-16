@@ -6,17 +6,17 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:53:12 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/15 21:24:44 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/16 11:09:33 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	list_add(t_token_list **list)
+void	list_add(t_list **list)
 {
-	t_token_list	*new_list;
+	t_list	*new_list;
 
-	new_list = malloc(sizeof(t_token_list));
+	new_list = malloc(sizeof(t_list));
 	if (new_list == NULL)
 		error_end("malloc failed");
 	new_list->next = NULL;
@@ -24,9 +24,9 @@ void	list_add(t_token_list **list)
 	(*list) = (*list)->next;
 } // 연결리스트 노드 추가
 
-t_token_list	*list_init(t_token_list **list)
+t_list	*list_init(t_list **list)
 {
-	(*list) = malloc(sizeof(t_token_list));
+	(*list) = malloc(sizeof(t_list));
 	if (list == NULL)
 		error_end("malloc failed");
 	(*list)->info.flags = 0;
@@ -34,9 +34,9 @@ t_token_list	*list_init(t_token_list **list)
 	return (*list);
 } // 연결리스트 생성
 
-void	list_free(t_token_list **list)
+void	list_free(t_list **list)
 {
-	t_token_list	*temp;
+	t_list	*temp;
 
 	while (*list != NULL)
 	{

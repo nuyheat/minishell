@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/15 21:24:43 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/16 11:10:13 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	main(void)
 {
-	char			*line;
-	t_token_list	*list;
-	t_token_list	*list_head;
+	char	*line;
+	t_list	*list;
+	t_list	*list_head;
 
 	while (1)
 	{

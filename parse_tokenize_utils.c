@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 21:29:45 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/15 21:31:14 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/16 11:23:19 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	ft_strlen(char *str)
 	return (i);
 } // libft 사용할 예정이라서 지워야 함
 
-void	parse_token_add(t_token_list **list, char *new_token, int new_flags)
+void	parse_token_add(t_list **list, char *new_token, int new_flags)
+// new_flags는 0이 아니어야 한다.
 {
 	int	token_len;
 	int	idx;
@@ -43,22 +44,24 @@ void	parse_token_add(t_token_list **list, char *new_token, int new_flags)
 	(*list)->info.flags = new_flags;
 } // token 문자열 생성
 
-/*void	le()
+void	le()
 {
 	system("leaks a.out");
-}*/
+}
 
 /*int main()
 {
-	t_token_list	*list;
-	t_token_list	*list_head;
-	t_token_list	*list_head_free;
+	t_list	*list;
+	t_list	*list_head;
+	t_list	*list_head_free;
 
 	atexit(le);
 	list_head = list_init(&list);
 	list_head_free = list_head;
 	parse_token_add(&list, "ls", 1);
 	parse_token_add(&list, "cat", 2);
+	parse_token_add(&list, "cd", 3);
+	parse_token_add(&list, "chmod", 4);
 	while (list_head != NULL)
 	{
 		printf("token : %s\nflags : %d\n", get_token(list_head), get_flags(list_head));
