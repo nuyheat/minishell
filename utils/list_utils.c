@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:53:12 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/16 11:09:33 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/16 23:27:17 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,19 @@ void	list_add(t_list **list)
 	new_list->next = NULL;
 	(*list)->next = new_list;
 	(*list) = (*list)->next;
-} // 연결리스트 노드 추가
+}
+// 연결리스트 노드 추가
 
 t_list	*list_init(t_list **list)
 {
 	(*list) = malloc(sizeof(t_list));
 	if (list == NULL)
 		error_end("malloc failed");
-	(*list)->info.flags = 0;
+	(*list)->info.flgs = 0;
 	(*list)->next = NULL;
 	return (*list);
-} // 연결리스트 생성
+}
+// 연결리스트 생성
 
 void	list_free(t_list **list)
 {
@@ -45,4 +47,5 @@ void	list_free(t_list **list)
 		free(temp->info.token);
 		free(temp);
 	}
-} // 연결리스트 메모리 해제
+}
+// 연결리스트 메모리 해제

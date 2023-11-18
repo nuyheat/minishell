@@ -1,36 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_tokenization_utils.c                         :+:      :+:    :+:   */
+/*   tokenize_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 21:29:45 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/16 11:23:19 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/18 05:43:28 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strlen(char *str)
+void	token_delimited(t_list **list, char **buf)
 {
-	int	i;
+	int	new_flgs;
+	int	idx;
 
-	i = 0;
-	while (str[i] != 0)
-		i++;
-	return (i);
-} // libft 사용할 예정이라서 지워야 함
+	new_flgs = 0;
+	idx = 0;
+	while ((*buf)[idx] != '\0')
+	{
+		tokenize_flgs(list, &new_flgs, (*buf)[idx]);
+		idx++;
+	}
+	token_add(list, *buf, new_flgs);
+	ft_bzero(*buf, idx);
+}
 
-void	parse_token_add(t_list **list, char *new_token, int new_flags)
-// new_flags는 0이 아니어야 한다.
+void	token_add(t_list **list, char *new_token, int new_flags) // new_flags는 0이 아니어야 한다.
 {
 	int	token_len;
 	int	idx;
 
 	idx = 0;
 	token_len = ft_strlen(new_token);
-	if ((*list)->info.flags != 0)
+	if ((*list)->info.flgs != 0)
 		list_add(list);
 	(*list)->info.token = malloc(token_len + 1);
 	if ((*list)->info.token == NULL)
@@ -41,15 +46,38 @@ void	parse_token_add(t_list **list, char *new_token, int new_flags)
 		idx++;
 	}
 	(*list)->info.token[idx] = '\0';
-	(*list)->info.flags = new_flags;
-} // token 문자열 생성
+	(*list)->info.flgs = new_flags;
+}
 
-void	le()
+int	quote_check(char *buf)
+{
+	int	idx;
+
+	idx = 0;
+	while (buf[idx] != '\0')
+	{
+		if (buf[idx] == '\"' || buf[idx] == '\'')
+			return (0);
+		idx++;
+	}
+	return (1);
+}
+
+int	operator_check(char prev_char)
+{
+	if (prev_char == '<' || prev_char == '>' || prev_char == '|')
+		return (1);
+	return (0);
+}
+
+// token_info 생성
+
+/*void	le()
 {
 	system("leaks a.out");
 }
 
-/*int main()
+int main()
 {
 	t_list	*list;
 	t_list	*list_head;
