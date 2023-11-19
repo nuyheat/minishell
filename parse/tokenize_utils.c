@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 21:29:45 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/18 05:43:28 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/20 00:05:53 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,15 @@ void	token_delimited(t_list **list, char **buf)
 
 	new_flgs = 0;
 	idx = 0;
+	printf("input_buf : %s\n", *buf);
 	while ((*buf)[idx] != '\0')
 	{
 		tokenize_flgs(list, &new_flgs, (*buf)[idx]);
 		idx++;
 	}
 	token_add(list, *buf, new_flgs);
-	ft_bzero(*buf, idx);
+	ft_bzero(*buf, ft_strlen(*buf));
+	printf("\nsave_token : %s\n\n", (*list)->info.token);
 }
 
 void	token_add(t_list **list, char *new_token, int new_flags) // new_flags는 0이 아니어야 한다.
@@ -51,14 +53,15 @@ void	token_add(t_list **list, char *new_token, int new_flags) // new_flags는 0�
 
 int	quote_check(char *buf)
 {
-	int	idx;
+	int	buf_len;
 
-	idx = 0;
-	while (buf[idx] != '\0')
+	buf_len = ft_strlen(buf);
+	if (buf_len > 0 && buf[0] == '\'' && buf[0] == '\"')
 	{
-		if (buf[idx] == '\"' || buf[idx] == '\'')
+		if (buf_len == 1)
 			return (0);
-		idx++;
+		else if (buf_len > 1 && buf[0] != buf[buf_len - 1])
+			return (0);
 	}
 	return (1);
 }

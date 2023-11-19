@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 23:29:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/19 06:09:24 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/19 23:56:58 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,6 @@ int	tokenize_two(char **buf, char now_char)
 		return (1);
 	return (0);
 } // 연산자 토큰을 생성한다(<, >, <<, >>, |)
-
-/*void	tokenize_three(int new_flgs, char **buf, char now_char)
-{
-	if (now_char == '$' && !(new_flgs & DQUOTE) && !(new_flgs & QUOTE))
-
-}*/ // 파라미터 확장이라는 걸 어떻게 구현해야 하는가?
 
 int	tokenize_four(char **buf, char now_char)
 {

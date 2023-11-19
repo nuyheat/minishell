@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/19 06:04:20 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/19 22:42:01 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ typedef struct s_list
 # define DOLLAR				32	 // flgs_dollar 함수에서 사용
 # define DOLLAR_PARAM		64	 // flgs_dollar 함수에서 사용
 # define COMMAND      		128	 // flgs_command 함수에서 사용
-# define COMMAND_END  		256
-# define COMMENT      		512
+# define OPTION 	 		256
+# define STRING      		512
 # define REDIRECT_LEFT		1024 // flgs_redirect 함수에서 사용
 # define REDIRECT_LEFT_END	2048 // flgs_redirect 함수에서 사용
 # define REDIRECT_RIGHT		4096 // flgs_redirect 함수에서 사용

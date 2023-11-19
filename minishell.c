@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/19 02:21:55 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/19 22:43:23 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	list_print(t_list *list_head)
 		new_flgs = get_flags(list_head);
 		printf("token : %s\n", get_token(list_head));
 		printf("COMMAND           : %d\n", new_flgs & COMMAND);
+		printf("OPTION 	          : %d\n", new_flgs & OPTION);
+		printf("STRING            : %d\n", new_flgs & STRING);
 		printf("DQUOTE            : %d\n", new_flgs & DQUOTE);
 		printf("DQUOTE_END        : %d\n", new_flgs & DQUOTE_END);
 		printf("QUOTE             : %d\n", new_flgs & QUOTE);
