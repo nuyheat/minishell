@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/20 17:51:33 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/20 18:40:33 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ typedef struct s_list
 # define END				1
 
 # define DQUOTE         	1    // flgs_quote 함수에서 사용
-# define DQUOTE_END   		2	 // flgs_quote 함수에서 사용
+// # define DQUOTE_END   		2	 // flgs_quote 함수에서 사용
 # define QUOTE        		4	 // flgs_quote 함수에서 사용
-# define QUOTE_END    		8	 // flgs_quote 함수에서 사용
+// # define QUOTE_END    		8	 // flgs_quote 함수에서 사용
 # define PIPE	     		16	 // flgs_pipe 함수에서 사용
 # define DOLLAR				32	 // flgs_dollar 함수에서 사용
 //# define DOLLAR_PARAM		64	 // flgs_dollar 함수에서 사용
