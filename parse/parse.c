@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:24:31 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/19 06:16:15 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/20 14:04:01 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	parse(t_list **list, char *line)
 	char	*buf;
 
 	idx = 0;
-	buf = ft_calloc(sizeof(ft_strlen(line)) + 1, sizeof(char));
+	buf = ft_calloc(ft_strlen(line) + 1, sizeof(char));
 	if (buf == NULL)
 		error_end("malloc failed");
 	while (line[idx] != '\0')

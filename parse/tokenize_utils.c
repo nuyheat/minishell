@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 21:29:45 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/20 00:05:53 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/20 14:05:36 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	token_delimited(t_list **list, char **buf)
 
 	new_flgs = 0;
 	idx = 0;
-	printf("input_buf : %s\n", *buf);
 	while ((*buf)[idx] != '\0')
 	{
 		tokenize_flgs(list, &new_flgs, (*buf)[idx]);
@@ -27,7 +26,6 @@ void	token_delimited(t_list **list, char **buf)
 	}
 	token_add(list, *buf, new_flgs);
 	ft_bzero(*buf, ft_strlen(*buf));
-	printf("\nsave_token : %s\n\n", (*list)->info.token);
 }
 
 void	token_add(t_list **list, char *new_token, int new_flags) // new_flags는 0이 아니어야 한다.
