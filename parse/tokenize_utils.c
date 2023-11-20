@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 21:29:45 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/20 16:44:54 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/20 17:50:04 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,8 @@ void	token_delimited(t_list **list, char **buf)
 
 	new_flgs = 0;
 	idx = 0;
-	// printf("buf_str : %s\n", *buf);
 	if ((*buf)[0] == '\0')
-	{
-		// printf("this is space\n");
 		return ;
-	}
 	while ((*buf)[idx] != '\0')
 	{
 		tokenize_flgs(list, &new_flgs, (*buf)[idx]);
@@ -42,7 +38,7 @@ void	token_add(t_list **list, char *new_token, int new_flags)
 	idx = 0;
 	token_len = ft_strlen(new_token);
 	if ((*list)->info.flgs != 0)
-		list_add(list);
+		list_nodeadd(list);
 	(*list)->info.token = malloc(token_len + 1);
 	if ((*list)->info.token == NULL)
 		error_end("malloc failed");
@@ -55,32 +51,37 @@ void	token_add(t_list **list, char *new_token, int new_flags)
 	(*list)->info.flgs = new_flags;
 }
 
+int	quote_check_flgs(char *buf, int *idx)
+{
+	char	prev_char;
+
+	prev_char = buf[*idx];
+	(*idx)++;
+	while (buf[*idx] != '\0')
+	{
+		if (buf[*idx] == prev_char)
+			return (QUOTED);
+		(*idx)++;
+	}
+	return (NOT_QUOTED);
+}
+
 int	quote_check(char *buf)
 {
-	int	start_idx;
-	int	end_idx;
+	int		idx;
+	int		flgs;
 
-	start_idx = 0;
-	end_idx = ft_strlen(buf) - 1;
-	if (end_idx == -1)
-		return (NOT_QUOTED);
-	while (buf[start_idx] != '\0')
+	idx = 0;
+	flgs = QUOTED;
+	while (buf[idx] != '\0')
 	{
-		if (buf[start_idx] == '\'' || buf[start_idx] == '\"')
-			break ;
-		start_idx++;
+		if (buf[idx] == '\"' || buf[idx] == '\'')
+			flgs = quote_check_flgs(buf, &idx);
+		if (buf[idx] == '\0')
+			return (flgs);
+		idx++;
 	}
-	if (buf[start_idx] == '\0')
-		return (QUOTED);
-	while (end_idx > start_idx)
-	{
-		if (buf[end_idx] == '\'' || buf[end_idx] == '\"')
-			break ;
-		end_idx--;
-	}
-	if ((start_idx != end_idx) && (buf[start_idx] == buf[end_idx]))
-		return (QUOTED);
-	return (NOT_QUOTED);
+	return (flgs);
 }
 
 int	operator_check(char prev_char)

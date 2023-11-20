@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 23:15:50 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/20 16:32:36 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/20 18:01:49 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	flgs_command(t_list **list, int *new_flgs, char now_char)
 		else if ((*list)->info.token[0] == '|')
 			(*new_flgs) |= COMMAND;
 	}
-	else if (now_char == '-')
+	if (now_char == '-')
 	{
 		if ((*list)->info.flgs & COMMAND)
 			(*new_flgs) |= OPTION;
