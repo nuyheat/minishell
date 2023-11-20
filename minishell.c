@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/20 14:04:11 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:29:08 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,18 @@ int	main(void)
 
 	while (1)
 	{
-		list_head = list_init(&list);
 		line = readline("minishell$ ");
 		if (line == NULL)
 			error_end("readline error");
-		parse(&list, line);
-		list_print(list_head);
-		list_free(&list_head);
+		if (line[0])
+		{
+			list_head = list_init(&list);
+			parse(&list, line);
+			//해석 진행
+			//수행 진행
+			//list_print(list_head);
+			list_free(&list_head);
+		}
 		free(line);
 	}
 }

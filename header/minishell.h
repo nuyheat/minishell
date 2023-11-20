@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/19 22:42:01 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/20 15:34:11 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ typedef struct s_list
 	struct s_list	*next;
 	t_token_info	info;
 }	t_list;
+
+# define QUOTED				1
+# define NOT_QUOTED			0
 
 # define DQUOTE         	1    // flgs_quote 함수에서 사용
 # define DQUOTE_END   		2	 // flgs_quote 함수에서 사용

@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:24:31 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/20 14:04:01 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:33:58 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,25 @@
 int	parse_tokenize(t_list **list, char **buf, char now_char)
 {
 	if (tokenize_one(buf, now_char))
-		return (0); // 토큰분리규칙 2번
+		return (0);
 	if (tokenize_two(buf, now_char) || tokenize_four(buf, now_char))
 	{
-		if (ft_strlen(*buf) > 0)
-			token_delimited(list, buf);
-		(*buf)[0] = now_char;
+		token_delimited(list, buf);
+		if (now_char != ' ')
+			(*buf)[0] = now_char;
 		return (0);
-	}// 토큰분리규칙 3번, 6번
+	}
 	if (tokenize_five(buf, now_char))
 	{
-		if (ft_strlen(*buf) > 0)
-			token_delimited(list, buf);
+		token_delimited(list, buf);
 		return (0);
-	}// 토큰분리규칙 7번
+	}
 	if (tokenize_seven(buf, now_char))
 	{
-		if (ft_strlen(*buf) > 0)
-			token_delimited(list, buf);
+		token_delimited(list, buf);
 		return (1);
-	}// 토큰분리규칙 9번
-	tokenize_six(buf, now_char);// 토큰분리규칙 8번
+	}
+	tokenize_six(buf, now_char);
 	return (0);
 }
 

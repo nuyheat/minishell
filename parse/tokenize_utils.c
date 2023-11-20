@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 21:29:45 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/20 14:05:36 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:31:07 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	token_delimited(t_list **list, char **buf)
 
 	new_flgs = 0;
 	idx = 0;
+	if ((*buf)[0] == '\0')
+		return ;
 	while ((*buf)[idx] != '\0')
 	{
 		tokenize_flgs(list, &new_flgs, (*buf)[idx]);
@@ -28,7 +30,7 @@ void	token_delimited(t_list **list, char **buf)
 	ft_bzero(*buf, ft_strlen(*buf));
 }
 
-void	token_add(t_list **list, char *new_token, int new_flags) // new_flags는 0이 아니어야 한다.
+void	token_add(t_list **list, char *new_token, int new_flags)
 {
 	int	token_len;
 	int	idx;
@@ -51,17 +53,30 @@ void	token_add(t_list **list, char *new_token, int new_flags) // new_flags는 0�
 
 int	quote_check(char *buf)
 {
-	int	buf_len;
+	int	start_idx;
+	int	end_idx;
 
-	buf_len = ft_strlen(buf);
-	if (buf_len > 0 && buf[0] == '\'' && buf[0] == '\"')
+	start_idx = 0;
+	end_idx = ft_strlen(buf) - 1;
+	if (end_idx == -1)
+		return (NOT_QUOTED);
+	while (buf[start_idx] != '\0')
 	{
-		if (buf_len == 1)
-			return (0);
-		else if (buf_len > 1 && buf[0] != buf[buf_len - 1])
-			return (0);
+		if (buf[start_idx] == '\'' || buf[start_idx] == '\"')
+			break ;
+		start_idx++;
 	}
-	return (1);
+	if (buf[start_idx] == '\0')
+		return (QUOTED);
+	while (end_idx > start_idx)
+	{
+		if (buf[end_idx] == '\'' || buf[end_idx] == '\"')
+			break ;
+		end_idx--;
+	}
+	if ((start_idx != end_idx) && (buf[start_idx] == buf[end_idx]))
+		return (QUOTED);
+	return (NOT_QUOTED);
 }
 
 int	operator_check(char prev_char)
@@ -70,31 +85,3 @@ int	operator_check(char prev_char)
 		return (1);
 	return (0);
 }
-
-// token_info 생성
-
-/*void	le()
-{
-	system("leaks a.out");
-}
-
-int main()
-{
-	t_list	*list;
-	t_list	*list_head;
-	t_list	*list_head_free;
-
-	atexit(le);
-	list_head = list_init(&list);
-	list_head_free = list_head;
-	parse_token_add(&list, "ls", 1);
-	parse_token_add(&list, "cat", 2);
-	parse_token_add(&list, "cd", 3);
-	parse_token_add(&list, "chmod", 4);
-	while (list_head != NULL)
-	{
-		printf("token : %s\nflags : %d\n", get_token(list_head), get_flags(list_head));
-		list_head = list_head->next;
-	}
-	list_free(&list_head_free);
-}*/ // 'parse_token_add' 'list_init' 'list_add' 'list_free' 테스트 코드

@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:53:12 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/16 23:27:17 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:23:01 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	list_free(t_list **list)
 	{
 		temp = *list;
 		*list = (*list)->next;
-		free(temp->info.token);
+		if (temp->info.token != NULL)
+			free(temp->info.token);
 		free(temp);
 	}
 }
