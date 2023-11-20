@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:53:12 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/20 16:23:01 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:52:42 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_list	*list_init(t_list **list)
 	if (list == NULL)
 		error_end("malloc failed");
 	(*list)->info.flgs = 0;
+	(*list)->info.token = NULL;
 	(*list)->next = NULL;
 	return (*list);
 }

@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:24:31 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/20 16:33:58 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:45:39 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ void	parse(t_list **list, char *line)
 	{
 		if (parse_tokenize(list, &buf, line[idx]))
 			break ;
-		if (line[idx + 1] == '\0' && buf[0] != '\0')
-			token_delimited(list, &buf);
 		idx++;
 	}
+	token_delimited(list, &buf);
 	free(buf);
+	printf("END\n");
 }

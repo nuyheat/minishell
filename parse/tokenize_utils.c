@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 21:29:45 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/20 16:31:07 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/20 16:44:54 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,12 @@ void	token_delimited(t_list **list, char **buf)
 
 	new_flgs = 0;
 	idx = 0;
+	// printf("buf_str : %s\n", *buf);
 	if ((*buf)[0] == '\0')
+	{
+		// printf("this is space\n");
 		return ;
+	}
 	while ((*buf)[idx] != '\0')
 	{
 		tokenize_flgs(list, &new_flgs, (*buf)[idx]);
