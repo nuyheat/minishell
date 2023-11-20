@@ -6,13 +6,13 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:53:12 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/20 17:00:37 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/20 21:34:20 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	list_nodeadd(t_list **list)
+void	list_node_add(t_list **list)
 {
 	t_list	*new_list;
 

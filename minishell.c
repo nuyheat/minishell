@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/20 16:56:03 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/20 21:46:05 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,8 @@ int	main(void)
 			parse(&list, line);
 			//해석 진행
 			//수행 진행
-			printf("parse OK\n");
 			list_print(list_head);
-			printf("print OK\n");
 			list_free(&list_head);
-			printf("free OK\n");
 		}
 		free(line);
 	}

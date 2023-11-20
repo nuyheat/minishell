@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 23:15:50 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/20 18:01:49 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/20 21:50:34 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,9 @@
 void	flgs_quote(int *new_flgs, char now_char)
 {
 	if (now_char == '\"')
-	{
-		if ((*new_flgs) & DQUOTE)
-			(*new_flgs) |= DQUOTE_END;
-		else
-			(*new_flgs) |= DQUOTE;
-	}
+		(*new_flgs) |= DQUOTE;
 	else if (now_char == '\'')
-	{
-		if ((*new_flgs) & QUOTE)
-			(*new_flgs) |= QUOTE_END;
-		else
-			(*new_flgs) |= QUOTE;
-	}
+		(*new_flgs) |= QUOTE;
 }
 
 void	flgs_command(t_list **list, int *new_flgs, char now_char)
@@ -81,11 +71,6 @@ void	flgs_pipe(int *new_flgs, char now_char)
 void	flgs_dollar(int *new_flgs, char now_char)
 {
 	if (now_char == '$')
-	{
-		if (((*new_flgs) & DQUOTE) || ((*new_flgs) & QUOTE))
-			(*new_flgs) |= DOLLAR;
-		else
-			(*new_flgs) |= DOLLAR_PARAM;
-	}
+		(*new_flgs) |= DOLLAR;
 }
 // TODO 수정 필요
