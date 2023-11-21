@@ -2,7 +2,7 @@ NAME		= minishell
 NAME_BONUS	= minishell_bonus
 
 CC			= cc
-CFLAGS		= 
+CFLAGS		=
 RM			= rm -f
 AR			= ar
 ARFLAGS		= rcs
@@ -14,9 +14,9 @@ LIBFT_DIR		 = ./libft
 MINISHELL		 = minishell.a
 MINISHELL_BONUS	 = minishell_bonus.a
 
-SRCS		= minishell.c utils/all_utils.c utils/list_utils.c      		\
-				parse/parse.c parse/tokenize_utils.c parse/tokenize_flgs.c	\
-				parse/tokenize_flgs_func.c parse/tokenize_rules.c			\
+SRCS		= minishell.c utils/all_utils.c utils/list_handling.c      		\
+				parse/parse.c parse/token_handling.c parse/token_flgs.c	\
+				parse/tokenize_utils.c parse/tokenize_rules.c			\
 
 SRCS_BONUS	= minishell_bonus.c	\
 
