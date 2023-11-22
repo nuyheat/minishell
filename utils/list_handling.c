@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_handling_funcs.c                              :+:      :+:    :+:   */
+/*   list_handling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:53:12 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/21 20:03:51 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/22 12:08:48 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_list	*list_init(t_list **list)
 	(*list) = malloc(sizeof(t_list));
 	if (list == NULL)
 		error_end("malloc failed");
-	(*list)->info.flgs = 0;
+	(*list)->info.flgs = START;
 	(*list)->info.token = NULL;
 	(*list)->next = NULL;
 	return (*list);

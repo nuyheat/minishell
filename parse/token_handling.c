@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 19:25:04 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/21 20:06:39 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/22 12:31:27 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,19 @@ void	token_flgs(t_list **list, int *new_flgs, char *buf)
 	int	buf_len;
 
 	buf_len = ft_strlen(buf);
-	if (flgs_redirection(buf, new_flgs))
+	if (flgs_quote(buf, new_flgs))
+	{
+		if ((*new_flgs) == F_QUOTED)
+			flgs_quote_dollar(buf, new_flgs);
+		return ;
+	}
+	else if (flgs_redirection(buf, new_flgs))
 		return ;
 	else if (flgs_pipe(buf, new_flgs))
 		return ;
 	else if (flgs_dollar(buf, new_flgs))
 		return ;
-	// flgs_quote(new_flgs, now_char);
-	// flgs_command(list, new_flgs, now_char);
-	// flgs_redirect(new_flgs, now_char);
-	// flgs_pipe(new_flgs, now_char);
-	// flgs_dollar(new_flgs, now_char);
-	(*new_flgs) |= STRING;
+	(*new_flgs) |= F_STRING;
 }
 
 void	token_delimited(t_list **list, char **buf)
@@ -52,7 +53,7 @@ void	token_add(t_list **list, char *new_token, int new_flags)
 
 	idx = 0;
 	token_len = ft_strlen(new_token);
-	if ((*list)->info.flgs != 0)
+	if ((*list)->info.flgs != START)
 		list_node_add(list);
 	(*list)->info.token = malloc(token_len + 1);
 	if ((*list)->info.token == NULL)

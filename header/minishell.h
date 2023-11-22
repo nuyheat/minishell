@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/21 19:53:34 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/22 12:44:00 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,22 @@ typedef struct s_list
 	t_token_info	info;
 }	t_list;
 
-# define QUOTED				1
 # define NOT_QUOTED			0
+# define QUOTED				1
 
 # define NEXT				0
 # define END				1
 
-# define DQUOTE         	1    // flgs_quote 함수에서 사용
-# define QUOTE        		4	 // flgs_quote 함수에서 사용
-# define PIPE	     		16	 // flgs_pipe 함수에서 사용
-# define DOLLAR				32	 // flgs_dollar 함수에서 사용
-# define COMMAND      		128	 // flgs_command 함수에서 사용
-# define OPTION 	 		256
-# define STRING      		512
-# define GRATE				1024 // flgs_redirect 함수에서 사용
-# define DGRATE				2048 // flgs_redirect 함수에서 사용
-# define LESS				4096 // flgs_redirect 함수에서 사용
-# define DLESS				8192 // flgs_redirect 함수에서 사용
-
+# define START				-1
+# define F_QUOTED			2
+# define F_NOT_QUOTED		4
+# define F_PIPE	     		8
+# define F_DOLLAR			16
+# define F_STRING      		32
+# define F_GRATE			64
+# define F_DGRATE			128
+# define F_LESS				256
+# define F_DLESS			512
 
 void	error_end(char *str);
 void	token_add(t_list **list, char *new_token, int new_flags);
@@ -62,12 +60,8 @@ void	token_flgs(t_list **list, int *new_flgs, char *buf);
 int		flgs_redirection(char *buf, int *new_flgs);
 int		flgs_pipe(char *buf, int *new_flgs);
 int		flgs_dollar(char *buf, int *new_flgs);
-
-// void	flgs_quote(int *new_flgs, char now_char);
-// void	flgs_command(t_list **list, int *new_flgs, char now_char);
-// void	flgs_redirect(int *new_flgs, char now_char);
-// void	flgs_pipe(int *new_flgs, char now_char);
-// void	flgs_dollar(int *new_flgs, char now_char);
+int		flgs_quote(char *buf, int *new_flgs);
+void	flgs_quote_dollar(char *buf, int *new_flgs);
 int		tokenize_operator_double(char **buf, char now_char);
 int		tokenize_operator_end(char **buf, char now_char);
 int		tokenize_operator_start(char **buf, char now_char);
