@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/22 14:03:00 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/22 19:01:03 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,33 @@ void	list_print(t_list *list)
 	}
 }
 
+// void	export(char ***envp)
+// {
+// 	int	idx;
+
+// 	idx = 0;
+// 	while ((*envp)[idx] != NULL)
+// 		idx++;
+// 	(*envp)[idx] = "asdf";
+// 	(*envp)[idx] = NULL;
+// }
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_list	*list;
-	t_list	*list_head;
 
 	while (1)
 	{
 		line = readline("minishell$ ");
 		if (line == NULL)
-			error_end("readline error");
+			error_end("readline failed");
 		if (line[0])
 		{
-			list_head = list_init(&list);
 			add_history(line);
-			parse(&list, line);
-			//해석 진행
-			//수행 진행
-			list_print(list_head);
-			list_free(&list_head);
+			list = parse(line, envp);
+			list_print(list);
+			list_free(&list);
 		}
 		free(line);
 	}

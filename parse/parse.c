@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:24:31 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/22 15:03:47 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/22 19:00:10 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,46 @@ void	parse_tokenize(t_list **list, char *line)
 	free(buf);
 }
 
-void	parse(t_list **list, char *line)
-{
-	t_list	*list_head;
+// void	parse_translate(t_list *now_list, t_list **new_list, char **envp)
+// {
+// 	char	*buf;
 
-	list_head = (*list);
-	parse_tokenize(*list, line);
+// 	while (now_list != NULL)
+// 	{
+// 		buf = translate_token(now_list, envp);
+// 		// if ((prev_list->info.flgs & F_QUOTED) &&
+// 		// 	(prev_list->info.flgs & F_DOLLAR))
+// 		// {
+// 		// 	token_add(new_list, prev_list->info.token, prev_list->info.flgs);
+// 		// else if (prev_list->info.flgs & F_QUOTED)
+// 		// {
+
+// 		// }
+// 		// else if (prev_list->info.flgs & F_DOLLAR)
+// 		// {
+// 		// 	// 버퍼 만들기 (길이 재서 그 크기만큼 calloc  하여 돌려줌)
+// 		// 	// 해당 버퍼에 한 char씩 넣기 ($??? 발견시 -> 환경변수명 구하기. 이후 getenv(환경변수명) 사용)
+// 		// 	// 넣는 과정 중 " 나 ' 만나면 넣지 않고 ++.
+// 		// 	buf = translate_dollar();
+// 		// 	parse_tokenize(new_list, buf);
+// 		// 	token_add(new_list, prev_list->info.token, prev_list->info.flgs);
+// 		// }
+// 		token_add(new_list, buf, now_list->info.flgs);
+// 		now_list = now_list->next;
+// 	}
+// }
+
+t_list	*parse(char *line, char **envp)
+{
+	t_list	*token_list;
+	t_list	*token_list_head;
+	t_list	*trans_list;
+	t_list	*trans_list_head;
+
+	token_list_head = list_init(&token_list);
+	parse_tokenize(&token_list, line);
+	//trans_list_head = list_init(&trans_list);
+	//parse_translate(token_list_head, &trans_list, envp);
+	//list_free(&token_list_head);
+	return (token_list_head);
 }
