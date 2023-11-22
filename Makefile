@@ -16,7 +16,7 @@ MINISHELL_BONUS	 = minishell_bonus.a
 
 SRCS		= minishell.c utils/all_utils.c utils/list_handling.c      		\
 				parse/parse.c parse/token_handling.c parse/token_flgs.c	\
-				parse/tokenize_utils.c parse/tokenize_rules.c			\
+				parse/token_utils.c parse/token_rules.c			\
 
 SRCS_BONUS	= minishell_bonus.c	\
 

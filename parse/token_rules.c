@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize_rules.c                                   :+:      :+:    :+:   */
+/*   token_rules.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	tokenize_operator_double(char **buf, char now_char)
+int	rules_operator_double(char **buf, char now_char)
 {
 	int		buf_len;
 	char	prev_char;
@@ -31,7 +31,7 @@ int	tokenize_operator_double(char **buf, char now_char)
 	return (NEXT);
 }
 
-int	tokenize_operator_end(char **buf, char now_char)
+int	rules_operator_end(char **buf, char now_char)
 {
 	int		buf_len;
 
@@ -44,7 +44,7 @@ int	tokenize_operator_end(char **buf, char now_char)
 	return (NEXT);
 }
 
-int	tokenize_operator_start(char **buf, char now_char)
+int	rules_operator_start(char **buf, char now_char)
 {
 	int	buf_len;
 
@@ -57,7 +57,7 @@ int	tokenize_operator_start(char **buf, char now_char)
 	return (NEXT);
 }
 
-int	tokenize_space(char **buf, char now_char)
+int	rules_space(char **buf, char now_char)
 {
 	int	buf_len;
 
@@ -72,7 +72,7 @@ int	tokenize_space(char **buf, char now_char)
 	return (NEXT);
 }
 
-int	tokenize_comment(char **buf, char now_char)
+int	rules_comment(char **buf, char now_char)
 {
 	int	buf_len;
 

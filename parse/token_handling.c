@@ -6,11 +6,37 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 19:25:04 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/22 12:31:27 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/22 15:01:36 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	token_rules(t_list **list, char **buf, char now_char)
+{
+	if (rules_operator_double(buf, now_char))
+		return (NEXT);
+	if (rules_operator_start(buf, now_char) \
+		|| rules_operator_end(buf, now_char))
+	{
+		token_delimited(list, buf);
+		if (now_char != ' ')
+			(*buf)[0] = now_char;
+		return (NEXT);
+	}
+	if (rules_space(buf, now_char))
+	{
+		token_delimited(list, buf);
+		return (NEXT);
+	}
+	if (rules_comment(buf, now_char))
+	{
+		token_delimited(list, buf);
+		return (END);
+	}
+	(*buf)[ft_strlen(*buf)] = now_char;
+	return (NEXT);
+}
 
 void	token_flgs(t_list **list, int *new_flgs, char *buf)
 {

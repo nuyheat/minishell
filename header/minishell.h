@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/22 14:44:26 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/22 15:01:20 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,19 @@ t_list	*list_init(t_list **list);
 void	list_free(t_list **list);
 void	parse(t_list **list, char *line);
 void	token_flgs(t_list **list, int *new_flgs, char *buf);
+int		token_rules(t_list **list, char **buf, char now_char);
+void	token_delimited(t_list **list, char **buf);
 int		flgs_redirection(char *buf, int *new_flgs);
 int		flgs_pipe(char *buf, int *new_flgs);
 int		flgs_dollar(char *buf, int *new_flgs);
 int		flgs_quote(char *buf, int *new_flgs);
 void	flgs_quote_dollar(char *buf, int *new_flgs);
-int		tokenize_operator_double(char **buf, char now_char);
-int		tokenize_operator_end(char **buf, char now_char);
-int		tokenize_operator_start(char **buf, char now_char);
-int		tokenize_space(char **buf, char now_char);
-int		tokenize_comment(char **buf, char now_char);
+int		rules_operator_double(char **buf, char now_char);
+int		rules_operator_end(char **buf, char now_char);
+int		rules_operator_start(char **buf, char now_char);
+int		rules_space(char **buf, char now_char);
+int		rules_comment(char **buf, char now_char);
 int		quote_check(char *buf);
 int		operator_check(char prev_char);
-void	token_delimited(t_list **list, char **buf);
 
 #endif
