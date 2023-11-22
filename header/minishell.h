@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/22 12:44:00 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/22 13:59:32 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 # include <stdlib.h>
 
 # include "../libft/libft.h"
