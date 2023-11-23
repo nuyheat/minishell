@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/22 19:01:03 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/23 11:48:52 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line = readline("minishell$ ");
+		if (ft_strchr(line, '\n'))
+			printf("is has \\n\n");
 		if (line == NULL)
 			error_end("readline failed");
 		if (line[0])
@@ -73,3 +75,4 @@ int	main(int argc, char **argv, char **envp)
 		free(line);
 	}
 }
+// ?!!! 왜 공백만 들어가면 모든 플래그가 켜지는가?

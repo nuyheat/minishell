@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/22 18:34:01 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/23 15:50:23 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_list
 # define NEXT				0
 # define END				1
 
-# define START				-1
+# define START				1
 # define F_QUOTED			2
 # define F_NOT_QUOTED		4
 # define F_PIPE	     		8
@@ -73,5 +73,7 @@ int		rules_comment(char **buf, char now_char);
 int		quote_check(char *buf);
 int		operator_check(char prev_char);
 // char	*translate_token(t_list *list, char **envp);
+char	*my_strtrim(char const *s1, char const *set);
+
 
 #endif

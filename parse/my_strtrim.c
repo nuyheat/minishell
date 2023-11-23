@@ -1,36 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   my_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 15:53:01 by sihlee            #+#    #+#             */
-/*   Updated: 2023/11/23 15:44:18 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/11/23 17:27:01 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
 #include <stdlib.h>
-
-static void	ft_bzero(void *s, size_t n)
-{
-	int	i;
-
-	i = 0;
-	while (n--)
-		((char *)s)[i++] = 0;
-}
-
-static size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i] != 0)
-		i++;
-	return (i);
-}
+#include "minishell.h"
 
 static int	check_set(char const *set, char const c)
 {
@@ -46,36 +28,18 @@ static int	check_set(char const *set, char const c)
 	return (0);
 }
 
-static size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
-{
-	size_t	count;
-	size_t	i;
-
-	if (!ft_strlen(src))
-		return (0);
-	count = ft_strlen(src);
-	i = 0;
-	while (src[i] && (i + 1 < dstsize))
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	if (dstsize > 0)
-		dst[i] = '\0';
-	return (count);
-}
-
-char	*ft_strtrim(char const *s1, char const *set)
+char	*my_strtrim(char const *s1, char const *set)
 {
 	int		size;
 	char	*result;
 
-	while (check_set(set, *s1))
-		s1++;
-	size = ft_strlen(s1);
-	if (size)
-		while (check_set(set, s1[size - 1]))
-			size--;
+	size = 0;
+	while (!check_set(set, s1[size]))
+	{
+		size++;
+		if (s1[size] == '\0')
+			break ;
+	}
 	result = malloc((size + 1) * sizeof(char));
 	if (!result)
 		return (NULL);

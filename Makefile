@@ -14,9 +14,15 @@ LIBFT_DIR		 = ./libft
 MINISHELL		 = minishell.a
 MINISHELL_BONUS	 = minishell_bonus.a
 
-SRCS		= minishell.c utils/all_utils.c utils/list_handling.c      		\
-				parse/parse.c parse/token_handling.c parse/token_flgs.c	\
-				parse/token_utils.c parse/token_rules.c			\
+SRCS		= minishell.c				\
+				utils/all_utils.c		\
+				utils/list_handling.c   \
+				parse/parse.c			\
+				parse/token_handling.c	\
+				parse/token_flgs.c		\
+				parse/token_utils.c		\
+				parse/token_rules.c		\
+				parse/my_strtrim.c		\
 
 SRCS_BONUS	= minishell_bonus.c	\
 
