@@ -62,7 +62,7 @@ int	rules_space(char **buf, char now_char)
 	int	buf_len;
 
 	buf_len = ft_strlen(*buf);
-	if (now_char == ' ' || now_char == '\t')
+	if (now_char == ' ')
 	{
 		if (buf_len == 0)
 			return (END);
