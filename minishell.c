@@ -6,7 +6,7 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/24 14:33:26 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/11/24 15:35:24 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,18 @@ void	list_print(t_list *list)
 // 	}
 // }
 
+void	leaks(void)
+{
+	system("leaks minishell");
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_list	*list;
 
-	while (1)
+	atexit(leaks);
+	// while (1)
 	{
 		line = readline("minishell$ ");
 		if (ft_strchr(line, '\n'))

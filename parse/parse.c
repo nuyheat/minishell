@@ -6,7 +6,7 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:24:31 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/23 17:49:41 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/11/24 15:39:50 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	parse_expend(t_list **token_list, char **envp)
 	t_list	*list_ptr;
 
 	list_ptr = *token_list;
-	if ((list_ptr != NULL))
+	while ((list_ptr != NULL))
 	{
 		if ((list_ptr)->info.flgs & F_DOLLAR)
 		{
@@ -81,8 +81,8 @@ void	parse_expend(t_list **token_list, char **envp)
 				char *name = my_strtrim(variable + 1, "#$ \t\n\"\'");	// $ 다음부터 공백, 탭, 개행문자, "가 나오기 전까지의 문자열을 name에 저장
 				char *value = getenv(name);							// name에 해당하는 환경변수의 value를 value에 저장
 				if (value == NULL)									// 환경변수가 없을 경우
-					value = "";										// value에 빈 문자열을 넣어줌
-				if (ft_strncmp(name, "a", ft_strlen(name)) == 0) value = "echo HH"; //for test
+					value = "\0";										// value에 빈 문자열을 넣어줌
+				if (*name && ft_strncmp(name, "a", ft_strlen(name)) == 0) value = "echo HH"; //for test
 				// 버퍼 만들기 (길이 재서 그 크기만큼 calloc  하여 돌려줌)
 				int buflen = ft_strlen((list_ptr)->info.token) - (ft_strlen(name) + 1) + ft_strlen(value);
 				char *buf = ft_calloc(buflen + 1, sizeof(char));
@@ -95,13 +95,11 @@ void	parse_expend(t_list **token_list, char **envp)
 				free((list_ptr)->info.token);
 				(list_ptr)->info.token = NULL;
 				free(name);
-				// free(value);
 				list_ptr->info.token = buf;
 			}
 		}
-	}
-	else
 		list_ptr = (list_ptr)->next;
+	}	
 }
 
 void	parse_translate(t_list **old, t_list **new)
@@ -118,27 +116,33 @@ void	parse_translate(t_list **old, t_list **new)
 void	parse_delitmit(t_list **trans_list)
 {
 	t_list	*trans_list_ptr;
+	char	*token;
+	char	*buf;
+	int		token_idx;
+	int		buf_idx;
 
 	trans_list_ptr = *trans_list;
 	while (trans_list_ptr != NULL)
 	{
-		char	*token = trans_list_ptr->info.token;
-		char	*buf = ft_calloc(ft_strlen(token) + 1, sizeof(char));
-		int		token_idx = 0;
-		int		buf_idx = 0;
-
-		while (token[token_idx] != '\0')
+		token = trans_list_ptr->info.token;
+		if ((token != NULL) && (trans_list_ptr->info.flgs & F_QUOTED))
 		{
-			if ((token[token_idx] != '\"') && (token[token_idx] != '\''))
+			buf = ft_calloc(ft_strlen(token) + 1, sizeof(char));
+			token_idx = 0;
+			buf_idx = 0;
+			while (token[token_idx] != '\0')
 			{
-				buf[buf_idx] = token[token_idx];
-				buf_idx++;
+				if ((token[token_idx] != '\"') && (token[token_idx] != '\''))
+				{
+					buf[buf_idx] = token[token_idx];
+					buf_idx++;
+				}
+				token_idx++;
 			}
-			token_idx++;
+			free(trans_list_ptr->info.token);
+			trans_list_ptr->info.token = NULL;
+			trans_list_ptr->info.token = buf;
 		}
-		free(trans_list_ptr->info.token);
-		trans_list_ptr->info.token = NULL;
-		trans_list_ptr->info.token = buf;
 		trans_list_ptr = trans_list_ptr->next;
 	}
 }
@@ -160,7 +164,7 @@ t_list	*parse(char *line, char **envp)
 
 	//trans_list_head = list_init(&trans_list);
 	//parse_translate(token_list_head, &trans_list, envp);
-	// list_free(&token_list_head);
+	list_free(&token_list_head);
 	// return (token_list_head);
 	return (trans_list_head);
 }
