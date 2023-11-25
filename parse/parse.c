@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:24:31 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/22 19:00:10 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/26 05:42:05 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,34 +31,33 @@ void	parse_tokenize(t_list **list, char *line)
 	free(buf);
 }
 
-// void	parse_translate(t_list *now_list, t_list **new_list, char **envp)
-// {
-// 	char	*buf;
+void	parse_translate(t_list *now_list, t_list **new_list)
+{
+	t_list	*new_list_head;
+	char	*new_token;
 
-// 	while (now_list != NULL)
-// 	{
-// 		buf = translate_token(now_list, envp);
-// 		// if ((prev_list->info.flgs & F_QUOTED) &&
-// 		// 	(prev_list->info.flgs & F_DOLLAR))
-// 		// {
-// 		// 	token_add(new_list, prev_list->info.token, prev_list->info.flgs);
-// 		// else if (prev_list->info.flgs & F_QUOTED)
-// 		// {
-
-// 		// }
-// 		// else if (prev_list->info.flgs & F_DOLLAR)
-// 		// {
-// 		// 	// 버퍼 만들기 (길이 재서 그 크기만큼 calloc  하여 돌려줌)
-// 		// 	// 해당 버퍼에 한 char씩 넣기 ($??? 발견시 -> 환경변수명 구하기. 이후 getenv(환경변수명) 사용)
-// 		// 	// 넣는 과정 중 " 나 ' 만나면 넣지 않고 ++.
-// 		// 	buf = translate_dollar();
-// 		// 	parse_tokenize(new_list, buf);
-// 		// 	token_add(new_list, prev_list->info.token, prev_list->info.flgs);
-// 		// }
-// 		token_add(new_list, buf, now_list->info.flgs);
-// 		now_list = now_list->next;
-// 	}
-// }
+	new_list_head = *new_list;
+	while (now_list != NULL)
+	{
+		if (now_list->info.flgs & F_DOLLAR)
+		{
+			new_token = trans_param_expansion(now_list->info.token);
+			parse_tokenize(new_list, new_token);
+		}
+		else
+			token_add(new_list, now_list->info.token, now_list->info.flgs);
+		now_list = now_list->next;
+	}
+	while (new_list_head != NULL)
+	{
+		if (new_list_head->info.flgs & F_QUOTED)
+		{
+			trans_quoted_remove(&new_list_head->info.token);
+			new_list_head->info.flgs = F_STRING;
+		}
+		new_list_head = new_list_head->next;
+	}
+}
 
 t_list	*parse(char *line, char **envp)
 {
@@ -69,8 +68,8 @@ t_list	*parse(char *line, char **envp)
 
 	token_list_head = list_init(&token_list);
 	parse_tokenize(&token_list, line);
-	//trans_list_head = list_init(&trans_list);
-	//parse_translate(token_list_head, &trans_list, envp);
-	//list_free(&token_list_head);
-	return (token_list_head);
+	trans_list_head = list_init(&trans_list);
+	parse_translate(token_list_head, &trans_list);
+	list_free(&token_list_head);
+	return (trans_list_head);
 }

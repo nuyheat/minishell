@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 23:15:50 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/22 19:01:57 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/25 20:28:46 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	flgs_quote(char *buf, int *new_flgs)
 {
 	int	quote_flg;
 
-	quote_flg = quote_check(buf);
+	quote_flg = quoted_check(buf);
 	if (quote_flg == QUOTED)
 	{
 		if (ft_strchr(buf, '\'') == NULL && ft_strchr(buf, '\"') == NULL)
@@ -26,7 +26,7 @@ int	flgs_quote(char *buf, int *new_flgs)
 	}
 	(*new_flgs) |= F_NOT_QUOTED;
 	return (END);
-} // quoted, not_quoted 체크한 후 F_DOLLAR 가 존재하면 F_DOLLAR flgs 를 달아준다
+}
 
 void	flgs_quote_dollar(char *buf, int *new_flgs)
 {
@@ -41,11 +41,7 @@ void	flgs_quote_dollar(char *buf, int *new_flgs)
 			return ;
 		}
 		if (buf[idx] == '\'')
-		{
-			idx++;
-			while (buf[idx] != '\'')
-				idx++;
-		}
+			quote_skip(buf, &idx);
 		idx++;
 	}
 }

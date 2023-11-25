@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/22 18:34:01 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/26 05:16:29 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,23 @@ typedef struct s_list
 	t_token_info	info;
 }	t_list;
 
+// typedef struct s_trans_info
+// {
+// 	char	**expand_str;
+// 	char	*token;
+// 	char	**result;
+// 	int		str_idx = 0;
+// 	int		token_idx = 0;
+// 	int		res_idx = 0;
+// }	t_trans_info
+
 # define NOT_QUOTED			0
 # define QUOTED				1
 
 # define NEXT				0
 # define END				1
 
-# define START				-1
+# define START				1
 # define F_QUOTED			2
 # define F_NOT_QUOTED		4
 # define F_PIPE	     		8
@@ -70,8 +80,16 @@ int		rules_operator_end(char **buf, char now_char);
 int		rules_operator_start(char **buf, char now_char);
 int		rules_space(char **buf, char now_char);
 int		rules_comment(char **buf, char now_char);
-int		quote_check(char *buf);
+int		quoted_check(char *buf);
 int		operator_check(char prev_char);
-// char	*translate_token(t_list *list, char **envp);
+
+char	*expansion_token_merge(char **split_token);
+void	expansion_dollar_convert(char ***split_token);
+char	**expansion_token_split(char *token);
+char	**splited_token_init(char *token);
+char	*trans_param_expansion(char *now_token);
+void	trans_quoted_remove(char **token);
+void	quote_skip(char *str, int *idx);
+int		row_cnt(char **str);
 
 #endif

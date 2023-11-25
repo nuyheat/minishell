@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/22 19:01:03 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/26 07:37:21 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,18 @@ void	list_print(t_list *list)
 	}
 }
 
-// void	export(char ***envp)
-// {
-// 	int	idx;
 
-// 	idx = 0;
-// 	while ((*envp)[idx] != NULL)
-// 		idx++;
-// 	(*envp)[idx] = "asdf";
-// 	(*envp)[idx] = NULL;
-// }
+void	le()
+{
+	system("leaks minishell");
+}
 
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_list	*list;
 
+	atexit(le);
 	while (1)
 	{
 		line = readline("minishell$ ");
@@ -71,5 +67,6 @@ int	main(int argc, char **argv, char **envp)
 			list_free(&list);
 		}
 		free(line);
+		return (0);
 	}
 }

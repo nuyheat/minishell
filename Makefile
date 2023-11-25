@@ -16,20 +16,23 @@ MINISHELL_BONUS	 = minishell_bonus.a
 
 SRCS		= minishell.c utils/all_utils.c utils/list_handling.c      		\
 				parse/parse.c parse/token_handling.c parse/token_flgs.c	\
-				parse/token_utils.c parse/token_rules.c			\
+				parse/token_utils.c parse/token_rules.c	parse/trans_handling.c	\
+				parse/trans_utils.c parse/f_expansion_token_split.c \
+				parse/f_expansion_dollar_convert.c parse/f_expansion_token_merge.c \
+				parse/parse_utils.c \
 
 SRCS_BONUS	= minishell_bonus.c	\
 
 OBJS        = $(SRCS:.c=.o)
 OBJS_BONUS  = $(SRCS_BONUS:.c=.o)
 
-ILKO_FLAG = ${-g3 -fsanitize=address}
+ILKO_FLAG = -fsanitize=address
 
 all: pre_make $(NAME)
 bonus : pre_make $(NAME_BONUS)
 
 $(NAME): $(MINISHELL)
-	$(CC) $(CFLAGS) $(LINKS_LIBRARY)  -lreadline $^ -o $@ -g
+	$(CC) $(CFLAGS) $(LINKS_LIBRARY) -lreadline $^ -o $@ -g
 
 $(MINISHELL): $(OBJS)
 	$(AR) $(ARFLAGS) $@ $^

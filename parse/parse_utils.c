@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   translate_utils.c                                  :+:      :+:    :+:   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/22 17:08:33 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/22 18:33:32 by taehkim2         ###   ########.fr       */
+/*   Created: 2023/11/23 19:40:16 by taehkim2          #+#    #+#             */
+/*   Updated: 2023/11/26 03:39:58 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int	dollar_cnt(char *token)
-// {
-// 	int	idx;
-// 	int	dollar_cnt;
-
-// 	idx = 0;
-// 	while (token[idx] != '\0')
-// 	{
-// 		if (token[idx] == '$')
-// 			dollar_cnt++;
-// 		idx++;
-// 	}
-// 	return (dollar_cnt);
-// }
+void	quote_skip(char *str, int *idx)
+{
+	(*idx) += 1;
+	while (str[*idx] != '\'')
+		(*idx)++;
+}

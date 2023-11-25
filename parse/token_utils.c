@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	quote_check_flgs(char *buf, int *idx)
+int	quoted_check_flgs(char *buf, int *idx)
 {
 	char	prev_char;
 
@@ -27,7 +27,7 @@ int	quote_check_flgs(char *buf, int *idx)
 	return (NOT_QUOTED);
 }
 
-int	quote_check(char *buf)
+int	quoted_check(char *buf)
 {
 	int		idx;
 	int		flgs;
@@ -37,7 +37,7 @@ int	quote_check(char *buf)
 	while (buf[idx] != '\0')
 	{
 		if (buf[idx] == '\"' || buf[idx] == '\'')
-			flgs = quote_check_flgs(buf, &idx);
+			flgs = quoted_check_flgs(buf, &idx);
 		if (buf[idx] == '\0')
 			return (flgs);
 		idx++;

@@ -51,7 +51,7 @@ int	rules_operator_start(char **buf, char now_char)
 	buf_len = ft_strlen(*buf);
 	if (operator_check(now_char))
 	{
-		if (buf_len == 0 || quote_check(*buf) == QUOTED)
+		if (buf_len == 0 || quoted_check(*buf) == QUOTED)
 			return (END);
 	}
 	return (NEXT);
@@ -66,7 +66,7 @@ int	rules_space(char **buf, char now_char)
 	{
 		if (buf_len == 0)
 			return (END);
-		if (quote_check(*buf))
+		if (quoted_check(*buf))
 			return (END);
 	}
 	return (NEXT);
@@ -79,7 +79,7 @@ int	rules_comment(char **buf, char now_char)
 	buf_len = ft_strlen(*buf);
 	if (now_char == '#')
 	{
-		if (buf_len == 0 || quote_check(*buf))
+		if (buf_len == 0 || quoted_check(*buf))
 			return (END);
 	}
 	return (NEXT);
