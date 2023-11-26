@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/26 07:37:21 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:03:05 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,11 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(line);
 			list = parse(line, envp);
-			list_print(list);
-			list_free(&list);
+			if (list != NULL)
+			{
+				list_print(list);
+				list_free(&list);
+			}
 		}
 		free(line);
 		return (0);

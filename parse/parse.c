@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:24:31 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/26 05:42:05 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:01:48 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	parse_translate(t_list *now_list, t_list **new_list)
 		{
 			new_token = trans_param_expansion(now_list->info.token);
 			parse_tokenize(new_list, new_token);
+			free(new_token);
 		}
 		else
 			token_add(new_list, now_list->info.token, now_list->info.flgs);
@@ -68,6 +69,11 @@ t_list	*parse(char *line, char **envp)
 
 	token_list_head = list_init(&token_list);
 	parse_tokenize(&token_list, line);
+	if (token_list_head->info.token == NULL)
+	{
+		free(token_list_head);
+		return (NULL);
+	}
 	trans_list_head = list_init(&trans_list);
 	parse_translate(token_list_head, &trans_list);
 	list_free(&token_list_head);
