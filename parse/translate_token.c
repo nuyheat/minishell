@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   translate_token.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:38:55 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/22 18:33:25 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/27 13:46:58 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,50 +27,83 @@
 // 	return (dollar_cnt);
 // }
 
-
-// void	token_quote(char prev_token, char **new_token)
-// {
-
-// }
-
-// char	**dollar_expand(char *token, char **envp)
-// {
-// 	char	**expand_token;
-
-// 	expand_token = malloc(sizeof(char *) * (dollar_cnt(token) + 1));
-// 	if (expand_token == NULL)
-// 		error_end("malloc failed");
-
-// }
-
-// void	token_expand_dollar(char *now_token, char **new_token, char **envp)
-// {
-// 	char	**expand_token;
-// 	int		idx;
-
-// 	idx = 0;
-// 	expand_token = malloc(sizeof(char *) * (dollar_cnt(now_token) + 1));
-// 	while (now_token[idx] != '\0')
-// 	{
-// 		if (now_token[idx])
-// 		idx++;
-// 	}
-// }
-
-char	*translate_token(t_list *list, char **envp)
+void	dollar_expand(t_list **token_list)
 {
-	char	*now_token;
-	char	*new_token;
+	t_list	*list_ptr;
+	char	*token;
+	char	*dollar_position;
+	char	*buf;
 
-	now_token = list->info.token;
-	if ((list->info.flgs & F_QUOTED) && \
-		(list->info.flgs & F_DOLLAR))
+	list_ptr = *token_list;
+	while ((list_ptr != NULL))
 	{
-		dollar_expand(now_token, &new_token, envp);
-		quote_delite(now_token, &new_token);
+		if (get_flags(list_ptr) & F_DOLLAR)
+		{
+			token = list_ptr->info.token;
+			while (find_dollar_position(token) != NULL)
+			{
+				dollar_position = find_dollar_position(token);
+				buf = create_expanded_buffer(token);
+				compose_expanded_token(&buf, token);
+				free(token);
+				token = NULL;
+				list_ptr->info.token = buf;
+				token = list_ptr->info.token;
+			}
+		}
+		list_ptr = (list_ptr)->next;
+	}	
+}
+
+void	move_content(t_list **old, t_list **new)
+{
+	t_list	*old_ptr;
+
+	old_ptr = *old;
+	while (old_ptr != NULL)
+	{
+		parse_token(new, old_ptr->info.token);
+		old_ptr = old_ptr->next;
 	}
-	else if (list->info.flgs & F_QUOTED)
-		token_quote(now_token, &new_token);
-	else if (list->info.flgs & F_DOLLAR)
-		token_dollar(now_token, &new_token, envp);
+}
+
+void	quote_delimit(t_list **trans_list)
+{
+	t_list	*trans_list_ptr;
+	char	*token;
+	char	*buf;
+	int		token_idx;
+	int		buf_idx;
+
+	trans_list_ptr = *trans_list;
+	while (trans_list_ptr != NULL)
+	{
+		token = trans_list_ptr->info.token;
+		if ((token != NULL) && (trans_list_ptr->info.flgs & F_QUOTED))
+		{
+			buf = ft_calloc(ft_strlen(token) + 1, sizeof(char));
+			token_idx = 0;
+			buf_idx = 0;
+			while (token[token_idx] != '\0')
+			{
+				if ((token[token_idx] != '\"') && (token[token_idx] != '\''))
+				{
+					buf[buf_idx] = token[token_idx];
+					buf_idx++;
+				}
+				token_idx++;
+			}
+			free(trans_list_ptr->info.token);
+			trans_list_ptr->info.token = NULL;
+			trans_list_ptr->info.token = buf;
+		}
+		trans_list_ptr = trans_list_ptr->next;
+	}
+}
+
+void	translate_token(t_list **token_list, t_list **trans_list)
+{
+	dollar_expand(token_list);
+	move_content(token_list, trans_list);
+	quote_delimit(trans_list);
 }

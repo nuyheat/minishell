@@ -6,7 +6,7 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/23 15:50:23 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/11/27 13:37:45 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	list_node_add(t_list **list);
 t_list	*list_init(t_list **list);
 void	list_free(t_list **list);
 t_list	*parse(char *line, char **envp);
+void	parse_token(t_list **list, char *line);
 void	token_flgs(t_list **list, int *new_flgs, char *buf);
 int		token_rules(t_list **list, char **buf, char now_char);
 void	token_delimited(t_list **list, char **buf);
@@ -72,8 +73,13 @@ int		rules_space(char **buf, char now_char);
 int		rules_comment(char **buf, char now_char);
 int		quote_check(char *buf);
 int		operator_check(char prev_char);
-// char	*translate_token(t_list *list, char **envp);
-char	*my_strtrim(char const *s1, char const *set);
 
+void	translate_token(t_list **token_list, t_list **trans_list);
+char	*my_strtrim(char const *s1, char const *set);
+char	*find_dollar_position(const char *token);
+char	*get_variable_name(const char *variable_position);
+char	*get_variable_value(const char *variable_name);
+char	*create_expanded_buffer(const char *token);
+void	compose_expanded_token(char **buf, const char *token);
 
 #endif
