@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 20:16:41 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/26 15:58:33 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:36:32 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	token_merge(char **merged_token, char **splited_token)
 {
 	int	split_row;
 	int	merge_idx;
-	int	idx;	
+	int	idx;
 
 	split_row = 0;
 	merge_idx = 0;

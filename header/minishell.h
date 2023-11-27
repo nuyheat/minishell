@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/26 05:16:29 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/27 18:04:02 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,6 @@ typedef struct s_list
 	struct s_list	*next;
 	t_token_info	info;
 }	t_list;
-
-// typedef struct s_trans_info
-// {
-// 	char	**expand_str;
-// 	char	*token;
-// 	char	**result;
-// 	int		str_idx = 0;
-// 	int		token_idx = 0;
-// 	int		res_idx = 0;
-// }	t_trans_info
 
 # define NOT_QUOTED			0
 # define QUOTED				1

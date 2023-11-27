@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 23:15:50 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/25 20:28:46 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:22:02 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,21 @@ void	flgs_quote_dollar(char *buf, int *new_flgs)
 	while (buf[idx] != '\0')
 	{
 		if (buf[idx] == '$')
-		{
 			(*new_flgs) |= F_DOLLAR;
-			return ;
-		}
 		if (buf[idx] == '\'')
 			quote_skip(buf, &idx);
+		if (buf[idx] == '\"')
+		{
+			idx++;
+			while (buf[idx] != '\"')
+			{
+				if (buf[idx] == '$')
+					(*new_flgs) |= F_DOLLAR;
+				idx++;
+			}
+		}
+		if ((*new_flgs) & F_DOLLAR)
+			return ;
 		idx++;
 	}
 }

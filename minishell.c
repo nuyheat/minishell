@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/26 16:03:05 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/27 13:28:13 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*line;
 	t_list	*list;
 
-	atexit(le);
+	// atexit(le);
 	while (1)
 	{
 		line = readline("minishell$ ");
@@ -70,6 +70,5 @@ int	main(int argc, char **argv, char **envp)
 			}
 		}
 		free(line);
-		return (0);
 	}
 }

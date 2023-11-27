@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 18:50:37 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/26 15:58:23 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/27 17:00:29 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,18 @@ void	dollar_convert(char **token)
 	(*token)[token_idx] = '\0';
 }
 
+void	dquoted_handling(char ***splited_token, int *idx)
+{
+	(*idx)++;
+	while ((*splited_token)[*idx][0] != '\"')
+	{
+		if ((*splited_token)[*idx][0] == '$' && \
+			(*splited_token)[*idx][1] != '\0')
+			dollar_convert(&(*splited_token)[*idx]);
+		(*idx)++;
+	}
+}
+
 void	expansion_dollar_convert(char ***splited_token)
 {
 	int	idx;
@@ -41,13 +53,18 @@ void	expansion_dollar_convert(char ***splited_token)
 	idx = 0;
 	while ((*splited_token)[idx] != NULL)
 	{
+		if ((*splited_token)[idx][0] == '\"')
+			dquoted_handling(splited_token, &idx);
 		if ((*splited_token)[idx][0] == '$')
 		{
-			if ((*splited_token)[idx][1] != '\0')
+			if ((*splited_token)[idx][1] == '\0')
+			{
+				if ((*splited_token)[idx + 1] != NULL)
+					(*splited_token)[idx][0] = '\0';
+			}
+			else
 				dollar_convert(&(*splited_token)[idx]);
-			else if ((*splited_token)[idx + 1] != NULL)
-				(*splited_token)[idx][0] = '\0';
-		}	
+		}
 		idx++;
 	}
 }
