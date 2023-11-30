@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/30 18:12:31 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/11/30 19:03:52 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int		row_cnt(char **str);
 int		cd(char **argv);
 int		echo(char **argv);
 void	printenv(char **envp);
-char	*my_getenv(char *name, char **envp);
+char	*ft_getenv(char *name, char **envp);
 int		export(char **argv, char **envp);
 int		pwd(char **argv);
 

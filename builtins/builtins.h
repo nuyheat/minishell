@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:17:36 by sihlee            #+#    #+#             */
-/*   Updated: 2023/11/30 15:41:42 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/11/30 18:56:37 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,8 @@
 # include "../libft/libft.h"
 
 void	*ft_realloc(void *memblock, size_t size);
+char	*findenv(const char *name, int *offset, char **envp);
+void	printenv(char **envp);
+int		namelen(const char *str, char find);
 
 #endif

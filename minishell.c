@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/30 18:26:12 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/11/30 19:05:53 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,9 @@ int	main(int argc, char **argv, char **envp)
 			// export(2, args, envp);
 			export(args, envp);
 			// printenv(envp);
+			char *value = ft_getenv("a", envp);
+			if (value != NULL)
+				printf("\n%s\n", value);
 			for (int i = 0; args[i] != NULL; i++)
 				free(args[i]);
 			free(args);
