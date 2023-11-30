@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/30 12:08:34 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/30 18:26:12 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,33 +40,89 @@ void	list_print(t_list *list)
 	}
 }
 
+void	copy_envp(char **envp)
+{
+	int	idx;
+
+	idx = 0;
+	while (envp[idx] != NULL)
+	{
+		envp[idx] = ft_strdup(envp[idx]);
+		idx++;
+	}
+}
 
 void	le()
 {
 	system("leaks minishell");
 }
 
+
+char **make_args(t_list *list)
+{
+	char 	**args;
+	t_list *list_head;
+	int		arg_idx;
+	int		idx;
+
+	arg_idx = 0;
+	list_head = list;
+	while (list != NULL)
+	{
+		list = list->next;
+		arg_idx++;
+	}
+	args = malloc(sizeof(char *) * (arg_idx + 1));
+	if (args == NULL)
+		error_end("malloc failed");
+	arg_idx = 0;
+	while (list_head != NULL)
+	{
+		idx = 0;
+		args[arg_idx] = malloc(ft_strlen(list_head->info.token) + 1);
+		if (args[arg_idx] == NULL)
+			error_end("malloc failed");
+		while (list_head->info.token[idx] != '\0')
+		{
+			args[arg_idx][idx] = list_head->info.token[idx];
+			idx++;
+		}
+		args[arg_idx][idx] = '\0';
+		list_head = list_head->next;
+		arg_idx++;
+	}
+	args[arg_idx] = NULL;
+	return (args);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_list	*list;
-
-	// atexit(le);
-
-	while (1)
+	char	**args;
+	atexit(le);
+	copy_envp(envp);
+	// while (1)
 	{
 		line = readline("minishell$ ");
 		if (line == NULL)
-			error_end("readline failed");
+			error_end("renadline failed");
 		if (line[0])
 		{
 			add_history(line);
 			list = parse(line, envp);
 			if (list != NULL)
 			{
-				list_print(list);
+				// list_print(list);
+				args = make_args(list);
 				list_free(&list);
 			}
+			// export(2, args, envp);
+			export(args, envp);
+			// printenv(envp);
+			for (int i = 0; args[i] != NULL; i++)
+				free(args[i]);
+			free(args);
 		}
 		free(line);
 	}

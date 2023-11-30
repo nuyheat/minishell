@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/30 11:51:22 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/30 18:12:31 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,13 @@ char	*trans_param_expansion(char *now_token);
 void	trans_quoted_remove(char **token);
 void	quote_skip(char *str, int *idx);
 int		row_cnt(char **str);
+
+// void	*ft_realloc(void *memblock, size_t size);
+int		cd(char **argv);
+int		echo(char **argv);
+void	printenv(char **envp);
+char	*my_getenv(char *name, char **envp);
+int		export(char **argv, char **envp);
+int		pwd(char **argv);
 
 #endif
