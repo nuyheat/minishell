@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   f_expansion_dollar_convert.c                       :+:      :+:    :+:   */
+/*   ft_expansion_dollar_convert.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 18:50:37 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/27 17:00:29 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/30 14:26:43 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,21 @@ void	dquoted_handling(char ***splited_token, int *idx)
 	}
 }
 
+int	is_quoted_2d(char **str, int idx, char quote)
+{
+	if (str[idx][0] == quote && str[idx][1] == '\0')
+	{
+		idx++;
+		while (str[idx] != NULL)
+		{
+			if (str[idx][0] == quote && str[idx][1] == '\0')
+				return (QUOTED);
+			idx++;
+		}
+	}
+	return (NOT_QUOTED);
+}
+
 void	expansion_dollar_convert(char ***splited_token)
 {
 	int	idx;
@@ -53,7 +68,7 @@ void	expansion_dollar_convert(char ***splited_token)
 	idx = 0;
 	while ((*splited_token)[idx] != NULL)
 	{
-		if ((*splited_token)[idx][0] == '\"')
+		if (is_quoted_2d(*splited_token, idx, '\"'))
 			dquoted_handling(splited_token, &idx);
 		if ((*splited_token)[idx][0] == '$')
 		{

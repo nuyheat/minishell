@@ -44,42 +44,40 @@ int	rules_operator_end(char **buf, char now_char)
 	return (NEXT);
 }
 
-int	rules_operator_start(char **buf, char now_char)
+int	rules_operator_start(char **buf, char *line, int now_idx)
 {
 	int	buf_len;
 
 	buf_len = ft_strlen(*buf);
-	if (operator_check(now_char))
+	if (operator_check(line[now_idx]))
 	{
-		if (buf_len == 0 || quoted_check(*buf) == QUOTED)
+		if (is_char(line, now_idx))
 			return (END);
 	}
 	return (NEXT);
 }
 
-int	rules_space(char **buf, char now_char)
+int	rules_space(char **buf, char *line, int now_idx)
 {
 	int	buf_len;
 
 	buf_len = ft_strlen(*buf);
-	if (now_char == ' ')
+	if (line[now_idx] == ' ')
 	{
-		if (buf_len == 0)
-			return (END);
-		if (quoted_check(*buf))
+		if (is_char(line, now_idx))
 			return (END);
 	}
 	return (NEXT);
 }
 
-int	rules_comment(char **buf, char now_char)
+int	rules_comment(char **buf, char *line, int now_idx)
 {
 	int	buf_len;
 
 	buf_len = ft_strlen(*buf);
-	if (now_char == '#')
+	if (line[now_idx] == '#')
 	{
-		if (buf_len == 0 || quoted_check(*buf))
+		if (is_char(line, now_idx))
 			return (END);
 	}
 	return (NEXT);

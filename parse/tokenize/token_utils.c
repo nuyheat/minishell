@@ -12,37 +12,56 @@
 
 #include "minishell.h"
 
-int	quoted_check_flgs(char *buf, int *idx)
+int	is_char(char *line, int now_idx)
 {
 	char	prev_char;
-
-	prev_char = buf[*idx];
-	(*idx)++;
-	while (buf[*idx] != '\0')
-	{
-		if (buf[*idx] == prev_char)
-			return (QUOTED);
-		(*idx)++;
-	}
-	return (NOT_QUOTED);
-}
-
-int	quoted_check(char *buf)
-{
+	int		start_idx;
+	int		end_idx;
 	int		idx;
-	int		flgs;
 
 	idx = 0;
-	flgs = QUOTED;
+	while (line[idx] != '\0')
+	{
+		if (line[idx] == '\'' || line[idx] == '\"')
+		{
+			start_idx = idx;
+			prev_char = line[idx++];
+			while (line[idx] != prev_char && line[idx] != '\0')
+				idx++;
+			end_idx = idx;
+			if (line[idx] == '\0')
+				idx = start_idx;
+			else if (start_idx < now_idx && end_idx > now_idx)
+				return (0);
+		}
+		idx++;
+	}
+	return (1);
+}
+
+int	have_quoted(char *buf)
+{
+	char	prev_char;
+	int		start_idx;
+	int		idx;
+
+	idx = 0;
 	while (buf[idx] != '\0')
 	{
 		if (buf[idx] == '\"' || buf[idx] == '\'')
-			flgs = quoted_check_flgs(buf, &idx);
-		if (buf[idx] == '\0')
-			return (flgs);
+		{
+			start_idx = idx;
+			prev_char = buf[idx++];
+			while (buf[idx] != prev_char && buf[idx] != '\0')
+				idx++;
+			if (buf[idx] == '\0')
+				idx = start_idx;
+			else
+				return (QUOTED);
+		}
 		idx++;
 	}
-	return (flgs);
+	return (NOT_QUOTED);
 }
 
 int	operator_check(char prev_char)

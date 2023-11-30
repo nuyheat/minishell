@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 23:15:50 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/27 15:22:02 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/30 13:40:36 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,12 @@
 
 int	flgs_quote(char *buf, int *new_flgs)
 {
-	int	quote_flg;
-
-	quote_flg = quoted_check(buf);
-	if (quote_flg == QUOTED)
+	if (have_quoted(buf))
 	{
-		if (ft_strchr(buf, '\'') == NULL && ft_strchr(buf, '\"') == NULL)
-			return (NEXT);
 		(*new_flgs) |= F_QUOTED;
 		return (END);
 	}
-	(*new_flgs) |= F_NOT_QUOTED;
-	return (END);
+	return (NEXT);
 }
 
 void	flgs_quote_dollar(char *buf, int *new_flgs)
@@ -37,9 +31,9 @@ void	flgs_quote_dollar(char *buf, int *new_flgs)
 	{
 		if (buf[idx] == '$')
 			(*new_flgs) |= F_DOLLAR;
-		if (buf[idx] == '\'')
+		else if (is_quoted(buf, idx, '\''))
 			quote_skip(buf, &idx);
-		if (buf[idx] == '\"')
+		else if (is_quoted(buf, idx, '\"'))
 		{
 			idx++;
 			while (buf[idx] != '\"')
@@ -50,7 +44,7 @@ void	flgs_quote_dollar(char *buf, int *new_flgs)
 			}
 		}
 		if ((*new_flgs) & F_DOLLAR)
-			return ;
+			break ;
 		idx++;
 	}
 }

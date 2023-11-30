@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   f_expansion_token_split.c                          :+:      :+:    :+:   */
+/*   ft_expansion_token_split.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 18:39:36 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/27 15:36:29 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/30 14:28:26 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,25 +48,26 @@ void	not_dequoted_handling(char *token, char ***result, int *idx)
 {
 	int	start;
 
-	while (token[*idx] != '\"' && token[*idx] != '\0')
+	while (token[*idx] != '\0')
 	{
 		start = *idx;
-		while (find(token[*idx], "$\"") && token[*idx] != '\0')
+		if (token[*idx] == '$')
+			(*idx)++;
+		while (token[*idx] != '$' && token[*idx] != '\0')
 		{
-			if (token[*idx] == '\'')
+			if (token[start] == '$' && is_quoted(token, *idx, '\''))
+				break ;
+			else if (is_quoted(token, *idx, '\''))
 				quote_skip(token, idx);
+			if (is_quoted(token, *idx, '\"'))
+				break ;
 			(*idx)++;
 		}
-		token_split(token, result, start, *idx);
-		start = *idx;
-		if (token[*idx] == '\"' || token[*idx] == '\0')
-			return ;
-		(*idx)++;
-		while (find(token[*idx], "$\'\"") && token[*idx] != '\0')
-			(*idx)++;
-		if ((*idx) - start == 1 && token[start] == token[*idx])
+		if ((*idx) - start == 1 && token[start] == '$' && token[*idx] == '$')
 			(*idx)++;
 		token_split(token, result, start, *idx);
+		if (token[*idx] == '\"')
+			break ;
 	}
 }
 
@@ -86,7 +87,7 @@ void	dequoted_handling(char *token, char ***result, int *idx)
 			break ;
 		start = *idx;
 		(*idx)++;
-		while (find(token[*idx], "$\"\' #"))
+		while (find(token[*idx], "$\" "))
 			(*idx)++;
 		if ((*idx) - start == 1 && token[start] == token[*idx])
 			(*idx)++;

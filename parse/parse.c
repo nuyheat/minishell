@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:24:31 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/27 17:11:46 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/30 11:51:27 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	parse_tokenize(t_list **list, char *line)
 		error_end("calloc failed");
 	while (line[idx] != '\0')
 	{
-		if (token_rules(list, &buf, line[idx]) == END)
+		if (token_rules(list, &buf, line, idx) == END)
 			break ;
 		idx++;
 	}

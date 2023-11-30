@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/27 13:28:13 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/30 12:08:34 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void	list_print(t_list *list)
 		printf("token : %s\n", get_token(list));
 		if (list->info.flgs & F_QUOTED)
 			printf("F_QUOTED is on\n");
-		if (list->info.flgs & F_NOT_QUOTED)
-			printf("F_NOT_QUOTED is on\n");
 		if (list->info.flgs & F_LESS)
 			printf("F_LESS flag is on\n");
 		if (list->info.flgs & F_DLESS)
@@ -54,6 +52,7 @@ int	main(int argc, char **argv, char **envp)
 	t_list	*list;
 
 	// atexit(le);
+
 	while (1)
 	{
 		line = readline("minishell$ ");

@@ -15,10 +15,10 @@ MINISHELL		 = minishell.a
 MINISHELL_BONUS	 = minishell_bonus.a
 
 SRCS		= minishell.c utils/all_utils.c utils/list_handling.c      		\
-				parse/parse.c parse/token_handling.c parse/token_flgs.c	\
-				parse/token_utils.c parse/token_rules.c	parse/trans_handling.c	\
-				parse/trans_utils.c parse/f_expansion_token_split.c \
-				parse/f_expansion_dollar_convert.c parse/f_expansion_token_merge.c \
+				parse/parse.c parse/tokenize/token_handling.c parse/tokenize/token_flgs.c	\
+				parse/tokenize/token_utils.c parse/tokenize/token_rules.c	parse/translate/trans_handling.c	\
+				parse/translate/trans_utils.c parse/translate/ft_expansion_token_split.c \
+				parse/translate/ft_expansion_dollar_convert.c parse/translate/ft_expansion_token_merge.c \
 				parse/parse_utils.c \
 
 SRCS_BONUS	= minishell_bonus.c	\

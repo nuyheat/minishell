@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 19:41:25 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/27 12:57:22 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/30 14:42:36 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	trans_quoted_remove(char **token)
 {
 	char	*removed_token;
-	char	prev_char;
+	char	quote;
 	int		removed_idx;
 	int		idx;
 
@@ -26,10 +26,10 @@ void	trans_quoted_remove(char **token)
 		error_end("malloc failed");
 	while ((*token)[idx] != '\0')
 	{
-		if ((*token)[idx] == '\'' || (*token)[idx] == '\"')
+		if (is_quoted(*token, idx, '\'') || is_quoted(*token, idx, '\"'))
 		{
-			prev_char = (*token)[idx++];
-			while ((*token)[idx] != prev_char)
+			quote = (*token)[idx++];
+			while ((*token)[idx] != quote)
 				removed_token[removed_idx++] = (*token)[idx++];
 			idx++;
 		}

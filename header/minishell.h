@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/27 18:04:02 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/11/30 11:51:22 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ typedef struct s_list
 
 # define START				1
 # define F_QUOTED			2
-# define F_NOT_QUOTED		4
 # define F_PIPE	     		8
 # define F_DOLLAR			16
 # define F_STRING      		32
@@ -58,7 +57,7 @@ t_list	*list_init(t_list **list);
 void	list_free(t_list **list);
 t_list	*parse(char *line, char **envp);
 void	token_flgs(t_list **list, int *new_flgs, char *buf);
-int		token_rules(t_list **list, char **buf, char now_char);
+int		token_rules(t_list **list, char **buf, char *line, char now_idx);
 void	token_delimited(t_list **list, char **buf);
 int		flgs_redirection(char *buf, int *new_flgs);
 int		flgs_pipe(char *buf, int *new_flgs);
@@ -67,10 +66,12 @@ int		flgs_quote(char *buf, int *new_flgs);
 void	flgs_quote_dollar(char *buf, int *new_flgs);
 int		rules_operator_double(char **buf, char now_char);
 int		rules_operator_end(char **buf, char now_char);
-int		rules_operator_start(char **buf, char now_char);
-int		rules_space(char **buf, char now_char);
-int		rules_comment(char **buf, char now_char);
-int		quoted_check(char *buf);
+int		rules_operator_start(char **buf, char *line, int now_idx);
+int		rules_space(char **buf, char *line, int now_idx);
+int		rules_comment(char **buf, char *line, int now_idx);
+int		is_char(char *line, int now_idx);
+int		is_quoted(char *token, int idx, char quote);
+int		have_quoted(char *buf);
 int		operator_check(char prev_char);
 
 char	*expansion_token_merge(char **split_token);
