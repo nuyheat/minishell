@@ -6,7 +6,11 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:59:35 by sihlee            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/12/01 15:05:22 by taehkim2         ###   ########.fr       */
+=======
+/*   Updated: 2023/12/01 15:16:12 by sihlee           ###   ########.fr       */
+>>>>>>> 52e114849c96cd65d66a213019a829d747186661
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +37,10 @@ void	sortenv(char **envp)
 {
 	int		idx;
 	int		cnt;
-	int		envp_idx;
-	int		len;
 
 	idx = 1;
+	if (envp[0] == NULL)
+		return ;
 	while (envp[idx] != NULL)
 	{
 		cnt = idx;

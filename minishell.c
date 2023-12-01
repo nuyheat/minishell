@@ -6,7 +6,11 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/12/01 20:05:14 by taehkim2         ###   ########.fr       */
+=======
+/*   Updated: 2023/12/01 15:24:53 by sihlee           ###   ########.fr       */
+>>>>>>> 52e114849c96cd65d66a213019a829d747186661
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +52,7 @@ void	copy_envp(char **envp)
 	while (envp[idx] != NULL)
 	{
 		envp[idx] = ft_strdup(envp[idx]);
+		ft_putenv(envp[idx], envp);
 		idx++;
 	}
 }
@@ -64,6 +69,7 @@ void	le()
 // 	int		arg_idx;
 // 	int		idx;
 
+<<<<<<< HEAD
 // 	arg_idx = 0;
 // 	list_head = list;
 // 	while (list != NULL)
@@ -93,6 +99,44 @@ void	le()
 // 	args[arg_idx] = NULL;
 // 	return (args);
 // }
+=======
+char	**make_args(t_list *list)
+{
+	char 	**args;
+	t_list *list_head;
+	int		arg_idx;
+	int		idx;
+
+	arg_idx = 0;
+	list_head = list;
+	while (list != NULL)
+	{
+		list = list->next;
+		arg_idx++;
+	}
+	args = malloc(sizeof(char *) * (arg_idx + 1));
+	if (args == NULL)
+		error_end("malloc failed");
+	arg_idx = 0;
+	while (list_head != NULL)
+	{
+		idx = 0;
+		args[arg_idx] = malloc(ft_strlen(list_head->info.token) + 1);
+		if (args[arg_idx] == NULL)
+			error_end("malloc failed");
+		while (list_head->info.token[idx] != '\0')
+		{
+			args[arg_idx][idx] = list_head->info.token[idx];
+			idx++;
+		}
+		args[arg_idx][idx] = '\0';
+		list_head = list_head->next;
+		arg_idx++;
+	}
+	args[arg_idx] = NULL;
+	return (args);
+}
+>>>>>>> 52e114849c96cd65d66a213019a829d747186661
 
 int	main(int argc, char **argv, char **envp)
 {
