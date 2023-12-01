@@ -6,7 +6,7 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:17:36 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/01 14:38:43 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/01 15:10:25 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int		pwd(char **argv);
 int		unset(char **argv, char **envp);
 
 int		namelen(const char *str, char find);
+int		ft_putenv(const char *str, char **envp);
 char	*findenv(const char *name, int *offset, char **envp);
 char	*ft_getenv(char *name, char **envp);
 void	printenv(char **envp);

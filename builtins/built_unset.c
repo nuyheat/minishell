@@ -6,7 +6,7 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:59:35 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/01 14:47:00 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/01 15:13:11 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	cleanenv(char **envp)
 {
 	int		idx;
 
-	idx = 1;
+	idx = 0;
 	while (envp[idx + 1] != NULL)
 	{
 		if (*envp[idx] == 0)

@@ -6,7 +6,7 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/01 13:28:34 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/01 15:24:53 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	copy_envp(char **envp)
 	while (envp[idx] != NULL)
 	{
 		envp[idx] = ft_strdup(envp[idx]);
+		ft_putenv(envp[idx], envp);
 		idx++;
 	}
 }
@@ -58,7 +59,7 @@ void	le()
 }
 
 
-char **make_args(t_list *list)
+char	**make_args(t_list *list)
 {
 	char 	**args;
 	t_list *list_head;
