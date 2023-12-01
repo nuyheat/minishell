@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   all_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:10:27 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/30 19:01:04 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/01 12:26:53 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ char	*ft_getenv(char *name, char **envp)
 	int		envp_index;
 
 	value = findenv(name, &envp_index, envp);
-	if (*value == '=')
-		return (value + 1);
+	if (value == NULL)
+		return ((char *)0);
+	value = ft_strtrim(value, "=\"");
 	return (value);
 }
