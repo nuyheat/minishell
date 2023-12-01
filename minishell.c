@@ -6,7 +6,7 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/01 12:27:32 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/01 13:28:34 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,9 @@ int	main(int argc, char **argv, char **envp)
 	char	*line;
 	t_list	*list;
 	char	**args;
-	atexit(le);
+	// atexit(le);
 	copy_envp(envp);
-	// while (1)
+	while (1)
 	{
 		line = readline("minishell$ ");
 		if (line == NULL)
@@ -117,11 +117,15 @@ int	main(int argc, char **argv, char **envp)
 				args = make_args(list);
 				list_free(&list);
 			}
-			// export(2, args, envp);
-			export(args, envp);
-			// printenv(envp);
-			char *value = ft_getenv("a", envp);
-			printf("\n%s\n", value);
+
+			//export, unset test
+			if (ft_strncmp(args[0], "export", 7) == 0)
+				export(args, envp);
+			else if (ft_strncmp(args[0], "unset", 7) == 0)
+				unset(args, envp);
+			//export, unset test fin.
+
+			// args 만든거 free해야함. 줄 수 정리는 나중에 하자
 			for (int i = 0; args[i] != NULL; i++)
 				free(args[i]);
 			free(args);

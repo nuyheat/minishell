@@ -6,7 +6,7 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:10:27 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/01 12:26:53 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/01 14:53:59 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ char	*ft_getenv(char *name, char **envp)
 	int		envp_index;
 
 	value = findenv(name, &envp_index, envp);
-	if (value == NULL)
-		return ((char *)0);
-	value = ft_strtrim(value, "=\"");
+	if (value != NULL)
+		value = ft_strtrim(value, "=\"");
 	return (value);
 }

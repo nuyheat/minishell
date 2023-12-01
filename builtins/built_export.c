@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:24:56 by sihlee            #+#    #+#             */
-/*   Updated: 2023/11/30 19:07:17 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/01 14:40:13 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	export(char **argv, char **envp)
 	int		argv_idx;
 
 	argv_idx = 1;
+	sortenv(envp);
 	if (argv[argv_idx] == NULL)
 		printenv(envp);
 	else

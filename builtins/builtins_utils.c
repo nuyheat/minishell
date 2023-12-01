@@ -6,7 +6,7 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:15:27 by sihlee            #+#    #+#             */
-/*   Updated: 2023/11/29 18:00:14 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/01 14:02:46 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,13 @@ void	*ft_realloc(void *memblock, size_t size)
 		return (new_memblock);
 	}
 	return (memblock);
+}
+
+void	swap(char **envp1, char **envp2)
+{
+	char	*temp;
+
+	temp = *envp1;
+	*envp1 = *envp2;
+	*envp2 = temp;
 }

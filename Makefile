@@ -21,7 +21,7 @@ SRCS		= minishell.c utils/all_utils.c utils/list_handling.c      		\
 				parse/translate/ft_expansion_dollar_convert.c parse/translate/ft_expansion_token_merge.c \
 				parse/parse_utils.c \
 				builtins/builtins_utils.c builtins/built_cd.c builtins/built_echo.c builtins/built_export.c builtins/built_pwd.c \
-				builtins/built_export_utils.c \
+				builtins/built_export_utils.c builtins/built_unset.c builtins/built_unset_utils.c \
 
 SRCS_BONUS	= minishell_bonus.c	\
 
