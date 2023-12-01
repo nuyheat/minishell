@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_unset_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:59:35 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/01 14:45:41 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/01 15:05:22 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	sortenv(char **envp)
 	while (envp[idx] != NULL)
 	{
 		cnt = idx;
-		while (1 < cnt)
+		while (1 <= cnt)
 		{
 			if (order(envp[cnt - 1], envp[cnt]) > 0)
 				swap(envp + cnt - 1, envp + cnt);

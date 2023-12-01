@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/01 13:28:34 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/01 20:05:14 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,49 +57,48 @@ void	le()
 	system("leaks minishell");
 }
 
+// char **make_args(t_list *list)
+// {
+// 	char 	**args;
+// 	t_list *list_head;
+// 	int		arg_idx;
+// 	int		idx;
 
-char **make_args(t_list *list)
-{
-	char 	**args;
-	t_list *list_head;
-	int		arg_idx;
-	int		idx;
-
-	arg_idx = 0;
-	list_head = list;
-	while (list != NULL)
-	{
-		list = list->next;
-		arg_idx++;
-	}
-	args = malloc(sizeof(char *) * (arg_idx + 1));
-	if (args == NULL)
-		error_end("malloc failed");
-	arg_idx = 0;
-	while (list_head != NULL)
-	{
-		idx = 0;
-		args[arg_idx] = malloc(ft_strlen(list_head->info.token) + 1);
-		if (args[arg_idx] == NULL)
-			error_end("malloc failed");
-		while (list_head->info.token[idx] != '\0')
-		{
-			args[arg_idx][idx] = list_head->info.token[idx];
-			idx++;
-		}
-		args[arg_idx][idx] = '\0';
-		list_head = list_head->next;
-		arg_idx++;
-	}
-	args[arg_idx] = NULL;
-	return (args);
-}
+// 	arg_idx = 0;
+// 	list_head = list;
+// 	while (list != NULL)
+// 	{
+// 		list = list->next;
+// 		arg_idx++;
+// 	}
+// 	args = malloc(sizeof(char *) * (arg_idx + 1));
+// 	if (args == NULL)
+// 		error_end("malloc failed");
+// 	arg_idx = 0;
+// 	while (list_head != NULL)
+// 	{
+// 		idx = 0;
+// 		args[arg_idx] = malloc(ft_strlen(list_head->info.token) + 1);
+// 		if (args[arg_idx] == NULL)
+// 			error_end("malloc failed");
+// 		while (list_head->info.token[idx] != '\0')
+// 		{
+// 			args[arg_idx][idx] = list_head->info.token[idx];
+// 			idx++;
+// 		}
+// 		args[arg_idx][idx] = '\0';
+// 		list_head = list_head->next;
+// 		arg_idx++;
+// 	}
+// 	args[arg_idx] = NULL;
+// 	return (args);
+// }
 
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	t_list	*list;
-	char	**args;
+
 	// atexit(le);
 	copy_envp(envp);
 	while (1)
@@ -114,21 +113,9 @@ int	main(int argc, char **argv, char **envp)
 			if (list != NULL)
 			{
 				// list_print(list);
-				args = make_args(list);
+				excute(list, envp);
 				list_free(&list);
 			}
-
-			//export, unset test
-			if (ft_strncmp(args[0], "export", 7) == 0)
-				export(args, envp);
-			else if (ft_strncmp(args[0], "unset", 7) == 0)
-				unset(args, envp);
-			//export, unset test fin.
-
-			// args 만든거 free해야함. 줄 수 정리는 나중에 하자
-			for (int i = 0; args[i] != NULL; i++)
-				free(args[i]);
-			free(args);
 		}
 		free(line);
 	}
