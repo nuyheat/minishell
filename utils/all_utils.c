@@ -6,7 +6,7 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:10:27 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/01 14:53:59 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/01 14:57:23 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,15 @@ int	get_flags(t_list *list)
 char	*ft_getenv(char *name, char **envp)
 {
 	char	*value;
+	char	*result;
 	int		envp_index;
 
+	result = NULL;
 	value = findenv(name, &envp_index, envp);
 	if (value != NULL)
-		value = ft_strtrim(value, "=\"");
-	return (value);
+	{
+		result = ft_strtrim(value, "=\"");
+		free(value);
+	}
+	return (result);
 }
