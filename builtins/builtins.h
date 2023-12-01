@@ -6,7 +6,7 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:17:36 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/01 15:10:25 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/01 20:15:23 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@
 # include <stdlib.h>
 # include "../libft/libft.h"
 
-int		cd(char **argv);
-int		echo(char **argv);
-int		export(char **argv, char **envp);
-int		pwd(char **argv);
-int		unset(char **argv, char **envp);
+void	cd(char **argv);
+void	echo(char **argv);
+void	export(char **argv, char **envp);
+void	pwd(char **argv);
+void	unset(char **argv, char **envp);
+void	env(char **argv, char **envp);
+void	exit(char **argv);
 
 int		namelen(const char *str, char find);
 int		ft_putenv(const char *str, char **envp);

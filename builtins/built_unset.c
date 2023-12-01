@@ -6,7 +6,7 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:59:35 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/01 15:13:11 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/01 20:17:13 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	cleanenv(char **envp)
 	envp[idx] = NULL;
 }
 
-int	unset(char **argv, char **envp)
+void	unset(char **argv, char **envp)
 {
 	int		idx;
 	int		envp_idx;

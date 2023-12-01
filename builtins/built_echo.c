@@ -6,13 +6,13 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:59:35 by sihlee            #+#    #+#             */
-/*   Updated: 2023/11/30 15:59:54 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/01 19:58:07 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-int	echo(char **argv)
+void	echo(char **argv)
 {
 	int	idx;
 	int	newline;

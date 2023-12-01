@@ -6,13 +6,13 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:59:35 by sihlee            #+#    #+#             */
-/*   Updated: 2023/11/30 18:30:11 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/01 20:14:00 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-int	cd(char **argv)
+void	cd(char **argv)
 {
 	int		idx;
 	int		flg;

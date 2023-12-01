@@ -6,7 +6,7 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:24:56 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/01 14:40:13 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/01 20:21:19 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_putenv(const char *str, char **envp)
 	return (0);
 }
 
-int	export(char **argv, char **envp)
+void	export(char **argv, char **envp)
 {
 	int		argv_idx;
 
