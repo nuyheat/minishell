@@ -6,7 +6,7 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/01 19:08:23 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/01 20:33:52 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,41 @@ void	le()
 	system("leaks minishell");
 }
 
+// char **make_args(t_list *list)
+// {
+// 	char 	**args;
+// 	t_list *list_head;
+// 	int		arg_idx;
+// 	int		idx;
+// 	arg_idx = 0;
+// 	list_head = list;
+// 	while (list != NULL)
+// 	{
+// 		list = list->next;
+// 		arg_idx++;
+// 	}
+// 	args = malloc(sizeof(char *) * (arg_idx + 1));
+// 	if (args == NULL)
+// 		error_end("malloc failed");
+// 	arg_idx = 0;
+// 	while (list_head != NULL)
+// 	{
+// 		idx = 0;
+// 		args[arg_idx] = malloc(ft_strlen(list_head->info.token) + 1);
+// 		if (args[arg_idx] == NULL)
+// 			error_end("malloc failed");
+// 		while (list_head->info.token[idx] != '\0')
+// 		{
+// 			args[arg_idx][idx] = list_head->info.token[idx];
+// 			idx++;
+// 		}
+// 		args[arg_idx][idx] = '\0';
+// 		list_head = list_head->next;
+// 		arg_idx++;
+// 	}
+// 	args[arg_idx] = NULL;
+// 	return (args);
+// }
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -78,7 +113,7 @@ int	main(int argc, char **argv, char **envp)
 			if (list != NULL)
 			{
 				// list_print(list);
-				execute(list, envp);
+				excute(list, envp);
 				list_free(&list);
 			}
 		}
