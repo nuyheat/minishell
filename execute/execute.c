@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   excute.c                                           :+:      :+:    :+:   */
+/*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:25:55 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/01 20:35:23 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/02 12:42:47 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	put_char(t_list *list_head, char ***args, int end)
+void	put_char(t_list *list, char ***args, int end)
 {
 	int	args_idx;
 	int	idx;
@@ -21,16 +21,16 @@ void	put_char(t_list *list_head, char ***args, int end)
 	while (args_idx < end)
 	{
 		idx = 0;
-		(*args)[args_idx] = malloc(ft_strlen(list_head->info.token) + 1);
+		(*args)[args_idx] = malloc(ft_strlen(list->info.token) + 1);
 		if ((*args)[args_idx] == NULL)
 			error_end("malloc failed");
-		while (list_head->info.token[idx] != '\0')
+		while (list->info.token != NULL && list->info.token[idx] != '\0')
 		{
-			(*args)[args_idx][idx] = list_head->info.token[idx];
+			(*args)[args_idx][idx] = list->info.token[idx];
 			idx++;
 		}
 		(*args)[args_idx][idx] = '\0';
-		list_head = list_head->next;
+		list = list->next;
 		args_idx++;
 	}
 	(*args)[args_idx] = NULL;

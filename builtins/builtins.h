@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:17:36 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/01 20:15:23 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/02 11:46:17 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	export(char **argv, char **envp);
 void	pwd(char **argv);
 void	unset(char **argv, char **envp);
 void	env(char **argv, char **envp);
-void	exit(char **argv);
+//void	exit(char **argv);
 
 int		namelen(const char *str, char find);
 int		ft_putenv(const char *str, char **envp);

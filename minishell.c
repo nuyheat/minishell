@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/01 20:33:52 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/02 11:47:16 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	main(int argc, char **argv, char **envp)
 			if (list != NULL)
 			{
 				// list_print(list);
-				excute(list, envp);
+				execute(list, envp);
 				list_free(&list);
 			}
 		}
