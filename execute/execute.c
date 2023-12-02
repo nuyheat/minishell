@@ -88,7 +88,7 @@ char	*builtin(char **args, char **envp, char **result)
 	else if (ft_strncmp(command, "env", 4) == 0)
 		env(args, envp);
 	else if (ft_strncmp(command, "exit", 5) == 0)
-		exit(args);
+		my_exit(args);
 	return (NULL);
 }
 

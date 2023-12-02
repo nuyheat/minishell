@@ -24,9 +24,10 @@ void	export(char **argv, char **envp);
 void	pwd(char **argv);
 void	unset(char **argv, char **envp);
 void	env(char **argv, char **envp);
-//void	exit(char **argv);
+void    my_exit(char **argv);
+// void	exit(char **argv);
 
-int		namelen(const char *str, char find);
+    int namelen(const char *str, char find);
 int		ft_putenv(const char *str, char **envp);
 char	*findenv(const char *name, int *offset, char **envp);
 char	*ft_getenv(char *name, char **envp);

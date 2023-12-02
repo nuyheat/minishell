@@ -12,7 +12,7 @@
 
 #include "builtins.h"
 
-void	exit(char **argv)
+void	my_exit(char **argv)
 {
 	int		argv_idx;
 
