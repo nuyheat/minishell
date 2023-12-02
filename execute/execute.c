@@ -72,10 +72,23 @@ void	args_free(char ***args)
 
 char	*builtin(char **args, char **envp, char **result)
 {
-	if (ft_strncmp(args[0], "export", 7) == 0)
+	char	*command;
+
+	command = args[0];
+	if (ft_strncmp(command, "echo", 3) == 0)
+		echo(args);
+	else if (ft_strncmp(command, "cd", 5) == 0)
+		cd(args);
+	else if (ft_strncmp(command, "pwd", 4) == 0)
+		pwd(args);
+	else if (ft_strncmp(command, "export", 7) == 0)
 		export(args, envp);
-	else if (ft_strncmp(args[0], "unset", 7) == 0)
+	else if (ft_strncmp(command, "unset", 6) == 0)
 		unset(args, envp);
+	else if (ft_strncmp(command, "env", 4) == 0)
+		env(args, envp);
+	else if (ft_strncmp(command, "exit", 5) == 0)
+		exit(args);
 	return (NULL);
 }
 

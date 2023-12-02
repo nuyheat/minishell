@@ -48,7 +48,6 @@ void	copy_envp(char **envp)
 	while (envp[idx] != NULL)
 	{
 		envp[idx] = ft_strdup(envp[idx]);
-		ft_putenv(envp[idx], envp);
 		idx++;
 	}
 }

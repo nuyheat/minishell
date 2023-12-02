@@ -86,7 +86,6 @@ int		row_cnt(char **str);
 
 
 void	execute(t_list *list, char **envp);
-
 // void	*ft_realloc(void *memblock, size_t size);
 
 

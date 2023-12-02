@@ -30,7 +30,7 @@ int		namelen(const char *str, char find);
 int		ft_putenv(const char *str, char **envp);
 char	*findenv(const char *name, int *offset, char **envp);
 char	*ft_getenv(char *name, char **envp);
-void	printenv(char **envp);
+void	printexport(char **envp);
 void	cleanenv(char **envp);
 void	sortenv(char **envp);
 

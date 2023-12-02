@@ -32,9 +32,9 @@ int	ft_setenv(const char *name, const char *value, char **envp)
 	change_here = findenv(name, &idx, envp);
 	if (change_here != NULL)
 	{
-		ft_memmove(change_here, "=\"", 2);
-		ft_memmove(change_here + 2, value, value_len);
-		ft_memmove(change_here + 2 + value_len, "\"\0", 2);
+		ft_memmove(change_here, "=", 1);
+		ft_memmove(change_here + 1, value, value_len);
+		change_here[1 + value_len] = 0;
 	}
 	return (-1);
 }
@@ -48,7 +48,10 @@ int	ft_putenv(const char *str, char **envp)
 		return (-1);
 	change_here = findenv(str, &idx, envp);
 	if ((change_here == NULL) && (ft_strchr(str, '=') == NULL))
-		envp[idx] = (char *)str;
+	{
+		envp[idx] = ft_strdup(str);
+		envp[idx + 1] = NULL;
+	}
 	else if (ft_strchr(str, '=') != NULL)
 		ft_setenv(str, ft_strchr(str, '=') + 1, envp);
 	return (0);
@@ -61,7 +64,7 @@ void	export(char **argv, char **envp)
 	argv_idx = 1;
 	sortenv(envp);
 	if (argv[argv_idx] == NULL)
-		printenv(envp);
+		printexport(envp);
 	else
 	{
 		while (argv[argv_idx] != NULL)

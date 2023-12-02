@@ -10,16 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "builtins.h"
 
-void	printenv(char **envp)
+void	printexport(char **envp)
 {
 	char	**envp_ptr;
+	char	*equal;
 
 	envp_ptr = envp;
 	while (*envp_ptr != NULL)
 	{
-		printf("%s\n", *envp_ptr);
+		write(1, *envp_ptr, namelen(*envp_ptr, '='));
+		equal = ft_strchr(*envp_ptr, '=');
+		if (equal != NULL)
+		{
+			write(1, "=\"", 2);
+			equal++;
+			write(1, equal, ft_strlen(equal));
+			write(1, "\"", 1);
+		}
+		write(1, "\n", 1);
 		envp_ptr++;
 	}
 }
