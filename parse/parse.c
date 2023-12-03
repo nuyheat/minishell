@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:24:31 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/02 11:45:23 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/03 19:10:11 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ void	parse_tokenize(t_list **list, char *line)
 	char	*buf;
 
 	idx = 0;
+	if (line[0] == '\0')
+	{
+		token_add(list, line, F_STRING);
+		return ;
+	}
 	buf = ft_calloc(ft_strlen(line) + 1, sizeof(char));
 	if (buf == NULL)
 		error_end("calloc failed");

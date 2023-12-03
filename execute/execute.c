@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:25:55 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/02 12:42:47 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/03 18:41:49 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	args_free(char ***args)
 	free(*args);
 }
 
-char	*builtin(char **args, char **envp, char **result)
+int	*builtin(char **args, char **envp)
 {
 	char	*command;
 
@@ -89,10 +89,12 @@ char	*builtin(char **args, char **envp, char **result)
 		env(args, envp);
 	else if (ft_strncmp(command, "exit", 5) == 0)
 		my_exit(args);
-	return (NULL);
+	else
+		return (0);
+	return (1);
 }
 
-char	*simple_command(char **args, char **envp, char **result)
+char	*simple_command(char **args, char **envp)
 {
 	(void)args;
 	(void)envp;
@@ -102,16 +104,15 @@ char	*simple_command(char **args, char **envp, char **result)
 void	execute(t_list *list, char **envp)
 {
 	char	**args;
-	char	*result;
+	int		error_check;
 
-	result = NULL;
 	while (list != NULL)
 	{
+ 		if (redirection(&list) == ERROR)
+			break ;
 		args = args_make(&list);
-		// redirection handling 필요
-		builtin(args, envp, &result);
-		if (result == NULL)
-			simple_command(args, envp, &result);
+		if (!builtin(args, envp))
+			simple_command(args, envp);
 		// 리다이렉션, 파이프가 있다면 result를 특정한 곳으로 보냄
 		// list
 		// else

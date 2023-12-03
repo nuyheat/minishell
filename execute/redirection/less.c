@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*   less.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/23 19:40:16 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/03 19:06:41 by sihlee           ###   ########.fr       */
+/*   Created: 2023/12/03 15:56:06 by sihlee            #+#    #+#             */
+/*   Updated: 2023/12/03 19:15:45 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../header/minishell.h"
+#include <fcntl.h>
 
-void	quote_skip(char *str, int *idx)
+int	less(t_list *list, int *fd)
 {
-	(*idx) += 1;
-	while (str[*idx] != '\'')
-		(*idx)++;
-}
+	int	less_idx;
 
-int	is_quoted(char *token, int idx, char quote)
-{
-	if (token[idx] == quote)
-	{
-		idx++;
-		while (token[idx] != '\0')
-		{
-			if (token[idx] == quote)
-				return (QUOTED);
-			idx++;
-		}
-	}
-	return (NOT_QUOTED);
+	less_idx = 0;
+	if (syntax_error(list))
+		return (ERROR);
+	// 파일 access 권한 handling
+	*fd = open(list->info.token, O_RDONLY);
+	if (*fd == -1)
+		error_end("open failed");
 }

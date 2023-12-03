@@ -6,7 +6,7 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/03 14:38:12 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/03 18:56:03 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_list
 # define NOT_QUOTED			0
 # define QUOTED				1
 
+# define ERROR				-1
 # define NEXT				0
 # define END				1
 
@@ -49,13 +50,17 @@ typedef struct s_list
 # define F_LESS				256
 # define F_DLESS			512
 
+
 void	error_end(char *str);
 void	token_add(t_list **list, char *new_token, int new_flags);
 int		get_flags(t_list *list);
 char	*get_token(t_list *list);
+
 void	list_node_add(t_list **list);
 t_list	*list_init(t_list **list);
 void	list_free(t_list **list);
+t_list	*list_delete(t_list **list, t_list **trash);
+
 t_list	*parse(char *line, char **envp);
 void	token_flgs(t_list **list, int *new_flgs, char *buf);
 int		token_rules(t_list **list, char **buf, char *line, char now_idx);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_handling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:53:12 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/27 18:05:50 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/03 18:21:30 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,3 +51,26 @@ void	list_free(t_list **list)
 	}
 }
 // 연결리스트 메모리 해제
+
+t_list	*list_delete(t_list **list, t_list **trash)
+{
+	t_list	*ptr;
+
+	ptr = *list;
+	if (ptr == (*trash))
+	{
+		ptr = ptr->next;
+		(*trash)->next = NULL;
+		list_free(trash);
+		return (ptr);
+	}
+	while (ptr->next != (*trash))
+		ptr = ptr->next;
+	if (ptr->next == (*trash))
+	{
+		ptr->next = ptr->next->next;
+		(*trash)->next = NULL;
+		list_free(trash);
+	}
+	return (*list);
+}
