@@ -6,25 +6,11 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 14:57:04 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/03 19:16:01 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/04 14:20:52 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
-
-int	syntax_error(t_list *node)
-{
-	int	flag;
-
-	flag = node->info.flgs;
-	if (flag & (F_LESS | F_DLESS | F_DGRATE | F_GRATE) != 0)
-	{
-		printf("minishell: syntax error near unexpected token");
-		printf("`%s'\n", node->info.token);
-		return (ERROR);
-	}
-	return (NEXT);
-}
 
 int	change_fd(int *fd)
 {

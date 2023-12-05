@@ -6,7 +6,7 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/03 18:56:03 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/05 19:29:10 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,36 +50,47 @@ typedef struct s_list
 # define F_LESS				256
 # define F_DLESS			512
 
-
+/* utils */
 void	error_end(char *str);
-void	token_add(t_list **list, char *new_token, int new_flags);
-int		get_flags(t_list *list);
+int		syntax_error(t_list *node);
+int		redirection_error(t_list *node);
+int		command_not_found(t_list *node, char **envp);
+int		is_it_builtin(char *command);
+void	my_free(char *str);
+void	my_free2(char **strs);
 char	*get_token(t_list *list);
+int		get_flags(t_list *list);
 
 void	list_node_add(t_list **list);
 t_list	*list_init(t_list **list);
 void	list_free(t_list **list);
 t_list	*list_delete(t_list **list, t_list **trash);
 
+/* parse */
 t_list	*parse(char *line, char **envp);
 void	token_flgs(t_list **list, int *new_flgs, char *buf);
 int		token_rules(t_list **list, char **buf, char *line, char now_idx);
+void	token_add(t_list **list, char *new_token, int new_flags);
 void	token_delimited(t_list **list, char **buf);
+
 int		flgs_redirection(char *buf, int *new_flgs);
 int		flgs_pipe(char *buf, int *new_flgs);
 int		flgs_dollar(char *buf, int *new_flgs);
 int		flgs_quote(char *buf, int *new_flgs);
 void	flgs_quote_dollar(char *buf, int *new_flgs);
+
 int		rules_operator_double(char **buf, char now_char);
 int		rules_operator_end(char **buf, char now_char);
 int		rules_operator_start(char **buf, char *line, int now_idx);
 int		rules_space(char **buf, char *line, int now_idx);
 int		rules_comment(char **buf, char *line, int now_idx);
+
 int		is_char(char *line, int now_idx);
 int		is_quoted(char *token, int idx, char quote);
 int		have_quoted(char *buf);
 int		operator_check(char prev_char);
 
+/* translate */
 char	*expansion_token_merge(char **split_token);
 void	expansion_dollar_convert(char ***split_token);
 char	**expansion_token_split(char *token);
@@ -89,7 +100,7 @@ void	trans_quoted_remove(char **token);
 void	quote_skip(char *str, int *idx);
 int		row_cnt(char **str);
 
+/* execute */
 void	execute(t_list *list, char **envp);
-// void	*ft_realloc(void *memblock, size_t size);
 
 #endif

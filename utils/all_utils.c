@@ -6,19 +6,33 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:10:27 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/01 14:57:23 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/05 19:24:28 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "../builtins/builtins.h"
 
-void	error_end(char *str)
+void	my_free(char *str)
 {
-	printf("Error\n%s\n", str);
-	exit(1);
+	if (str != NULL)
+	{
+		free(str);
+		str = NULL;
+	}
 }
-// 에러 커스텀 메세지 출력 및 종료
+
+void	my_free2(char **strs)
+{
+	int	idx;
+
+	idx = 0;
+	while (strs[idx] != NULL)
+	{
+		my_free(strs[idx]);
+		idx++;
+	}
+}
 
 char	*get_token(t_list *list)
 {
