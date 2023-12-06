@@ -14,15 +14,23 @@ LIBFT_DIR		 = ./libft
 MINISHELL		 = minishell.a
 MINISHELL_BONUS	 = minishell_bonus.a
 
-SRCS		= minishell.c utils/all_utils.c utils/list_handling.c      		\
-				parse/parse.c parse/tokenize/token_handling.c parse/tokenize/token_flgs.c	\
-				parse/tokenize/token_utils.c parse/tokenize/token_rules.c	parse/translate/trans_handling.c	\
-				parse/translate/trans_utils.c parse/translate/ft_expansion_token_split.c \
-				parse/translate/ft_expansion_dollar_convert.c parse/translate/ft_expansion_token_merge.c \
-				parse/parse_utils.c \
-				builtins/builtins_utils.c builtins/built_cd.c builtins/built_echo.c builtins/built_export.c builtins/built_pwd.c \
-				builtins/built_export_utils.c builtins/built_unset.c builtins/built_unset_utils.c builtins/built_env.c builtins/built_exit.c\
-				execute/execute.c \
+SRCS		= minishell.c \
+				utils/all_utils.c utils/list_handling.c utils/main_utils.c	\
+				builtins/builtins_utils.c builtins/built_cd.c builtins/built_echo.c \
+				builtins/built_export.c builtins/built_pwd.c builtins/built_export_utils.c \
+				builtins/built_unset.c builtins/built_unset_utils.c \
+				builtins/built_env.c builtins/built_exit.c \
+				parse/parse.c parse/parse_utils.c \
+				parse/tokenize/token_handling.c parse/tokenize/token_flgs.c	\
+				parse/tokenize/token_utils.c parse/tokenize/token_rules.c	\
+				parse/translate/trans_utils.c parse/translate/trans_handling.c \
+				parse/translate/ft_expansion_token_split.c \
+				parse/translate/ft_expansion_dollar_convert.c \
+				parse/translate/ft_expansion_token_merge.c \
+				execute/execute.c execute/args_utils.c \
+				execute/parent/ft_command_error.c \
+				execute/parent/ft_redirection_error.c \
+				execute/parent/ft_syntax_error.c \
 
 SRCS_BONUS	= minishell_bonus.c	\
 
@@ -35,13 +43,13 @@ all: pre_make $(NAME)
 bonus : pre_make $(NAME_BONUS)
 
 $(NAME): $(MINISHELL)
-	$(CC) $(CFLAGS) $(LINKS_LIBRARY) -lreadline $^ -o $@ -g
+	$(CC) $(CFLAGS) $(LINKS_LIBRARY) -fsanitize=address -lreadline $^ -o $@ -g
 
 $(MINISHELL): $(OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES_HEADER) -c $^ -o $@ -g
+	$(CC) $(CFLAGS) -fsanitize=address $(INCLUDES_HEADER) -c $^ -o $@ -g
 
 $(NAME_BONUS): $(MINISHELL_BONUS)
 	$(CC) $(CFLAGS) $(LINKS_LIBRARY) -lreadline $^ -o $@

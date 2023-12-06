@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:24:31 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/03 19:10:11 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/06 20:08:46 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	parse_tokenize(t_list **list, char *line)
 	free(buf);
 }
 
-void	parse_translate(t_list *now_list, t_list **new_list)
+void	parse_translate(t_list *now_list, t_list **new_list, char **envp)
 {
 	t_list	*new_list_head;
 	char	*new_token;
@@ -46,7 +46,7 @@ void	parse_translate(t_list *now_list, t_list **new_list)
 	{
 		if (now_list->info.flgs & F_DOLLAR)
 		{
-			new_token = trans_param_expansion(now_list->info.token);
+			new_token = trans_param_expansion(now_list->info.token, envp);
 			parse_tokenize(new_list, new_token);
 			free(new_token);
 		}
@@ -80,7 +80,7 @@ t_list	*parse(char *line, char **envp)
 		return (NULL);
 	}
 	trans_list_head = list_init(&trans_list);
-	parse_translate(token_list_head, &trans_list);
+	parse_translate(token_list_head, &trans_list, envp);
 	list_free(&token_list_head);
 	return (trans_list_head);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/05 19:29:10 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/06 20:13:28 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,22 @@ typedef struct s_list
 # define F_LESS				256
 # define F_DLESS			512
 
-/* utils */
+/* main utils */
+char	*line_creat(void);
+void	copy_envp(char **envp);
+
+/* all utils */
 void	error_end(char *str);
-int		syntax_error(t_list *node);
-int		redirection_error(t_list *node);
-int		command_not_found(t_list *node, char **envp);
-int		is_it_builtin(char *command);
 void	my_free(char *str);
 void	my_free2(char **strs);
-char	*get_token(t_list *list);
-int		get_flags(t_list *list);
 
+/* list utils */
 void	list_node_add(t_list **list);
 t_list	*list_init(t_list **list);
 void	list_free(t_list **list);
 t_list	*list_delete(t_list **list, t_list **trash);
 
-/* parse */
+/* parse tokenize*/
 t_list	*parse(char *line, char **envp);
 void	token_flgs(t_list **list, int *new_flgs, char *buf);
 int		token_rules(t_list **list, char **buf, char *line, char now_idx);
@@ -90,17 +89,27 @@ int		is_quoted(char *token, int idx, char quote);
 int		have_quoted(char *buf);
 int		operator_check(char prev_char);
 
-/* translate */
+/* parse translate */
 char	*expansion_token_merge(char **split_token);
-void	expansion_dollar_convert(char ***split_token);
+void	expansion_dollar_convert(char ***split_token, char **envp);
 char	**expansion_token_split(char *token);
 char	**splited_token_init(char *token);
-char	*trans_param_expansion(char *now_token);
+char	*trans_param_expansion(char *now_token, char **envp);
 void	trans_quoted_remove(char **token);
 void	quote_skip(char *str, int *idx);
 int		row_cnt(char **str);
 
 /* execute */
 void	execute(t_list *list, char **envp);
+
+/* excute error */
+int		syntax_error(t_list *list);
+int		redirection_error(t_list *list);
+int		command_error(char *token, char **envp);
+
+/* excute args utils */
+void	args_next(t_list **list);
+void	args_free(char ***args);
+char	**args_make(t_list **list);
 
 #endif

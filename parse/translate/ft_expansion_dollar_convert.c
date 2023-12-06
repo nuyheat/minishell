@@ -6,13 +6,13 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 18:50:37 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/30 14:26:43 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/06 20:09:25 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	dollar_convert(char **token)
+void	dollar_convert(char **token, char **envp)
 {
 	char	*buf;
 	int		buf_len;
@@ -22,7 +22,7 @@ void	dollar_convert(char **token)
 	buf_len = 0;
 	buf_idx = 0;
 	token_idx = 0;
-	buf = getenv((*token) + 1);
+	buf = ft_getenv((*token) + 1, envp);
 	if (buf != NULL)
 		buf_len = ft_strlen(buf);
 	free(*token);
@@ -34,14 +34,14 @@ void	dollar_convert(char **token)
 	(*token)[token_idx] = '\0';
 }
 
-void	dquoted_handling(char ***splited_token, int *idx)
+void	dquoted_handling(char ***splited_token, int *idx, char **envp)
 {
 	(*idx)++;
 	while ((*splited_token)[*idx][0] != '\"')
 	{
 		if ((*splited_token)[*idx][0] == '$' && \
 			(*splited_token)[*idx][1] != '\0')
-			dollar_convert(&(*splited_token)[*idx]);
+			dollar_convert(&(*splited_token)[*idx], envp);
 		(*idx)++;
 	}
 }
@@ -61,7 +61,7 @@ int	is_quoted_2d(char **str, int idx, char quote)
 	return (NOT_QUOTED);
 }
 
-void	expansion_dollar_convert(char ***splited_token)
+void	expansion_dollar_convert(char ***splited_token, char **envp)
 {
 	int	idx;
 
@@ -69,7 +69,7 @@ void	expansion_dollar_convert(char ***splited_token)
 	while ((*splited_token)[idx] != NULL)
 	{
 		if (is_quoted_2d(*splited_token, idx, '\"'))
-			dquoted_handling(splited_token, &idx);
+			dquoted_handling(splited_token, &idx, envp);
 		if ((*splited_token)[idx][0] == '$')
 		{
 			if ((*splited_token)[idx][1] == '\0')
@@ -78,7 +78,7 @@ void	expansion_dollar_convert(char ***splited_token)
 					(*splited_token)[idx][0] = '\0';
 			}
 			else
-				dollar_convert(&(*splited_token)[idx]);
+				dollar_convert(&(*splited_token)[idx], envp);
 		}
 		idx++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   all_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:10:27 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/05 19:24:28 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/06 20:11:00 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,11 @@ void	my_free2(char **strs)
 	}
 }
 
-char	*get_token(t_list *list)
+void	error_end(char *str)
 {
-	return (list->info.token);
+	printf("Error\n%s\n", str);
+	exit(1);
 }
-// 토큰 받아오는 함수(필요 없을시 삭제)
-
-int	get_flags(t_list *list)
-{
-	return (list->info.flgs);
-}
-// 플래그 받아오는 함수(필요 없을시 삭제)
 
 char	*ft_getenv(char *name, char **envp)
 {
@@ -57,7 +51,7 @@ char	*ft_getenv(char *name, char **envp)
 	if (value != NULL)
 	{
 		result = ft_strtrim(value, "=\"");
-		free(value);
+		// free(value); 이거 왜 free하면 에러나는지 모르겠음
 	}
 	return (result);
 }
