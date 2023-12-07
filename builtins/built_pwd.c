@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_pwd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:17:26 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/01 20:14:05 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/07 15:05:30 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 void	pwd(char **argv)
 {
 	char	*str;
+	char	current_path[BUFSIZ];
 
 	(void)argv;
-	str = getcwd(NULL, BUFSIZ);
+	str = getcwd(current_path, BUFSIZ);
 	if (str == NULL)
 	{
 		perror("minishell: pwd: ");
 	}
 	else
 		printf("%s\n", str);
-	free(str);
 }

@@ -1,33 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
+/*   ft_one_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/06 17:19:47 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/07 14:55:31 by taehkim2         ###   ########.fr       */
+/*   Created: 2023/12/07 14:51:15 by taehkim2          #+#    #+#             */
+/*   Updated: 2023/12/07 15:33:02 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execute(t_list *list, char **envp, int flg)
+void	one_process(t_list *list, char **envp)
 {
-	t_pipe	pipe;
+	int		pid;
+	char	**args;
+	char	*command;
 
-	if (syntax_error(list) == ERROR)
-		return ;
-	while (list != NULL)
+	if (is_it_builtin(list->info.token))
 	{
-		if (redirection_error(list) != ERROR && \
-			command_error(list->info.token, envp) != ERROR)
-		{
-			if (flg == F_PIPE)
-				multi_process(list, &pipe, envp);
-			else
-				one_process(list, envp);
-		}
-		args_next(&list);
+		// redirection handling
+		args = args_make(list);
+		builtin(args, envp);
+		args_free(&args);
+		return ;
 	}
+	pid = fork();
+	if (pid == -1)
+		return ;
+	else if (pid == 0)
+	{
+		// redirection handling
+		args = args_make(list);
+		simple_command(args, envp);
+		args_free(&args);
+		exit(0);
+	}
+	waitpid(pid, NULL, 0);
 }

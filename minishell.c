@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/06 20:00:21 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/07 13:45:27 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,17 @@
 // 	system("leaks minishell");
 // }
 
+int	pipe_find(t_list *list)
+{
+	while (list != NULL)
+	{
+		if (list->info.flgs == F_PIPE)
+			return (F_PIPE);
+		list = list->next;
+	}
+	return (END);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
@@ -61,7 +72,7 @@ int	main(int argc, char **argv, char **envp)
 			list = parse(line, envp);
 			if (list != NULL)
 			{
-				execute(list, envp);
+				execute(list, envp, pipe_find(list));
 				list_free(&list);
 			}
 		}

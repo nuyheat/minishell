@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/06 20:13:28 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:09:20 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ typedef struct s_list
 	struct s_list	*next;
 	t_token_info	info;
 }	t_list;
+
+typedef struct s_pipe
+{
+	int	next_fd[2];
+	int	prev_fd[2];
+}	t_pipe;
 
 # define NOT_QUOTED			0
 # define QUOTED				1
@@ -100,16 +106,29 @@ void	quote_skip(char *str, int *idx);
 int		row_cnt(char **str);
 
 /* execute */
-void	execute(t_list *list, char **envp);
+void	execute(t_list *list, char **envp, int flg);
+
+/* excute parent */
+void	one_process(t_list *list, char **envp);
 
 /* excute error */
 int		syntax_error(t_list *list);
 int		redirection_error(t_list *list);
 int		command_error(char *token, char **envp);
 
-/* excute args utils */
+/* excute utils args */
 void	args_next(t_list **list);
 void	args_free(char ***args);
-char	**args_make(t_list **list);
+char	**args_make(t_list *list);
+
+/* excute utils builtin */
+int		builtin(char **args, char **envp);
+int		is_it_builtin(char *command);
+
+/* excute utils simple_command */
+void	simple_command(char **args, char **envp);
+
+/* excute child */
+void	multi_process(t_list *list, t_pipe *pipe, char **envp);
 
 #endif

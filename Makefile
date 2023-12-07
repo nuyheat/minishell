@@ -27,10 +27,17 @@ SRCS		= minishell.c \
 				parse/translate/ft_expansion_token_split.c \
 				parse/translate/ft_expansion_dollar_convert.c \
 				parse/translate/ft_expansion_token_merge.c \
-				execute/execute.c execute/args_utils.c \
+				execute/execute.c \
+				execute/execute_utils/args_utils.c \
+				execute/execute_utils/builtin_utils.c \
+				execute/execute_utils/ft_simple_command.c \
 				execute/parent/ft_command_error.c \
 				execute/parent/ft_redirection_error.c \
 				execute/parent/ft_syntax_error.c \
+				execute/parent/ft_one_process.c \
+				execute/child/ft_multi_process.c \
+
+
 
 SRCS_BONUS	= minishell_bonus.c	\
 

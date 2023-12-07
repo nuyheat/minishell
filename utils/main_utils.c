@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:25:40 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/06 20:18:35 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/07 13:13:33 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,27 @@ char	*my_strjoin(char **s1, char *s2)
 	return (NULL);
 }
 
+int	line_check(char *line)
+{
+	int	len;
+
+	len = ft_strlen(line);
+	if (len == 1 && line[0] == '|')
+		return (END);
+	else if (line[len - 1] == '|')
+	{
+		len -= 2;
+		while (len >= 0 && line[len] == ' ')
+			len--;
+		if (len == -1)
+			return (END);
+		else if (line[len] == '|' || line[len] == '<' || line[len] == '>')
+			return (END);
+		return (NEXT);
+	}
+	return (END);
+}
+
 char	*line_creat(void)
 {
 	char	*line;
@@ -56,7 +77,7 @@ char	*line_creat(void)
 		return (line);
 	while (1)
 	{
-		if (line[ft_strlen(line) - 1] != '|')
+		if (line_check(line))
 			break ;
 		tmp = readline("> ");
 		if (tmp == NULL)

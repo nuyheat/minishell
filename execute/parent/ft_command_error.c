@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:44 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/06 20:14:37 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:09:52 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	is_it_directory(char *command)
 {
 	char	*current_path;
+
 	if (chdir(command) == 0)
 	{
 		printf("minishell: %s: is a directory\n", command);
@@ -50,21 +51,9 @@ char	*get_filename(char *command)
 	filename = malloc(sizeof(char) * (ft_strlen(command) - command_len + 1));
 	if (!filename)
 		return (NULL);
-	ft_strlcpy(filename, command + command_len + 1, ft_strlen(command) - command_len);
+	ft_strlcpy(filename, command + command_len + 1, \
+				ft_strlen(command) - command_len);
 	return (filename);
-}
-
-int	is_it_builtin(char *command)
-{
-	if ((ft_strncmp(command, "echo", 3) == 0)
-		|| (ft_strncmp(command, "cd", 5) == 0)
-		|| (ft_strncmp(command, "pwd", 4) == 0)
-		|| (ft_strncmp(command, "export", 7) == 0)
-		|| (ft_strncmp(command, "unset", 6) == 0)
-		|| (ft_strncmp(command, "env", 4) == 0)
-		|| (ft_strncmp(command, "exit", 5) == 0))
-		return (END);
-	return (NEXT);
 }
 
 int	is_it_external(char *filename, char **envp)
@@ -73,12 +62,13 @@ int	is_it_external(char *filename, char **envp)
 	int		table_idx;
 	char	*path;
 	char	**path_table;
+	char	current_path[BUFSIZ];
 
 	found = 0;
 	table_idx = 0;
 	path = ft_getenv("PATH", envp);
 	path_table = ft_split(path, ':');
-	path = getcwd(NULL, 0);
+	path = getcwd(current_path, BUFSIZ);
 	while (path_table[table_idx] != NULL)
 	{
 		chdir(path_table[table_idx]);
@@ -86,15 +76,14 @@ int	is_it_external(char *filename, char **envp)
 			found = 1;
 		table_idx++;
 	}
-	free(path);
 	my_free2(path_table);
 	chdir(path);
-	return (NEXT);
+	return (found);
 }
 
 int	command_error(char *token, char **envp)
 {
-	char	*current_path;
+	char	current_path[BUFSIZ];
 	char	*path;
 	char	*filename;
 
@@ -104,7 +93,7 @@ int	command_error(char *token, char **envp)
 		return (ERROR);
 	path = get_path(token);
 	filename = get_filename(token);
-	current_path = getcwd(NULL, 0);
+	getcwd(current_path, BUFSIZ);
 	if (chdir(path) == 0)
 	{
 		if (access(filename, X_OK) == -1)

@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:15:40 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/06 20:03:32 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:06:10 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,21 @@ void	put_char(t_list *list, char ***args, int end)
 	(*args)[args_idx] = NULL;
 }
 
-char	**args_make(t_list **list)
+char	**args_make(t_list *list)
 {
 	t_list	*list_head;
 	char	**args;
 	int		args_idx;
 
 	args_idx = 0;
-	list_head = *list;
-	while (*list != NULL && (*list)->info.flgs != F_PIPE)
+	list_head = list;
+	while (list != NULL && list->info.flgs != F_PIPE)
 	{
-		*list = (*list)->next;
+		list = list->next;
 		args_idx++;
 	}
-	if (*list != NULL)
-		*list = (*list)->next;
+	if (list != NULL)
+		list = list->next;
 	if (args_idx == 0)
 		return (NULL);
 	args = malloc(sizeof(char *) * (args_idx + 1));
@@ -68,6 +68,7 @@ void	args_free(char ***args)
 	while ((*args)[idx] != NULL)
 		free((*args)[idx++]);
 	free(*args);
+	*args = NULL;
 }
 
 void	args_next(t_list **list)

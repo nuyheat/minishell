@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 13:02:15 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/06 20:15:40 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/07 13:13:36 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 int	syntax_error_pipe(t_list *list, int redirection)
 {
-	if (list->info.flgs == F_PIPE && (list->next->info.flgs & redirection) || \
-		(list->info.flgs & redirection) && list->next->info.flgs == F_PIPE)
-		return (END);
+	if (list->info.flgs == F_PIPE)
+	{
+		if (list->next == NULL || (list->next->info.flgs & redirection))
+			return (END);
+	}
 	while (list->next != NULL)
 	{
 		if (list->info.flgs == F_PIPE && list->next->info.flgs == F_PIPE)
@@ -26,8 +28,6 @@ int	syntax_error_pipe(t_list *list, int redirection)
 			return (END);
 		list = list->next;
 	}
-	if (list->info.flgs == F_PIPE)
-		return (END);
 	return (NEXT);
 }
 
@@ -39,7 +39,7 @@ int	syntax_error_redirection(t_list *list, int redirection)
 			(list->next->info.flgs & redirection))
 		{
 			printf("minishell: syntax error near unexpected token");
-			printf("`%s'\n", list->next->info.token);
+			printf(" `%s'\n", list->next->info.token);
 			return (END);
 		}
 		list = list->next;
