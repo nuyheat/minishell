@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:19:47 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/08 17:37:49 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/08 18:27:42 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@ void	child_process(t_list *list, t_pipe *pipes, char **envp)
 	}
 }
 
-void	parent_process(t_list *list, t_pipe *pipe, char **envp)
+void	parent_process(t_list *list, t_pipe *pipes, char **envp)
 {
 	char	**args;
 
-	redirection_handling(list, pipe);
+	redirection_handling(list, pipes);
 	args = args_make(list);
 	builtin(args, envp);
 	args_free(&args);
-	if (dup2(pipe->std_fds[0], STDIN_FILENO) == -1 \
-		|| dup2(pipe->std_fds[1], STDOUT_FILENO) == -1)
+	if (dup2(pipes->std_fds[0], STDIN_FILENO) == -1 \
+		|| dup2(pipes->std_fds[1], STDOUT_FILENO) == -1)
 		error_end("dup2 failed");
 }
 

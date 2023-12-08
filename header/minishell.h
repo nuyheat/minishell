@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/08 17:35:57 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/08 18:02:54 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int		is_it_builtin(char *command);
 
 /* excute utils redirection */
 void	token_change(t_list *list);
-void	redirection_handling(t_list *list, t_pipe *pipe);
+void	redirection_handling(t_list *list, t_pipe *pipes);
 
 /* excute child */
 void	simple_command(char **args, char **envp);
