@@ -1,41 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_one_process.c                                   :+:      :+:    :+:   */
+/*   child_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/07 14:51:15 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/07 15:33:02 by taehkim2         ###   ########.fr       */
+/*   Created: 2023/12/08 17:31:26 by taehkim2          #+#    #+#             */
+/*   Updated: 2023/12/08 17:34:45 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	one_process(t_list *list, char **envp)
+int	is_it_last_order(t_list *list)
 {
-	int		pid;
-	char	**args;
-	char	*command;
-
-	if (is_it_builtin(list->info.token))
+	while (list != NULL)
 	{
-		// redirection handling
-		args = args_make(list);
-		builtin(args, envp);
-		args_free(&args);
-		return ;
+		if (list->info.flgs & F_PIPE)
+			return (0);
+		list = list->next;
 	}
-	pid = fork();
-	if (pid == -1)
-		return ;
-	else if (pid == 0)
-	{
-		// redirection handling
-		args = args_make(list);
-		simple_command(args, envp);
-		args_free(&args);
-		exit(0);
-	}
-	waitpid(pid, NULL, 0);
+	return (1);
 }

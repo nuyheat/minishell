@@ -30,12 +30,15 @@ SRCS		= minishell.c \
 				execute/execute.c \
 				execute/execute_utils/args_utils.c \
 				execute/execute_utils/builtin_utils.c \
-				execute/execute_utils/ft_simple_command.c \
+				execute/execute_utils/ft_redirection_handling.c \
+				execute/execute_utils/redirection_utils.c \
 				execute/parent/ft_command_error.c \
 				execute/parent/ft_redirection_error.c \
 				execute/parent/ft_syntax_error.c \
-				execute/parent/ft_one_process.c \
-				execute/child/ft_multi_process.c \
+				execute/parent/parent_utils.c \
+				execute/child/ft_child.c \
+				execute/child/ft_simple_command.c \
+				execute/child/child_utils.c \
 
 
 

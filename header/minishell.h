@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/07 15:09:20 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/08 17:35:57 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
+# include <fcntl.h>
 
 # include "../libft/libft.h"
 # include "../builtins/builtins.h"
@@ -37,6 +38,8 @@ typedef struct s_pipe
 {
 	int	next_fd[2];
 	int	prev_fd[2];
+	int	here_doc[2];
+	int	std_fds[2];
 }	t_pipe;
 
 # define NOT_QUOTED			0
@@ -64,6 +67,7 @@ void	copy_envp(char **envp);
 void	error_end(char *str);
 void	my_free(char *str);
 void	my_free2(char **strs);
+char	*my_strjoin(char **s1, char *s2);
 
 /* list utils */
 void	list_node_add(t_list **list);
@@ -96,11 +100,12 @@ int		have_quoted(char *buf);
 int		operator_check(char prev_char);
 
 /* parse translate */
+char	*trans_param_expansion(char *now_token, char **envp);
 char	*expansion_token_merge(char **split_token);
 void	expansion_dollar_convert(char ***split_token, char **envp);
 char	**expansion_token_split(char *token);
 char	**splited_token_init(char *token);
-char	*trans_param_expansion(char *now_token, char **envp);
+
 void	trans_quoted_remove(char **token);
 void	quote_skip(char *str, int *idx);
 int		row_cnt(char **str);
@@ -109,12 +114,13 @@ int		row_cnt(char **str);
 void	execute(t_list *list, char **envp, int flg);
 
 /* excute parent */
-void	one_process(t_list *list, char **envp);
-
-/* excute error */
+/* error */
 int		syntax_error(t_list *list);
 int		redirection_error(t_list *list);
 int		command_error(char *token, char **envp);
+/* utils */
+char	*command_find(t_list *list);
+void	pipe_setting_for_parent(t_pipe *pipes);
 
 /* excute utils args */
 void	args_next(t_list **list);
@@ -125,10 +131,14 @@ char	**args_make(t_list *list);
 int		builtin(char **args, char **envp);
 int		is_it_builtin(char *command);
 
-/* excute utils simple_command */
-void	simple_command(char **args, char **envp);
+/* excute utils redirection */
+void	token_change(t_list *list);
+void	redirection_handling(t_list *list, t_pipe *pipe);
 
 /* excute child */
-void	multi_process(t_list *list, t_pipe *pipe, char **envp);
+void	simple_command(char **args, char **envp);
+int		child(t_list *list, t_pipe *pipes, char **envp);
+/* utils */
+int		is_it_last_order(t_list *list);
 
 #endif

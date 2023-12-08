@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 20:53:12 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/06 17:29:35 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/08 10:29:11 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ t_list	*list_delete(t_list **list, t_list **trash)
 		ptr = ptr->next;
 		(*trash)->next = NULL;
 		list_free(trash);
+		*list = ptr;
 		return (ptr);
 	}
 	while (ptr->next != (*trash))

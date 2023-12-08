@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:10:27 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/07 15:10:38 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/07 18:41:01 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,24 @@ char	*ft_getenv(char *name, char **envp)
 		// free(value); 이거 왜 free하면 에러나는지 모르겠음
 	}
 	return (result);
+}
+
+char	*my_strjoin(char **s1, char *s2)
+{
+	void	*ptr;
+	size_t	s1_len;
+	size_t	s2_len;
+
+	s1_len = ft_strlen(*s1);
+	s2_len = ft_strlen(s2);
+	ptr = malloc((s1_len + s2_len + 1) * sizeof(char));
+	if (ptr)
+	{
+		ft_bzero(ptr, (s1_len + s2_len + 1) * sizeof(char));
+		ft_memmove(ptr, *s1, s1_len);
+		ft_memmove(ptr + s1_len, s2, s2_len + 1);
+		free(*s1);
+		return (ptr);
+	}
+	return (NULL);
 }

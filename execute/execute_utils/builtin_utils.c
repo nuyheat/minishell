@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:55:16 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/07 15:09:05 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/08 17:34:58 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	is_it_builtin(char *command)
 {
+	if (command == NULL)
+		return (NEXT);
 	if (ft_strncmp(command, "echo", 5) == 0 || \
 		ft_strncmp(command, "cd", 3) == 0 || \
 		ft_strncmp(command, "pwd", 4) == 0 || \
