@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/08 18:02:54 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/08 19:42:45 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ typedef struct s_pipe
 {
 	int	next_fd[2];
 	int	prev_fd[2];
+	int redir_less_occured;
+	int redir_heredoc_occured;
+	int	redir_grate_occured;
 	int	here_doc[2];
 	int	std_fds[2];
 }	t_pipe;

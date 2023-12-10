@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:44 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/08 17:53:30 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/10 18:46:25 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	command_error(char *token, char **envp)
 	char	*path;
 	char	*filename;
 
-	if (is_it_builtin(token) || is_it_external(token, envp))
+	if (token == NULL || is_it_builtin(token) || is_it_external(token, envp))
 		return (NEXT);
 	if (is_it_directory(token))
 		return (ERROR);

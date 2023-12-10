@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:15:40 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/08 17:36:04 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/10 13:46:53 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ char	**args_make(t_list *list)
 			args_idx++;
 		list = list->next;
 	}
-	if (list != NULL)
-		list = list->next;
 	if (args_idx == 0)
 		return (NULL);
 	args = malloc(sizeof(char *) * (args_idx + 1));
@@ -69,6 +67,8 @@ void	args_free(char ***args)
 	int	idx;
 
 	idx = 0;
+	if ((*args) == NULL)
+		return ;
 	while ((*args)[idx] != NULL)
 		free((*args)[idx++]);
 	free(*args);
