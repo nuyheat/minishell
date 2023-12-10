@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redirection_handling.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:23:43 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/10 19:20:20 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/11 01:27:30 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,12 @@ void	case_less(t_list *list, t_pipe *pipes, char *file)
 	dup2(pipes->std_fds[0], STDIN_FILENO);
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		error_end("open failed");
-	if (dup2(fd, STDIN_FILENO) == -1)
+	{
+		write(2, "minishell: ", 11);
+		perror(file);
+		exit(1);
+	}
+	else if (dup2(fd, STDIN_FILENO) == -1)
 		error_end("dup2 failed");
 	close(fd);
 	token_change(list);
@@ -39,7 +43,8 @@ void	case_dless(t_list *list, t_pipe *pipes, char *eof)
 	{
 		line = readline("> ");
 		if (line == NULL)
-			error_end("readline failed");
+			exit(0);
+			// error_end("readline failed");
 		if (ft_strncmp(line, eof, ft_strlen(eof) + 1) == 0)
 		{
 			close(pipes->here_doc[1]);
@@ -64,8 +69,12 @@ void	case_grate(t_list *list, t_pipe *pipes, char *file)
 	dup2(pipes->std_fds[1], STDOUT_FILENO);
 	fd = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
-		error_end("open failed");
-	if (dup2(fd, STDOUT_FILENO) == -1)
+	{
+		write(2, "minishell: ", 11);
+		perror(file);
+		exit(1);
+	}
+	else if (dup2(fd, STDOUT_FILENO) == -1)
 		error_end("dup2 failed");
 	close(fd);
 	token_change(list);
@@ -76,11 +85,15 @@ void	case_dgrate(t_list *list, t_pipe *pipes, char *file)
 	int	fd;
 
 	pipes->redir_grate_occured = 1;
-	dup2(pipes->std_fds[0], STDOUT_FILENO);
+	dup2(pipes->std_fds[1], STDOUT_FILENO);
 	fd = open(file, O_RDWR | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
-		error_end("open failed");
-	if (dup2(fd, STDOUT_FILENO) == -1)
+	{
+		write(2, "minishell: ", 11);
+		perror(file);
+		exit(1);
+	}
+	else if (dup2(fd, STDOUT_FILENO) == -1)
 		error_end("dup2 failed");
 	close(fd);
 	token_change(list);

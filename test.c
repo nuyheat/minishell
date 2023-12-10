@@ -11,8 +11,8 @@ int main()
 	// pipe(fds);
 	int fd = open("tmp", O_CREAT | O_RDWR, 0644);
 	dup2(fd, STDOUT_FILENO);
-	char str[10];
-	read(0, str, 9);
-	// char *line = readline("> ");
+	// char str[10];
+	// read(0, str, 9);
+	char *line = readline("> ");
 	// write(fds[1], line, 10);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:24:56 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/01 20:21:19 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/11 01:31:01 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_setenv(const char *name, const char *value, char **envp)
 	change_here = findenv(name, &idx, envp);
 	if (change_here == NULL)
 	{
-		envp[idx] = malloc(name_len + 2 + value_len + 2);
+		envp[idx] = ft_calloc(name_len + 2 + value_len + 2, sizeof(char));
 		ft_memmove(envp[idx], name, name_len);
 	}
 	else
@@ -44,7 +44,7 @@ int	ft_putenv(const char *str, char **envp)
 	char	*change_here;
 	int		idx;
 
-	if (namelen(str, '=') == 0)
+	if (namelen(str, '=') == 0 || countchar(str, '=') > 1)
 		return (-1);
 	change_here = findenv(str, &idx, envp);
 	if ((change_here == NULL) && (ft_strchr(str, '=') == NULL))
@@ -71,8 +71,9 @@ void	export(char **argv, char **envp)
 		{
 			if (ft_putenv(argv[argv_idx], envp) == -1)
 			{
-				printf("minishell: export: `%s': ", argv[argv_idx]);
-				printf("not a valid identifier\n");
+				write(2, "minishell: export: `", 20);
+				write(2, argv[argv_idx], ft_strlen(argv[argv_idx]));
+				write(2, "': not a valid identifier\n", 26);
 			}
 			argv_idx++;
 		}

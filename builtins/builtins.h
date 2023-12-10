@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:17:36 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/03 14:45:07 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/10 22:57:51 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	env(char **argv, char **envp);
 void	my_exit(char **argv);
 // void	exit(char **argv);
 
+int		countchar(char *str, char find);
 int		namelen(const char *str, char find);
 int		ft_putenv(const char *str, char **envp);
 char	*findenv(const char *name, int *offset, char **envp);

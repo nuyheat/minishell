@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/08 19:42:45 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/11 01:21:05 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void	execute(t_list *list, char **envp, int flg);
 int		syntax_error(t_list *list);
 int		redirection_error(t_list *list);
 int		command_error(char *token, char **envp);
+char	*get_filename(char *command);
 /* utils */
 char	*command_find(t_list *list);
 void	pipe_setting_for_parent(t_pipe *pipes);

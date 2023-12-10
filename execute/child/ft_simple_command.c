@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_simple_command.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:52:44 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/10 19:33:05 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/11 01:06:19 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,12 @@ char	*get_external_path(char *command, char **envp)
 void	simple_command(char **args, char **envp)
 {
 	char	*command;
+	char	*filename;
 
-	command = get_external_path(args[0], envp);
+	if (ft_strchr(args[0], '/') != NULL)
+		filename = get_filename(args[0]);
+	else
+		filename = args[0];
+	command = get_external_path(filename, envp);
 	execve(command, args, envp);
 }

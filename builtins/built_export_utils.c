@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_export_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:50:45 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/30 18:55:26 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/10 22:56:08 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,24 @@ void	printexport(char **envp)
 		write(1, "\n", 1);
 		envp_ptr++;
 	}
+}
+
+int	countchar(char *str, char find)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	if (str == NULL)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == find)
+			count++;
+		i++;
+	}
+	return (count);
 }
 
 int	namelen(const char *str, char find)
