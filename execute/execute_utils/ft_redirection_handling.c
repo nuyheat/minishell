@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:23:43 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 17:49:14 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/11 19:13:34 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,20 +71,16 @@ void	case_dgrate(t_list *list, t_pipe *pipes, char *file)
 
 void	redirection_handling(t_list *list, t_pipe *pipes)
 {
-	t_list	*head;
-
-	head = list;
 	while (list != NULL && list->info.flgs != F_PIPE)
 	{
 		if (list->info.flgs == F_LESS)
 			case_less(list, pipes, list->next->info.token);
-		else if (head->info.flgs == F_DLESS)
-			case_dless(head, pipes);
+		else if (list->info.flgs == F_DLESS)
+			case_dless(list, pipes);
 		else if (list->info.flgs == F_GRATE)
 			case_grate(list, pipes, list->next->info.token);
 		else if (list->info.flgs == F_DGRATE)
 			case_dgrate(list, pipes, list->next->info.token);
 		list = list->next;
 	}
-	heredoc_close(pipes);
 }
