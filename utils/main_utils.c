@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:25:40 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 01:27:23 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/11 12:24:51 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ char	*line_creat(void)
 
 	line = readline("minishell$ ");
 	if (line == NULL)
-		exit(0);
-		// error_end("readline failed");
+		error_end("readline failed");
 	if (line[0] == '\0')
 		return (line);
 	while (1)
@@ -62,8 +61,7 @@ char	*line_creat(void)
 			break ;
 		tmp = readline("> ");
 		if (tmp == NULL)
-			exit(0);
-			// error_end("readline failed");
+			error_end("readline failed");
 		line = my_strjoin(&line, tmp);
 		if (line == NULL)
 			error_end("malloc failed");

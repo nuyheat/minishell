@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redirection_handling.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:23:43 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 12:15:53 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/11 12:25:20 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	case_dless(t_list *list, t_pipe *pipes, char *eof)
 	{
 		line = readline("> ");
 		if (line == NULL)
-			exit(1);
+			error_end("readline failed");
 		if (ft_strncmp(line, eof, ft_strlen(eof) + 1) == 0)
 		{
 			close(pipes->here_doc[1]);
