@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   all_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:10:27 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/07 18:41:01 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/11 12:22:33 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	my_free2(char **strs)
 
 void	error_end(char *str)
 {
-	printf("Error: %s\n", str);
+	write(2, "Error: ", 7);
+	write(2, str, ft_strlen(str));
 	exit(1);
 }
 
