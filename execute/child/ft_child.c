@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:54:15 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 12:08:47 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/11 17:33:40 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	mid_child(t_pipe *pipes)
 {
 	// prev 읽기
 	close(pipes->prev_fd[1]);
-	if (!pipes->redir_less_occured)
+	if (!pipes->redir_less_occured && !pipes->redir_heredoc_occured)
 		dup2(pipes->prev_fd[0], STDIN_FILENO);
 	close(pipes->prev_fd[0]);
 	// next에 쓰기
@@ -41,7 +41,7 @@ void	last_child(t_pipe *pipes)
 	if (pipes->prev_fd[0] != -1 && pipes->prev_fd[1] != -1)
 	{
 		close(pipes->prev_fd[1]);
-		if (!pipes->redir_less_occured)
+		if (!pipes->redir_less_occured && !pipes->redir_heredoc_occured)
 			dup2(pipes->prev_fd[0], STDIN_FILENO);
 		close(pipes->prev_fd[0]);
 	}

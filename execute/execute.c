@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:19:47 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 12:15:59 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/11 17:41:02 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	execute(t_list *list, char **envp, int flg)
 	pipes.prev_fd[1] = -1;
 	if (syntax_error(list) == ERROR)
 		return ;
+	heredoc_make(list, &pipes);
 	while (list != NULL)
 	{
 		command = command_find(list);
@@ -64,6 +65,8 @@ void	execute(t_list *list, char **envp, int flg)
 			else
 				child_process(list, &pipes, envp);
 		}
+		pipes.heredoc_cnt++;
 		args_next(&list);
 	}
+	heredoc_close(&pipes);
 }

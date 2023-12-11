@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_export_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:50:45 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/10 22:56:08 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/11 12:17:51 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	printexport(char **envp)
 	}
 }
 
-int	countchar(char *str, char find)
+int	countchar(const char *str, char find)
 {
 	int	i;
 	int	count;

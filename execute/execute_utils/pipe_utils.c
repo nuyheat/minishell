@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 20:08:50 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 12:15:55 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/11 13:01:53 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,5 @@ void	pipe_init(t_pipe *pipes)
 		error_end("dup failed");
 	pipes->redir_less_occured = 0;
 	pipes->redir_grate_occured = 0;
-	pipes->here_doc[0] = -1;
-	pipes->here_doc[1] = -1;
+	pipes->redir_heredoc_occured = 0;
 }

@@ -33,6 +33,7 @@ SRCS		= minishell.c \
 				execute/execute_utils/ft_redirection_handling.c \
 				execute/execute_utils/redirection_utils.c \
 				execute/execute_utils/pipe_utils.c \
+				execute/execute_utils/here_doc_utils.c \
 				execute/parent/ft_command_error.c \
 				execute/parent/ft_redirection_error.c \
 				execute/parent/ft_syntax_error.c \

@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 11:38:34 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/11 17:34:45 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ typedef struct s_pipe
 	int redir_less_occured;
 	int redir_heredoc_occured;
 	int	redir_grate_occured;
-	int	here_doc[2];
+	int	(*heredoc)[2];
+	int	heredoc_fl_cnt;
+	int	heredoc_cnt;
 	int	std_fds[2];
 }	t_pipe;
 
@@ -141,6 +143,10 @@ void	redirection_handling(t_list *list, t_pipe *pipes);
 
 /* excute utils pipe */
 void	pipe_init(t_pipe *pipes);
+
+/* excute utils heredoc */
+void	heredoc_make(t_list *list, t_pipe *pipes);
+void	heredoc_close(t_pipe *pipes);
 
 /* excute child */
 void	simple_command(char **args, char **envp);

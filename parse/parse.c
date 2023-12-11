@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:24:31 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/06 20:08:46 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/11 14:57:56 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	parse_tokenize(t_list **list, char *line)
 		token_add(list, line, F_STRING);
 		return ;
 	}
-	buf = ft_calloc(ft_strlen(line) + 1, sizeof(char));
+	buf = (char *)ft_calloc(ft_strlen(line) + 1, sizeof(char));
+	int	i = ft_strlen(line);
 	if (buf == NULL)
 		error_end("calloc failed");
 	while (line[idx] != '\0')

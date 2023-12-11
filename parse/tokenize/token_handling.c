@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 19:25:04 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/11/30 13:42:24 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/11 13:34:42 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	token_rules(t_list **list, char **buf, char *line, char now_idx)
 		token_delimited(list, buf);
 		return (END);
 	}
+	int i = ft_strlen(*buf);
 	(*buf)[ft_strlen(*buf)] = line[now_idx];
 	return (NEXT);
 }
