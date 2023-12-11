@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 01:21:05 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/11 11:38:34 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,9 @@ int		is_it_builtin(char *command);
 /* excute utils redirection */
 void	token_change(t_list *list);
 void	redirection_handling(t_list *list, t_pipe *pipes);
+
+/* excute utils pipe */
+void	pipe_init(t_pipe *pipes);
 
 /* excute child */
 void	simple_command(char **args, char **envp);

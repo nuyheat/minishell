@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:19:47 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/10 19:26:05 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/11 12:15:59 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	child_process(t_list *list, t_pipe *pipes, char **envp)
 	else if (pid > 0)
 	{
 		pipe_setting_for_parent(pipes);
-		waitpid(pid, &status, 0);
+		if (is_it_last_order(list))
+			waitpid(pid, &status, 0);
 	}
 }
 
@@ -34,10 +35,7 @@ void	parent_process(t_list *list, t_pipe *pipes, char **envp)
 {
 	char	**args;
 
-	pipes->std_fds[0] = dup(STDIN_FILENO);
-	pipes->std_fds[1] = dup(STDOUT_FILENO);
-	if (pipes->std_fds[0] == -1 || pipes->std_fds[1] == -1)
-		error_end("dup failed");
+	pipe_init(pipes);
 	redirection_handling(list, pipes);
 	args = args_make(list);
 	builtin(args, envp);
@@ -59,8 +57,7 @@ void	execute(t_list *list, char **envp, int flg)
 	while (list != NULL)
 	{
 		command = command_find(list);
-		if (redirection_error(list) != ERROR && \
-			command_error(command, envp) != ERROR)
+		if (redirection_error(list) != ERROR)
 		{
 			if (flg != F_PIPE && is_it_builtin(command))
 				parent_process(list, &pipes, envp);

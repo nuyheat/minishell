@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:54:15 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/10 19:38:18 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/11 12:08:47 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	mid_child(t_pipe *pipes)
 {
 	// prev 읽기
 	close(pipes->prev_fd[1]);
-	if (!pipes->redir_less_occured && !pipes->redir_heredoc_occured)
+	if (!pipes->redir_less_occured)
 		dup2(pipes->prev_fd[0], STDIN_FILENO);
 	close(pipes->prev_fd[0]);
 	// next에 쓰기
@@ -41,7 +41,7 @@ void	last_child(t_pipe *pipes)
 	if (pipes->prev_fd[0] != -1 && pipes->prev_fd[1] != -1)
 	{
 		close(pipes->prev_fd[1]);
-		if (!pipes->redir_less_occured && !pipes->redir_heredoc_occured)
+		if (!pipes->redir_less_occured)
 			dup2(pipes->prev_fd[0], STDIN_FILENO);
 		close(pipes->prev_fd[0]);
 	}
@@ -64,16 +64,14 @@ int	child(t_list *list, t_pipe *pipes, char **envp)
 	char	**args;
 	int		last_flag;
 
-	pipes->std_fds[0] = dup(STDIN_FILENO);
-	pipes->std_fds[1] = dup(STDOUT_FILENO);
-	if (pipes->std_fds[0] == -1 || pipes->std_fds[1] == -1)
-		error_end("dup failed");
+	pipe_init(pipes);
 	last_flag = is_it_last_order(list);
 	redirection_handling(list, pipes);
 	pipe_setting_for_child(pipes, last_flag);
 	args = args_make(list);
-	if (args != NULL && builtin(args, envp) == 0)
-		simple_command(args, envp);
+	if (args != NULL && command_error(args[0], envp) != ERROR)
+		if (builtin(args, envp) == 0)
+			simple_command(args, envp);
 	args_free(&args);
 	exit(0);
 }

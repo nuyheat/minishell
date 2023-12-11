@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirection_utils.c                                :+:      :+:    :+:   */
+/*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/08 16:24:47 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 12:15:57 by taehkim2         ###   ########.fr       */
+/*   Created: 2023/12/10 20:08:50 by taehkim2          #+#    #+#             */
+/*   Updated: 2023/12/11 12:15:55 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	token_change(t_list *list)
+void	pipe_init(t_pipe *pipes)
 {
-	free(list->info.token);
-	free(list->next->info.token);
-	list->info.token = NULL;
-	list->info.flgs = F_STRING;
-	list->next->info.token = NULL;
-	list->next->info.flgs = F_STRING;
+	pipes->std_fds[0] = dup(STDIN_FILENO);
+	pipes->std_fds[1] = dup(STDOUT_FILENO);
+	if (pipes->std_fds[0] == -1 || pipes->std_fds[1] == -1)
+		error_end("dup failed");
+	pipes->redir_less_occured = 0;
+	pipes->redir_grate_occured = 0;
+	pipes->here_doc[0] = -1;
+	pipes->here_doc[1] = -1;
 }
