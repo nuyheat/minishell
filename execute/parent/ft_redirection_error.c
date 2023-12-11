@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redirection_error.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 13:01:07 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 01:35:44 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/11 12:07:32 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	redirection_error_grate(char *token)
 {
-	if (access(token, W_OK) == 1)
+	if (access(token, F_OK) == 0 && \
+		access(token, W_OK) == -1)
 	{
 		write(2, "minishell: ", 11);
 		perror(token);
@@ -25,13 +26,13 @@ int	redirection_error_grate(char *token)
 
 int	redirection_error_less(char *token)
 {
-	if (access(token, F_OK) == 1)
+	if (access(token, F_OK) == -1)
 	{
 		write(2, "minishell: ", 11);
 		perror(token);
 		return (END);
 	}
-	else if (access(token, R_OK) == 1)
+	else if (access(token, R_OK) == -1)
 	{
 		write(2, "minishell: ", 11);
 		perror(token);
