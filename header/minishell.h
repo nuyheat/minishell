@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 17:34:45 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/11 17:53:56 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,15 @@ void	execute(t_list *list, char **envp, int flg);
 int		syntax_error(t_list *list);
 int		redirection_error(t_list *list);
 int		command_error(char *token, char **envp);
-char	*get_filename(char *command);
 /* utils */
 char	*command_find(t_list *list);
 void	pipe_setting_for_parent(t_pipe *pipes);
+
+/* excute child */
+void	simple_command(char **args, char **envp);
+int		child(t_list *list, t_pipe *pipes, char **envp);
+/* utils */
+int		is_it_last_order(t_list *list);
 
 /* excute utils args */
 void	args_next(t_list **list);
@@ -148,10 +153,9 @@ void	pipe_init(t_pipe *pipes);
 void	heredoc_make(t_list *list, t_pipe *pipes);
 void	heredoc_close(t_pipe *pipes);
 
-/* excute child */
-void	simple_command(char **args, char **envp);
-int		child(t_list *list, t_pipe *pipes, char **envp);
-/* utils */
-int		is_it_last_order(t_list *list);
+/* excute utils path */
+char	*get_path(char *command);
+char	*get_filename(char *command);
+
 
 #endif

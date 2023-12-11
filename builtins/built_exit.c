@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:24:56 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/11 12:15:33 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/11 16:03:32 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,50 +40,50 @@ int	ft_atol(const char *str)
 	return (result * flag);
 }
 
-void	check_exit_num(char *num)
+int	check_exit_num(char *num)
 {
-	if (ft_strncmp(num, "9223372036854775808", 20) >= 0
-		|| ft_strncmp(num, "-9223372036854775810", 21) <= 0)
+	int		idx;
+
+	if (ft_strncmp(num, "9223372036854775808", 20) == 0
+		|| ft_strncmp(num, "-9223372036854775810", 21) == 0)
 	{
 		write(2, "minishell: exit: ", 17);
 		write(2, num, ft_strlen(num));
 		write(2, ": numeric argument required\n", 28);
-		exit(-1);
+		return (-1);
 	}
+	idx = 0;
 	if (num[0] == '-')
-		num++;
-	while (*num)
+		idx++;
+	while (num[idx])
 	{
-		if (ft_isdigit(*num) == 0)
+		if (ft_isdigit(num[idx]) == 0)
 		{
 			write(2, "minishell: exit: ", 17);
 			write(2, num, ft_strlen(num));
 			write(2, ": numeric argument required\n", 28);
-			exit(-1);
+			return (-1);
 		}
-		num++;
+		idx++;
 	}
-	printf("exit\n");
-	exit(ft_atol(num));
+	return (ft_atol(num));
 }
 
 void	my_exit(char **argv)
 {
 	int		argv_idx;
+	int		exit_num;
 
 	argv_idx = 2;
+	exit_num = 0;
+	printf("exit\n");
 	if (argv[1] == NULL)
-	{
-		printf("exit\n");
-		exit(0);
-	}
+		exit(exit_num); // 이거 이전 $? 리턴값으로 exit_num을 넘겨줘야함
 	else if (argv[2] == NULL)
 	{
-		check_exit_num(argv[1]);
+		exit_num = check_exit_num(argv[1]);
+		exit(exit_num);
 	}
 	else
-	{
 		write(2, "minishell: exit: too many arguments\n", 36);
-		exit(1);
-	}
 }
