@@ -6,7 +6,7 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:50:45 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 12:03:07 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/11 16:46:30 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,30 +79,20 @@ int	comparename(const char *have_to_find, const char *now_im_at)
 	return (0);
 }
 
-//envp 배열을 순회하면서 입력된 환경 변수 이름(name)과 일치하는 환경 변수를 찾습니다.
-//이름이 발견되면 해당 환경 변수의 값의 시작 지점을 반환하고,
-//offset에는 찾은 환경 변수의 배열 인덱스가 설정됩니다. 만약 일치하는 환경 변수가 없으면 NULL을 반환합니다.
-// https://opensource.apple.com/source/Libc/Libc-583/stdlib/getenv-fbsd.c
-char	*findenv(const char *name, int *offset, char **envp)
+int	name_ok(const char *str)
 {
-	int			i;
-	const char	**envp_ptr;
+	int	name_len;
+	int	str_idx;
 
-	if (name == NULL || envp == NULL)
-		return (NULL);
-	envp_ptr = (const char **)envp;
-	i = 0;
-	while (*envp_ptr != NULL)
+	name_len = namelen(str, '=');
+	if (name_len == 0 || countchar(str, '=') > 1)
+		return (0);
+	str_idx = 0;
+	while (str_idx < name_len)
 	{
-		if (comparename(name, *envp_ptr) > 0)
-		{
-			*offset = i;
-			return ((char *)(*envp_ptr + namelen(name, '=')));
-		}
-		envp_ptr++;
-		i++;
+		if (str[str_idx] == '/' || str[str_idx] == '.' || str[str_idx] == ' ')
+			return (0);
+		str_idx++;
 	}
-	*offset = i;
-	envp[i + 1] = NULL;
-	return (NULL);
+	return (1);
 }

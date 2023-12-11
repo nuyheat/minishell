@@ -3,14 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   built_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:24:56 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/11 01:31:01 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/11 16:44:40 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+char	*findenv(const char *name, int *offset, char **envp)
+{
+	int			i;
+	const char	**envp_ptr;
+
+	if (name == NULL || envp == NULL)
+		return (NULL);
+	envp_ptr = (const char **)envp;
+	i = 0;
+	while (*envp_ptr != NULL)
+	{
+		if (comparename(name, *envp_ptr) > 0)
+		{
+			*offset = i;
+			return ((char *)(*envp_ptr + namelen(name, '=')));
+		}
+		envp_ptr++;
+		i++;
+	}
+	*offset = i;
+	envp[i + 1] = NULL;
+	return (NULL);
+}
 
 int	ft_setenv(const char *name, const char *value, char **envp)
 {
@@ -44,7 +68,7 @@ int	ft_putenv(const char *str, char **envp)
 	char	*change_here;
 	int		idx;
 
-	if (namelen(str, '=') == 0 || countchar(str, '=') > 1)
+	if (!name_ok(str))
 		return (-1);
 	change_here = findenv(str, &idx, envp);
 	if ((change_here == NULL) && (ft_strchr(str, '=') == NULL))
