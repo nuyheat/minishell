@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 18:50:37 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/06 20:09:25 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/11 18:50:10 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,11 @@ void	expansion_dollar_convert(char ***splited_token, char **envp)
 		{
 			if ((*splited_token)[idx][1] == '\0')
 			{
-				if ((*splited_token)[idx + 1] != NULL)
+				if ((*splited_token)[idx + 1] != NULL && \
+					(*splited_token)[idx + 1][0] != '/')
 					(*splited_token)[idx][0] = '\0';
 			}
-			else
+			else if ((*splited_token)[idx][1] != '.')
 				dollar_convert(&(*splited_token)[idx], envp);
 		}
 		idx++;

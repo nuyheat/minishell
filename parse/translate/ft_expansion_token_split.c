@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 18:39:36 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 17:39:12 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/11 18:41:49 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	not_dequoted_handling(char *token, char ***result, int *idx)
 	while (token[*idx] != '\0')
 	{
 		start = *idx;
-		if (token[*idx] == '$')
+		if (token[*idx] == '$' || token[*idx] == '/')
 			(*idx)++;
 		while (token[*idx] != '$' && token[*idx] != '\0')
 		{
@@ -59,7 +59,7 @@ void	not_dequoted_handling(char *token, char ***result, int *idx)
 				break ;
 			else if (is_quoted(token, *idx, '\''))
 				quote_skip(token, idx);
-			if (is_quoted(token, *idx, '\"'))
+			if (is_quoted(token, *idx, '\"') || token[*idx] == '/')
 				break ;
 			(*idx)++;
 		}
@@ -80,14 +80,14 @@ void	dequoted_handling(char *token, char ***result, int *idx)
 	while (token[*idx] != '\"')
 	{
 		start = *idx;
-		while (find(token[*idx], "$\""))
+		while (find(token[*idx], "$\"/"))
 			(*idx)++;
 		token_split(token, result, start, *idx);
 		if (token[*idx] == '\"')
 			break ;
 		start = *idx;
 		(*idx)++;
-		while (find(token[*idx], "$\" "))
+		while (find(token[*idx], "$\"/ "))
 			(*idx)++;
 		if ((*idx) - start == 1 && token[start] == token[*idx])
 			(*idx)++;
