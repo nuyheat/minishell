@@ -3,57 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_command_error.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:44 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/10 18:46:25 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/11 15:48:32 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/minishell.h"
+#include "minishell.h"
 
 int	is_it_directory(char *command)
 {
 	char	*current_path;
 
-	if (chdir(command) == 0)
+	if (chdir(command) != -1)
 	{
-		printf("minishell: %s: is a directory\n", command);
+		write(2, "minishell: ", 11);
+		write(2, command, ft_strlen(command));
+		write(2, ": is a directory\n", 17);
 		return (END);
 	}
 	chdir(current_path);
 	return (NEXT);
-}
-
-char	*get_path(char *command)
-{
-	int		command_len;
-	char	*path;
-
-	command_len = ft_strlen(command);
-	while (command_len > 0 && command[command_len] != '/')
-		command_len--;
-	path = malloc(sizeof(char) * (command_len + 1));
-	if (!path)
-		return (NULL);
-	ft_strlcpy(path, command, command_len + 1);
-	return (path);
-}
-
-char	*get_filename(char *command)
-{
-	int		command_len;
-	char	*filename;
-
-	command_len = ft_strlen(command);
-	while (command_len > 0 && command[command_len] != '/')
-		command_len--;
-	filename = malloc(sizeof(char) * (ft_strlen(command) - command_len + 1));
-	if (!filename)
-		return (NULL);
-	ft_strlcpy(filename, command + command_len + 1, \
-				ft_strlen(command) - command_len);
-	return (filename);
 }
 
 int	is_it_external(char *filename, char **envp)
@@ -63,8 +34,8 @@ int	is_it_external(char *filename, char **envp)
 	char	*path;
 	char	**path_table;
 	char	current_path[BUFSIZ];
-
-	found = 0;
+	
+	found = NEXT;
 	table_idx = 0;
 	path = ft_getenv("PATH", envp);
 	path_table = ft_split(path, ':');
@@ -73,7 +44,7 @@ int	is_it_external(char *filename, char **envp)
 	{
 		chdir(path_table[table_idx]);
 		if (access(filename, F_OK) == 0)
-			found = 1;
+			found = END;
 		table_idx++;
 	}
 	my_free2(path_table);
@@ -81,31 +52,48 @@ int	is_it_external(char *filename, char **envp)
 	return (found);
 }
 
-int	command_error(char *token, char **envp)
+int	is_it_path(char *command, char *path, char *filename)
 {
 	char	current_path[BUFSIZ];
+
+	getcwd(current_path, BUFSIZ);
+	if (chdir(path) == 0 && access(filename, X_OK) == 0)
+	{
+		chdir(current_path);
+		free(path);
+		free(filename);
+		return (END);
+	}
+	chdir(current_path);
+	free(path);
+	free(filename);
+	write(2, "minishell: ", 11);
+	perror(command);
+	return (NEXT);
+}
+
+int	command_error(char *token, char **envp)
+{
 	char	*path;
 	char	*filename;
 
-	if (token == NULL || is_it_builtin(token) || is_it_external(token, envp))
+	if (token == NULL)
 		return (NEXT);
-	if (is_it_directory(token))
+	else if (is_it_directory(token))
 		return (ERROR);
+	else if (is_it_builtin(token) || is_it_external(token, envp))
+		return (NEXT);
 	path = get_path(token);
 	filename = get_filename(token);
-	getcwd(current_path, BUFSIZ);
-	if (chdir(path) == 0)
+	if (path != NULL)
 	{
-		if (access(filename, X_OK) == -1)
-		{
-			write(2, "minishell: ", 11);
-			perror(token);
-			chdir(current_path);
+		if (is_it_path(token, path, filename))
+			return (NEXT);
+		else
 			return (ERROR);
-		}
-		chdir(current_path);
-		return (NEXT);
 	}
-	printf("minishell: %s: command not found\n", token);
+	write(2, "minishell: ", 11);
+	write(2, token, ft_strlen(token));
+	write(2, ": command not found\n", 20);
 	return (ERROR);
 }
