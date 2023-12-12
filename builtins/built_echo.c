@@ -3,27 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   built_echo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:59:35 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/01 19:58:07 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/12 18:31:30 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+void	newline_check(char **argv, int *idx, int *newline)
+{
+	int	char_idx;
+
+	*idx = 1;
+	*newline = 1;
+	while (argv[*idx] != NULL)
+	{
+		if (argv[*idx][0] == '-')
+		{
+			char_idx = 1;
+			while (argv[*idx][char_idx] != '\0')
+			{
+				if (argv[*idx][char_idx] != 'n')
+					break ;
+				char_idx++;
+			}
+			if (argv[*idx][char_idx] == '\0')
+				*newline = 0;
+			else
+				break ;
+		}
+		else if (argv[*idx][0] != '-')
+			break ;
+		(*idx)++;
+	}
+}
 
 void	echo(char **argv)
 {
 	int	idx;
 	int	newline;
 
-	idx = 1;
-	newline = 1;
+	newline_check(argv, &idx, &newline);
 	while (argv[idx] != NULL)
 	{
-		if (idx == 1 && (ft_strncmp("-n", argv[idx], 3) == 0))
-			newline = 0;
-		else if (argv[idx + 1] == NULL)
+		if (argv[idx + 1] == NULL)
 			printf("%s", argv[idx]);
 		else
 			printf("%s ", argv[idx]);

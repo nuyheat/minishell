@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_simple_command.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:52:44 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 17:30:53 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/12 20:07:14 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,5 @@ void	simple_command(char **args, char **envp)
 		command = args[0];
 	else
 		command = get_external_path(filename, envp);
-	if (is_it_minishell(command))
-		interactive_mode_sig();
 	execve(command, args, envp);
 }

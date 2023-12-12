@@ -6,44 +6,62 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 12:21:18 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 17:53:50 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 20:13:32 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	heredoc_put_char(t_pipe *pipes, char *eof, int cnt)
+int	heredoc_put_char(t_pipe *pipes, char *eof, int cnt)
 {
 	char	*line;
+	int		pid;
+	int		status;
 
-	if (pipes->heredoc[cnt][0] != -1 && pipes->heredoc[cnt][1] != -1)
-		close(pipes->heredoc[cnt][0]);
-	if (pipe(pipes->heredoc[cnt]) == -1)
-		error_end("pipe failed");
-	while (1)
+	signal(SIGINT, SIG_IGN);
+	pid = fork();
+	if (pid < 0)
+		error_end("fork failed");
+	else if (pid == 0)
 	{
-		line = readline("> ");
-		if (line == NULL)
+		heredoc_mode_sig();
+		if (pipes->heredoc[cnt][0] != -1 && pipes->heredoc[cnt][1] != -1)
+			close(pipes->heredoc[cnt][0]);
+		if (pipe(pipes->heredoc[cnt]) == -1)
+			error_end("pipe failed");
+		while (1)
 		{
-			close(pipes->heredoc[cnt][1]);
-			break ;
-		}
-		if (ft_strncmp(line, eof, ft_strlen(eof) + 1) == 0)
-		{
-			close(pipes->heredoc[cnt][1]);
+			line = readline("> ");
+			if (line == NULL)
+			{
+				close(pipes->heredoc[cnt][1]);
+				break ;
+			}
+			if (ft_strncmp(line, eof, ft_strlen(eof) + 1) == 0)
+			{
+				close(pipes->heredoc[cnt][1]);
+				free(line);
+				break ;
+			}
+			write(pipes->heredoc[cnt][1], line, ft_strlen(line));
+			write(pipes->heredoc[cnt][1], "\n", 1);
 			free(line);
-			break ;
 		}
-		write(pipes->heredoc[cnt][1], line, ft_strlen(line));
-		write(pipes->heredoc[cnt][1], "\n", 1);
-		free(line);
 	}
+	else if (pid > 0)
+	{
+		waitpid(pid, &status, 0);
+		return (status);
+	}
+	return (0);
 }
 
-void	heredoc_init(t_list *list, t_pipe *pipes)
+int	heredoc_init(t_list *list, t_pipe *pipes)
 {
 	int	cnt;
+	int	status;
 
+	status = -1;
 	cnt = 0;
 	while (cnt < pipes->heredoc_fl_cnt)
 	{
@@ -55,11 +73,17 @@ void	heredoc_init(t_list *list, t_pipe *pipes)
 	while (list != NULL)
 	{
 		if (list->info.flgs == F_DLESS)
-			heredoc_put_char(pipes, list->next->info.token, cnt);
-		if (list->info.flgs == F_PIPE)
+			status = heredoc_put_char(pipes, list->next->info.token, cnt);
+		else if (list->info.flgs == F_PIPE)
 			cnt++;
+		if (status > -1)
+		{
+			heredoc_close(pipes);
+			return (1);
+		}
 		list = list->next;
 	}
+	return (0);
 }
 
 void	heredoc_close(t_pipe *pipes)
@@ -75,12 +99,11 @@ void	heredoc_close(t_pipe *pipes)
 	}
 }
 
-void	heredoc_make(t_list *list, t_pipe *pipes)
+int	heredoc_make(t_list *list, t_pipe *pipes)
 {
 	t_list	*head;
 	int		cnt;
 
-	heredoc_mode_sig();
 	pipes->heredoc_cnt = 0;
 	pipes->heredoc_fl_cnt = 1;
 	head = list;
@@ -94,6 +117,7 @@ void	heredoc_make(t_list *list, t_pipe *pipes)
 	(int (*)[2])malloc(sizeof(int [2]) * pipes->heredoc_fl_cnt);
 	if (pipes->heredoc == NULL)
 		error_end("malloc failed");
-	heredoc_init(head, pipes);
-	interactive_mode_sig();
+	if (heredoc_init(head, pipes))
+		return (1);
+	return (0);
 }

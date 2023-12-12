@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 17:49:20 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 20:06:36 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ void	execute(t_list *list, t_pipe *pipes, char **envp, int flg, struct termios *
 int		syntax_error(t_list *list, int *status);
 int		redirection_error(t_list *list, int *status);
 int		command_error(char *token, char **envp);
-int	is_it_path(char *command, char *path, char *filename);
+int		is_it_path(char *command, char *path, char *filename);
 /* utils */
 char	*command_find(t_list *list);
 void	pipe_setting_for_parent(t_pipe *pipes);
@@ -165,7 +165,7 @@ void	redirection_handling(t_list *list, t_pipe *pipes);
 void	pipe_init(t_pipe *pipes);
 
 /* excute utils heredoc */
-void	heredoc_make(t_list *list, t_pipe *pipes);
+int		heredoc_make(t_list *list, t_pipe *pipes);
 void	heredoc_close(t_pipe *pipes);
 
 /* excute utils path */
@@ -173,8 +173,7 @@ char	*get_path(char *command);
 char	*get_filename(char *command);
 
 /* signal */
-void	handle_sigint1(int sig);
-void	handle_sigint2(int sig);
+void	handle_sigint(int sig);
 void	interactive_mode_sig(void);
 void	child_mode_sig(void);
 void	heredoc_mode_sig(void);

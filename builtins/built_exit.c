@@ -6,13 +6,13 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:24:56 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/12 17:52:07 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 18:05:43 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-int	ft_atol(const char *str)
+long long	ft_atol(const char *str)
 {
 	int			i;
 	int			flag;

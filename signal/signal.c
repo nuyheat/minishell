@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 16:16:11 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/12 17:14:52 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/12 20:06:21 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_sigint1(int sig)
+void	handle_sigint(int sig)
 {
 	printf("\n");
 	rl_on_new_line();
@@ -20,20 +20,15 @@ void	handle_sigint1(int sig)
 	rl_redisplay(); // readline 메시지를 다시 출력
 }
 
-void	handle_sigint2(int sig)
-{
-	printf("\n");
-}
-
 void	interactive_mode_sig(void)
 {
 	signal(SIGQUIT, SIG_IGN);
-    signal(SIGINT, handle_sigint1);
+	signal(SIGINT, handle_sigint);
 }
 void	child_mode_sig(void)
 {
 	signal(SIGQUIT, SIG_DFL);
-    signal(SIGINT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
 }
 
 void	heredoc_mode_sig(void)

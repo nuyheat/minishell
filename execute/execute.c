@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:19:47 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 17:53:09 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 20:01:51 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	child_process(t_list *list, t_pipe *pipes, char **envp, struct termios* ter
 {
 	int	pid;
 
-	signal(SIGINT, handle_sigint2);
+	signal(SIGINT, SIG_IGN);
 	pipe(pipes->next_fd);
 	pid = fork();
 	if (pid == -1)
@@ -76,7 +76,8 @@ void	execute(t_list *list, t_pipe *pipes, char **envp, int flg, struct termios* 
 	pipes->prev_fd[1] = -1;
 	if (syntax_error(list, &(pipes->status)) == ERROR)
 		return ;
-	heredoc_make(list, pipes);
+	if (heredoc_make(list, pipes))
+		return ;
 	while (list != NULL)
 	{
 		command = command_find(list);
