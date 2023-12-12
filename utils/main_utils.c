@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:25:40 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 17:02:43 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:36:19 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,15 @@ char	*line_creat(void)
 		free(tmp);
 	}
 	return (line);
+}
+
+int	pipe_find(t_list *list)
+{
+	while (list != NULL)
+	{
+		if (list->info.flgs == F_PIPE)
+			return (F_PIPE);
+		list = list->next;
+	}
+	return (END);
 }

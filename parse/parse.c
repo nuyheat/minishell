@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:24:31 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 14:28:39 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:21:36 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ void	parse_tokenize(t_list **list, char *line)
 	int		idx;
 	char	*buf;
 
-	if (line == NULL || line[0] == '\0')
+	if (line == NULL)
+		return ;
+	else if (line[0] == '\0')
 	{
-		if (line[0] == '\0')
-			token_add(list, line, F_STRING);
+		token_add(list, line, F_STRING);
 		return ;
 	}
 	idx = 0;

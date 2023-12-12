@@ -43,8 +43,6 @@ SRCS		= minishell.c \
 				execute/child/ft_simple_command.c \
 				execute/child/child_utils.c \
 
-
-
 SRCS_BONUS	= minishell_bonus.c	\
 
 OBJS        = $(SRCS:.c=.o)
