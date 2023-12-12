@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 19:25:04 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 13:56:22 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:26:36 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,20 @@ int	token_rules(t_list **list, char **buf, char *line, int now_idx)
 {
 	if (rules_operator_double(buf, line[now_idx]))
 		return (NEXT);
-	if (rules_operator_start(buf, line, now_idx) \
-		|| rules_operator_end(buf, line[now_idx]))
+	if (rules_operator_start(line, now_idx) \
+		|| rules_operator_end(buf))
 	{
 		token_delimited(list, buf);
 		if (line[now_idx] != ' ')
 			(*buf)[0] = line[now_idx];
 		return (NEXT);
 	}
-	if (rules_space(buf, line, now_idx))
+	if (rules_space(line, now_idx))
 	{
 		token_delimited(list, buf);
 		return (NEXT);
 	}
-	if (rules_comment(buf, line, now_idx))
+	if (rules_comment(line, now_idx))
 	{
 		token_delimited(list, buf);
 		return (END);
@@ -38,11 +38,8 @@ int	token_rules(t_list **list, char **buf, char *line, int now_idx)
 	return (NEXT);
 }
 
-void	token_flgs(t_list **list, int *new_flgs, char *buf)
+void	token_flgs(int *new_flgs, char *buf)
 {
-	int	buf_len;
-
-	buf_len = ft_strlen(buf);
 	if (flgs_quote(buf, new_flgs))
 	{
 		flgs_quote_dollar(buf, new_flgs);
@@ -81,13 +78,11 @@ void	token_add(t_list **list, char *new_token, int new_flags)
 void	token_delimited(t_list **list, char **buf)
 {
 	int	new_flgs;
-	int	idx;
 
 	new_flgs = 0;
-	idx = 0;
 	if ((*buf)[0] == '\0')
 		return ;
-	token_flgs(list, &new_flgs, *buf);
+	token_flgs(&new_flgs, *buf);
 	token_add(list, *buf, new_flgs);
 	ft_bzero(*buf, ft_strlen(*buf));
 }

@@ -2,7 +2,7 @@ NAME		= minishell
 NAME_BONUS	= minishell_bonus
 
 CC			= cc
-CFLAGS		=
+CFLAGS		= -Wall -Wextra -Werror
 RM			= rm -f
 AR			= ar
 ARFLAGS		= rcs

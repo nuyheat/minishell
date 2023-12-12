@@ -31,7 +31,7 @@ int	rules_operator_double(char **buf, char now_char)
 	return (NEXT);
 }
 
-int	rules_operator_end(char **buf, char now_char)
+int	rules_operator_end(char **buf)
 {
 	int		buf_len;
 
@@ -44,11 +44,8 @@ int	rules_operator_end(char **buf, char now_char)
 	return (NEXT);
 }
 
-int	rules_operator_start(char **buf, char *line, int now_idx)
+int	rules_operator_start(char *line, int now_idx)
 {
-	int	buf_len;
-
-	buf_len = ft_strlen(*buf);
 	if (operator_check(line[now_idx]))
 	{
 		if (is_char(line, now_idx))
@@ -57,11 +54,8 @@ int	rules_operator_start(char **buf, char *line, int now_idx)
 	return (NEXT);
 }
 
-int	rules_space(char **buf, char *line, int now_idx)
+int	rules_space(char *line, int now_idx)
 {
-	int	buf_len;
-
-	buf_len = ft_strlen(*buf);
 	if (line[now_idx] == ' ')
 	{
 		if (is_char(line, now_idx))
@@ -70,11 +64,8 @@ int	rules_space(char **buf, char *line, int now_idx)
 	return (NEXT);
 }
 
-int	rules_comment(char **buf, char *line, int now_idx)
+int	rules_comment(char *line, int now_idx)
 {
-	int	buf_len;
-
-	buf_len = ft_strlen(*buf);
 	if (line[now_idx] == '#')
 	{
 		if (is_char(line, now_idx))

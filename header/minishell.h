@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 21:34:43 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:22:43 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_pipe
 # define END_MSG "\nMessage sended to server successfully\n"
 
 /* main utils */
-char	*line_creat(void);
+char	*line_creat(int status);
 void	copy_envp(char **envp);
 int		pipe_find(t_list *list);
 void	child_wait(void);
@@ -96,7 +96,7 @@ t_list	*list_delete(t_list **list, t_list **trash);
 
 /* parse tokenize*/
 t_list	*parse(char *line, char **envp, int status);
-void	token_flgs(t_list **list, int *new_flgs, char *buf);
+void	token_flgs(int *new_flgs, char *buf);
 int		token_rules(t_list **list, char **buf, char *line, int now_idx);
 void	token_add(t_list **list, char *new_token, int new_flags);
 void	token_delimited(t_list **list, char **buf);
@@ -108,10 +108,10 @@ int		flgs_quote(char *buf, int *new_flgs);
 void	flgs_quote_dollar(char *buf, int *new_flgs);
 
 int		rules_operator_double(char **buf, char now_char);
-int		rules_operator_end(char **buf, char now_char);
-int		rules_operator_start(char **buf, char *line, int now_idx);
-int		rules_space(char **buf, char *line, int now_idx);
-int		rules_comment(char **buf, char *line, int now_idx);
+int		rules_operator_end(char **buf);
+int		rules_operator_start(char *line, int now_idx);
+int		rules_space(char *line, int now_idx);
+int		rules_comment(char *line, int now_idx);
 
 int		is_char(char *line, int now_idx);
 int		is_quoted(char *token, int idx, char quote);
@@ -156,7 +156,7 @@ void	args_free(char ***args);
 char	**args_make(t_list *list);
 
 /* excute utils builtin */
-int		builtin(char **args, char **envp);
+int		builtin(char **args, char **envp, int status);
 int		is_it_builtin(char *command);
 
 /* excute utils redirection */

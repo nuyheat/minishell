@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 16:16:11 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/12 22:03:51 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:43:24 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	handle_sigint(int sig)
 {
+	(void)sig;
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0); // 현재 버퍼를 비워줌

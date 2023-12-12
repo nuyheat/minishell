@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc_make.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 21:39:38 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 22:04:14 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:22:49 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int	heredoc_init(t_list *list, t_pipe *pipes, int cnt)
 int	heredoc_make(t_list *list, t_pipe *pipes)
 {
 	t_list	*head;
-	int		cnt;
 
 	pipes->heredoc_cnt = 0;
 	pipes->heredoc_fl_cnt = 1;

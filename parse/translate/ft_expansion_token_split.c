@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expansion_token_split.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 18:39:36 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 13:56:18 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:22:03 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ void	not_dequoted_handling(char *token, char ***result, int *idx)
 				break ;
 			(*idx)++;
 		}
-		if ((*idx) - start == 1 && (token[start] == '$' && token[*idx] == '$') \
+		if ((((*idx) - start == 1) && \
+			(token[start] == '$' && token[*idx] == '$'))
 			|| (token[start] == '$' && token[*idx] == '?'))
 			(*idx)++;
 		token_split(token, result, start, *idx);
@@ -103,7 +104,6 @@ char	**expansion_token_split(char *token)
 {
 	char	**splited_token;
 	int		idx;
-	int		start;
 
 	idx = 0;
 	splited_token = splited_token_init(token);
