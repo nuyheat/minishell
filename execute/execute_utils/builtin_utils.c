@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:55:16 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/08 17:34:58 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:10:06 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	is_it_builtin(char *command)
 	return (NEXT);
 }
 
-int	builtin(char **args, char **envp)
+int	builtin(char **args, char **envp, int status)
 {
 	char	*command;
 
@@ -45,7 +45,7 @@ int	builtin(char **args, char **envp)
 	else if (ft_strncmp(command, "env", 4) == 0)
 		env(args, envp);
 	else if (ft_strncmp(command, "exit", 5) == 0)
-		my_exit(args);
+		my_exit(args, status);
 	else
 		return (0);
 	return (1);

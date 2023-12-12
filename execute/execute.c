@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:19:47 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 21:59:57 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:09:45 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	parent_process(t_list *list, t_pipe *pipes, char **envp)
 	pipe_init(pipes);
 	redirection_handling(list, pipes);
 	args = args_make(list);
-	builtin(args, envp);
+	builtin(args, envp, pipes->status);
 	args_free(&args);
 	if (dup2(pipes->std_fds[0], STDIN_FILENO) == -1 \
 		|| dup2(pipes->std_fds[1], STDOUT_FILENO) == -1)

@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   built_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:24:56 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/12 18:05:43 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:14:34 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 #include "builtins.h"
 
 long long	ft_atol(const char *str)
@@ -21,6 +22,8 @@ long long	ft_atol(const char *str)
 	flag = 1;
 	result = 0;
 	i = 0;
+	if (ft_strncmp(str, "-9223372036854775808", 21) == 0)
+		return (-9223372036854775807LL - 1LL);
 	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
 		i++;
 	if (str[i] == '-' || str[i] == '+')
@@ -33,57 +36,54 @@ long long	ft_atol(const char *str)
 	{
 		result *= 10;
 		result += str[i] - '0';
-		if (result > 9223372036854775807)
-			return (-1);
 		i++;
 	}
 	return (result * flag);
 }
 
-int	check_exit_num(char *num)
+long long	check_exit_num(char *num, int *error_flag)
 {
 	int		idx;
 
-	if (ft_strncmp(num, "9223372036854775808", 20) == 0
-		|| ft_strncmp(num, "-9223372036854775810", 21) == 0)
-	{
-		write(2, "minishell: exit: ", 17);
-		write(2, num, ft_strlen(num));
-		write(2, ": numeric argument required\n", 28);
-		return (-1);
-	}
+	if ((ft_strchr(num, '-') == NULL && \
+		ft_strncmp(num, "9223372036854775808", 20) >= 0)
+		|| (ft_strchr(num, '-') != NULL && \
+		ft_strncmp(num, "-9223372036854775809", 21) >= 0))
+		*error_flag = 1;
 	idx = 0;
 	if (num[0] == '-')
 		idx++;
 	while (num[idx])
 	{
 		if (ft_isdigit(num[idx]) == 0)
-		{
-			write(2, "minishell: exit: ", 17);
-			write(2, num, ft_strlen(num));
-			write(2, ": numeric argument required\n", 28);
-			return (-1);
-		}
+			*error_flag = 1;
 		idx++;
 	}
 	return (ft_atol(num));
 }
 
-void	my_exit(char **argv)
+void	my_exit(char **argv, int status)
 {
-	int		argv_idx;
-	int		exit_num;
+	int				error_flag;
+	long long		exit_num;
 
-	argv_idx = 2;
 	exit_num = 0;
+	error_flag = 0;
 	printf("exit\n");
 	if (argv == NULL || argv[1] == NULL)
-		exit(exit_num); // 이거 이전 $? 리턴값으로 exit_num을 넘겨줘야함
-	else if (argv[2] == NULL)
-	{
-		exit_num = check_exit_num(argv[1]);
-		exit(exit_num);
-	}
+		exit(status);
 	else
-		write(2, "minishell: exit: too many arguments\n", 36);
+	{
+		exit_num = check_exit_num(argv[1], &error_flag);
+		if (error_flag == 1)
+		{
+			write(2, "minishell: exit: ", 17);
+			write(2, argv[1], ft_strlen(argv[1]));
+			write(2, ": numeric argument required\n", 28);
+		}
+		else if (argv[2] == NULL)
+			exit(exit_num);
+		else
+			write(2, "minishell: exit: too many arguments\n", 36);
+	}
 }

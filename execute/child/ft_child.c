@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_child.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:54:15 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 16:55:43 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:23:18 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	child(t_list *list, t_pipe *pipes, char **envp)
 	{
 		if (command_error(args[0], envp) == ERROR)
 			exit(127);
-		if (builtin(args, envp) == 0)
+		if (builtin(args, envp, pipes->status) == 0)
 			simple_command(args, envp);
 	}
 	args_free(&args);

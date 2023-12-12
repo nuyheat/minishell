@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_line_creat.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 20:44:43 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 22:06:43 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:11:05 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,14 +104,14 @@ char	*end_char_is_pipe(char **line)
 	return (*line);
 }
 
-char	*line_creat(void)
+char	*line_creat(int status)
 {
 	char	*line;
 
 	child_wait();
 	line = readline("minishell$ ");
 	if (line == NULL)
-		my_exit(NULL);
+		my_exit(NULL, status);
 	else if (line[0] == '\0')
 		return (line);
 	line = end_char_is_pipe(&line);

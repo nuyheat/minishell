@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:17:36 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/11 17:52:05 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:08:11 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	export(char **argv, char **envp);
 void	pwd(char **argv);
 void	unset(char **argv, char **envp);
 void	env(char **argv, char **envp);
-void	my_exit(char **argv);
+void	my_exit(char **argv, int status);
 
 int		countchar(const char *str, char find);
 int		comparename(const char *have_to_find, const char *now_im_at);
