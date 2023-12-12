@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:19:47 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 19:14:12 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:03:16 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	child_process(t_list *list, t_pipe *pipes, char **envp)
 {
 	int	pid;
-	int	status;
 
 	pipe(pipes->next_fd);
 	pid = fork();
@@ -27,7 +26,7 @@ void	child_process(t_list *list, t_pipe *pipes, char **envp)
 	{
 		pipe_setting_for_parent(pipes);
 		if (is_it_last_order(list))
-			waitpid(pid, &status, 0);
+			waitpid(pid, &(pipes->status), 0);
 	}
 }
 
@@ -45,28 +44,27 @@ void	parent_process(t_list *list, t_pipe *pipes, char **envp)
 		error_end("dup2 failed");
 }
 
-void	execute(t_list *list, char **envp, int flg)
+void	execute(t_list *list, t_pipe *pipes, char **envp, int flg)
 {
-	t_pipe	pipes;
 	char	*command;
 
-	pipes.prev_fd[0] = -1;
-	pipes.prev_fd[1] = -1;
-	if (syntax_error(list) == ERROR)
+	pipes->prev_fd[0] = -1;
+	pipes->prev_fd[1] = -1;
+	if (syntax_error(list, &(pipes->status)) == ERROR)
 		return ;
-	heredoc_make(list, &pipes);
+	heredoc_make(list, pipes);
 	while (list != NULL)
 	{
 		command = command_find(list);
-		if (redirection_error(list) != ERROR)
+		if (redirection_error(list, &(pipes->status)) != ERROR)
 		{
 			if (flg != F_PIPE && is_it_builtin(command))
-				parent_process(list, &pipes, envp);
+				parent_process(list, pipes, envp);
 			else
-				child_process(list, &pipes, envp);
+				child_process(list, pipes, envp);
 		}
-		pipes.heredoc_cnt++;
+		pipes->heredoc_cnt++;
 		args_next(&list);
 	}
-	heredoc_close(&pipes);
+	heredoc_close(pipes);
 }

@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 12:21:18 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 17:36:29 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 16:56:09 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ void	heredoc_put_char(t_pipe *pipes, char *eof, int cnt)
 	{
 		line = readline("> ");
 		if (line == NULL)
-			exit(1);
+		{
+			close(pipes->heredoc[cnt][1]);
+			break ;
+		}
 		if (ft_strncmp(line, eof, ft_strlen(eof) + 1) == 0)
 		{
 			close(pipes->heredoc[cnt][1]);
@@ -86,7 +89,8 @@ void	heredoc_make(t_list *list, t_pipe *pipes)
 			pipes->heredoc_fl_cnt++;
 		list = list->next;
 	}
-	pipes->heredoc = (int (*)[2])malloc(sizeof(int [2]) * pipes->heredoc_fl_cnt);
+	pipes->heredoc = \
+	(int (*)[2])malloc(sizeof(int [2]) * pipes->heredoc_fl_cnt);
 	if (pipes->heredoc == NULL)
 		error_end("malloc failed");
 	heredoc_init(head, pipes);

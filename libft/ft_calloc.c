@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/16 18:51:38 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/11 13:27:46 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 10:33:33 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void	*ft_calloc(size_t count, size_t size)
 	void	*ptr;
 
 	ptr = malloc(count * size);
-	if (ptr)
+	if (ptr != NULL)
 	{
 		ft_bzero(ptr, count * size);
 		return (ptr);
 	}
-	return ((void *)0);
+	return (NULL);
 }

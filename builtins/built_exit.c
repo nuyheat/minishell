@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:24:56 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/11 16:03:32 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/12 17:01:40 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,20 @@ void	my_exit(char **argv)
 
 	argv_idx = 2;
 	exit_num = 0;
-	printf("exit\n");
-	if (argv[1] == NULL)
+	if (argv == NULL || argv[1] == NULL)
+	{
+		printf("\b\bexit\n");
 		exit(exit_num); // 이거 이전 $? 리턴값으로 exit_num을 넘겨줘야함
+	}
 	else if (argv[2] == NULL)
 	{
+		printf("exit\n");
 		exit_num = check_exit_num(argv[1]);
 		exit(exit_num);
 	}
 	else
+	{
+		printf("exit\n");
 		write(2, "minishell: exit: too many arguments\n", 36);
+	}
 }
