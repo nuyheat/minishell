@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:19:47 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 17:50:16 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:53:09 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	execute(t_list *list, t_pipe *pipes, char **envp, int flg, struct termios* 
 			if (flg != F_PIPE && is_it_builtin(command))
 				parent_process(list, pipes, envp);
 			else
-				child_process(list, &pipes, envp, terminal);
+				child_process(list, pipes, envp, terminal);
 		}
 		pipes->heredoc_cnt++;
 		args_next(&list);

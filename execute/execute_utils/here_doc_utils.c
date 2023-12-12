@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 12:21:18 by taehkim2          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/12/12 15:53:02 by sihlee           ###   ########.fr       */
-=======
-/*   Updated: 2023/12/12 16:56:09 by taehkim2         ###   ########.fr       */
->>>>>>> 3171dfb6db91a062e0e4a4d70f3b4b2ec3ffa799
+/*   Updated: 2023/12/12 17:53:50 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +24,10 @@ void	heredoc_put_char(t_pipe *pipes, char *eof, int cnt)
 	{
 		line = readline("> ");
 		if (line == NULL)
-<<<<<<< HEAD
-			break ;
-=======
 		{
 			close(pipes->heredoc[cnt][1]);
 			break ;
 		}
->>>>>>> 3171dfb6db91a062e0e4a4d70f3b4b2ec3ffa799
 		if (ft_strncmp(line, eof, ft_strlen(eof) + 1) == 0)
 		{
 			close(pipes->heredoc[cnt][1]);
