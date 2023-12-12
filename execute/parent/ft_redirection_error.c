@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 13:01:07 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 19:13:20 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:43:59 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	redirection_error_less(char *token)
 	return (NEXT);
 }
 
-int	redirection_error(t_list *list)
+int	redirection_error(t_list *list, int *status)
 {
 	while (list != NULL && list->info.flgs != F_PIPE)
 	{
@@ -49,13 +49,19 @@ int	redirection_error(t_list *list)
 		{
 			list = list->next;
 			if (redirection_error_grate(list->info.token))
+			{
+				*status = 256;
 				return (ERROR);
+			}
 		}
 		else if (list->info.flgs == F_LESS)
 		{
 			list = list->next;
 			if (redirection_error_less(list->info.token))
+			{
+				*status = 256;
 				return (ERROR);
+			}
 		}
 		list = list->next;
 	}

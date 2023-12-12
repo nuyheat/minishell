@@ -6,7 +6,11 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 12:21:18 by taehkim2          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/12/12 15:53:02 by sihlee           ###   ########.fr       */
+=======
+/*   Updated: 2023/12/12 16:56:09 by taehkim2         ###   ########.fr       */
+>>>>>>> 3171dfb6db91a062e0e4a4d70f3b4b2ec3ffa799
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +28,14 @@ void	heredoc_put_char(t_pipe *pipes, char *eof, int cnt)
 	{
 		line = readline("> ");
 		if (line == NULL)
+<<<<<<< HEAD
 			break ;
+=======
+		{
+			close(pipes->heredoc[cnt][1]);
+			break ;
+		}
+>>>>>>> 3171dfb6db91a062e0e4a4d70f3b4b2ec3ffa799
 		if (ft_strncmp(line, eof, ft_strlen(eof) + 1) == 0)
 		{
 			close(pipes->heredoc[cnt][1]);
@@ -87,7 +98,8 @@ void	heredoc_make(t_list *list, t_pipe *pipes)
 			pipes->heredoc_fl_cnt++;
 		list = list->next;
 	}
-	pipes->heredoc = (int (*)[2])malloc(sizeof(int [2]) * pipes->heredoc_fl_cnt);
+	pipes->heredoc = \
+	(int (*)[2])malloc(sizeof(int [2]) * pipes->heredoc_fl_cnt);
 	if (pipes->heredoc == NULL)
 		error_end("malloc failed");
 	heredoc_init(head, pipes);

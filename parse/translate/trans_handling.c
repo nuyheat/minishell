@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 19:41:25 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 19:14:23 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 14:17:30 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	trans_quoted_remove(char **token)
 	*token = removed_token;
 }
 
-char	*trans_param_expansion(char *token, char **envp)
+char	*trans_param_expansion(char *token, char **envp, int status)
 {
 	char	**splited_token;
 	char	*expansed_token;
@@ -49,7 +49,7 @@ char	*trans_param_expansion(char *token, char **envp)
 
 	idx = 0;
 	splited_token = expansion_token_split(token);
-	expansion_dollar_convert(&splited_token, envp);
+	expansion_dollar_convert(&splited_token, envp, status);
 	expansed_token = expansion_token_merge(splited_token);
 	while (splited_token[idx] != NULL)
 		free(splited_token[idx++]);

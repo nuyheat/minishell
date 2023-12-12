@@ -6,7 +6,7 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 17:29:24 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/12 17:39:35 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,6 @@
 // 	}
 // }
 
-// void	le(void)
-// {
-// 	system("leaks minishell");
-// }
-
 int	pipe_find(t_list *list)
 {
 	while (list != NULL)
@@ -73,7 +68,7 @@ int	main(int argc, char **argv, char **envp)
 		if (line[0] != '\0')
 		{
 			add_history(line);
-			list = parse(line, envp);
+			list = parse(line, envp, pipes.status);
 			if (list != NULL)
 			{
 				execute(list, envp, pipe_find(list), &terminal);

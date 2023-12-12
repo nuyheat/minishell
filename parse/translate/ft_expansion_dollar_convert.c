@@ -6,13 +6,13 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 18:50:37 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 18:50:10 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 14:28:17 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	dollar_convert(char **token, char **envp)
+void	dollar_convert(char **token, char **envp, int status)
 {
 	char	*buf;
 	int		buf_len;
@@ -22,7 +22,10 @@ void	dollar_convert(char **token, char **envp)
 	buf_len = 0;
 	buf_idx = 0;
 	token_idx = 0;
-	buf = ft_getenv((*token) + 1, envp);
+	if ((*token)[1] == '?')
+		buf = ft_itoa(status / 256);
+	else
+		buf = ft_getenv((*token) + 1, envp);
 	if (buf != NULL)
 		buf_len = ft_strlen(buf);
 	free(*token);
@@ -34,14 +37,15 @@ void	dollar_convert(char **token, char **envp)
 	(*token)[token_idx] = '\0';
 }
 
-void	dquoted_handling(char ***splited_token, int *idx, char **envp)
+void	dquoted_handling(char ***splited_token, int *idx, \
+						char **envp, int status)
 {
 	(*idx)++;
 	while ((*splited_token)[*idx][0] != '\"')
 	{
 		if ((*splited_token)[*idx][0] == '$' && \
 			(*splited_token)[*idx][1] != '\0')
-			dollar_convert(&(*splited_token)[*idx], envp);
+			dollar_convert(&(*splited_token)[*idx], envp, status);
 		(*idx)++;
 	}
 }
@@ -61,7 +65,7 @@ int	is_quoted_2d(char **str, int idx, char quote)
 	return (NOT_QUOTED);
 }
 
-void	expansion_dollar_convert(char ***splited_token, char **envp)
+void	expansion_dollar_convert(char ***splited_token, char **envp, int status)
 {
 	int	idx;
 
@@ -69,7 +73,7 @@ void	expansion_dollar_convert(char ***splited_token, char **envp)
 	while ((*splited_token)[idx] != NULL)
 	{
 		if (is_quoted_2d(*splited_token, idx, '\"'))
-			dquoted_handling(splited_token, &idx, envp);
+			dquoted_handling(splited_token, &idx, envp, status);
 		if ((*splited_token)[idx][0] == '$')
 		{
 			if ((*splited_token)[idx][1] == '\0')
@@ -79,7 +83,7 @@ void	expansion_dollar_convert(char ***splited_token, char **envp)
 					(*splited_token)[idx][0] = '\0';
 			}
 			else if ((*splited_token)[idx][1] != '.')
-				dollar_convert(&(*splited_token)[idx], envp);
+				dollar_convert(&(*splited_token)[idx], envp, status);
 		}
 		idx++;
 	}

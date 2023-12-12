@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 20:16:41 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 18:19:08 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 10:17:28 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ char	*expansion_token_merge(char **splited_token)
 
 	merge_len = 0;
 	idx = 0;
+	if (splited_token[0][0] == '\0' && splited_token[1] == NULL)
+		return (NULL);
 	while (splited_token[idx] != NULL)
 	{
 		merge_len += ft_strlen(splited_token[idx]);

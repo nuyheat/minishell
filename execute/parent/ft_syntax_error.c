@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 13:02:15 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/08 14:57:10 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:40:52 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	syntax_error_newline(t_list *list, int redirection)
 	return (NEXT);
 }
 
-int	syntax_error(t_list *list)
+int	syntax_error(t_list *list, int *status)
 {
 	int	redirection;
 
@@ -66,13 +66,18 @@ int	syntax_error(t_list *list)
 	if (syntax_error_pipe(list, redirection))
 	{
 		printf("minishell: syntax error near unexpected token `|'\n");
+		*status = 256 * 258;
 		return (ERROR);
 	}
 	else if (syntax_error_redirection(list, redirection))
+	{
+		*status = 256 * 258;
 		return (ERROR);
+	}
 	else if (syntax_error_newline(list, redirection))
 	{
 		printf("minishell: syntax error near unexpected token `newline'\n");
+		*status = 256 * 258;
 		return (ERROR);
 	}
 	return (NEXT);

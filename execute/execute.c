@@ -6,7 +6,11 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:19:47 by taehkim2          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/12/12 17:14:56 by sihlee           ###   ########.fr       */
+=======
+/*   Updated: 2023/12/12 17:03:16 by taehkim2         ###   ########.fr       */
+>>>>>>> 3171dfb6db91a062e0e4a4d70f3b4b2ec3ffa799
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +37,6 @@
 void	child_process(t_list *list, t_pipe *pipes, char **envp, struct termios* terminal)
 {
 	int	pid;
-	int	status;
 
 	signal(SIGINT, handle_sigint2);
 	pipe(pipes->next_fd);
@@ -50,8 +53,12 @@ void	child_process(t_list *list, t_pipe *pipes, char **envp, struct termios* ter
 	{
 		pipe_setting_for_parent(pipes);
 		if (is_it_last_order(list))
+<<<<<<< HEAD
 			waitpid(pid, &status, 0);
 			// printf("status is %d\n", status);
+=======
+			waitpid(pid, &(pipes->status), 0);
+>>>>>>> 3171dfb6db91a062e0e4a4d70f3b4b2ec3ffa799
 	}
 	ctrl_echo_off(terminal);
 }
@@ -70,28 +77,35 @@ void	parent_process(t_list *list, t_pipe *pipes, char **envp)
 		error_end("dup2 failed");
 }
 
+<<<<<<< HEAD
 void	execute(t_list *list, char **envp, int flg, struct termios* terminal)
+=======
+void	execute(t_list *list, t_pipe *pipes, char **envp, int flg)
+>>>>>>> 3171dfb6db91a062e0e4a4d70f3b4b2ec3ffa799
 {
-	t_pipe	pipes;
 	char	*command;
 
-	pipes.prev_fd[0] = -1;
-	pipes.prev_fd[1] = -1;
-	if (syntax_error(list) == ERROR)
+	pipes->prev_fd[0] = -1;
+	pipes->prev_fd[1] = -1;
+	if (syntax_error(list, &(pipes->status)) == ERROR)
 		return ;
-	heredoc_make(list, &pipes);
+	heredoc_make(list, pipes);
 	while (list != NULL)
 	{
 		command = command_find(list);
-		if (redirection_error(list) != ERROR)
+		if (redirection_error(list, &(pipes->status)) != ERROR)
 		{
 			if (flg != F_PIPE && is_it_builtin(command))
-				parent_process(list, &pipes, envp);
+				parent_process(list, pipes, envp);
 			else
+<<<<<<< HEAD
 				child_process(list, &pipes, envp, terminal);
+=======
+				child_process(list, pipes, envp);
+>>>>>>> 3171dfb6db91a062e0e4a4d70f3b4b2ec3ffa799
 		}
-		pipes.heredoc_cnt++;
+		pipes->heredoc_cnt++;
 		args_next(&list);
 	}
-	heredoc_close(&pipes);
+	heredoc_close(pipes);
 }

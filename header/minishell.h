@@ -6,7 +6,11 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/12/12 17:23:21 by sihlee           ###   ########.fr       */
+=======
+/*   Updated: 2023/12/12 16:55:55 by taehkim2         ###   ########.fr       */
+>>>>>>> 3171dfb6db91a062e0e4a4d70f3b4b2ec3ffa799
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +45,14 @@ typedef struct s_pipe
 {
 	int	next_fd[2];
 	int	prev_fd[2];
-	int redir_less_occured;
-	int redir_heredoc_occured;
+	int	redir_less_occured;
+	int	redir_heredoc_occured;
 	int	redir_grate_occured;
 	int	(*heredoc)[2];
 	int	heredoc_fl_cnt;
 	int	heredoc_cnt;
 	int	std_fds[2];
+	int	status;
 }	t_pipe;
 
 /* return value */
@@ -92,9 +97,9 @@ void	list_free(t_list **list);
 t_list	*list_delete(t_list **list, t_list **trash);
 
 /* parse tokenize*/
-t_list	*parse(char *line, char **envp);
+t_list	*parse(char *line, char **envp, int status);
 void	token_flgs(t_list **list, int *new_flgs, char *buf);
-int		token_rules(t_list **list, char **buf, char *line, char now_idx);
+int		token_rules(t_list **list, char **buf, char *line, int now_idx);
 void	token_add(t_list **list, char *new_token, int new_flags);
 void	token_delimited(t_list **list, char **buf);
 
@@ -116,9 +121,10 @@ int		have_quoted(char *buf);
 int		operator_check(char prev_char);
 
 /* parse translate */
-char	*trans_param_expansion(char *now_token, char **envp);
+char	*trans_param_expansion(char *token, char **envp, int status);
 char	*expansion_token_merge(char **split_token);
-void	expansion_dollar_convert(char ***split_token, char **envp);
+void	expansion_dollar_convert(char ***splited_token, \
+								char **envp, int status);
 char	**expansion_token_split(char *token);
 char	**splited_token_init(char *token);
 
@@ -127,12 +133,16 @@ void	quote_skip(char *str, int *idx);
 int		row_cnt(char **str);
 
 /* execute */
+<<<<<<< HEAD
 void	execute(t_list *list, char **envp, int flg, struct termios* terminal);
+=======
+void	execute(t_list *list, t_pipe *pipes, char **envp, int flg);
+>>>>>>> 3171dfb6db91a062e0e4a4d70f3b4b2ec3ffa799
 
 /* excute parent */
 /* error */
-int		syntax_error(t_list *list);
-int		redirection_error(t_list *list);
+int		syntax_error(t_list *list, int *status);
+int		redirection_error(t_list *list, int *status);
 int		command_error(char *token, char **envp);
 int	is_it_path(char *command, char *path, char *filename);
 /* utils */
@@ -169,6 +179,7 @@ void	heredoc_close(t_pipe *pipes);
 char	*get_path(char *command);
 char	*get_filename(char *command);
 
+<<<<<<< HEAD
 /* signal */
 void	handle_sigint1(int sig);
 void	handle_sigint2(int sig);
@@ -178,4 +189,6 @@ void	heredoc_mode_sig(void);
 void	ctrl_echo_on(struct termios* terminal);
 void	ctrl_echo_off(struct termios* terminal);
 
+=======
+>>>>>>> 3171dfb6db91a062e0e4a4d70f3b4b2ec3ffa799
 #endif
