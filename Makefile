@@ -15,7 +15,7 @@ MINISHELL		 = minishell.a
 MINISHELL_BONUS	 = minishell_bonus.a
 
 SRCS		= minishell.c \
-				utils/all_utils.c utils/list_handling.c utils/main_utils.c	\
+				utils/all_utils.c utils/list_handling.c utils/main_utils.c utils/ft_line_creat.c \
 				builtins/builtins_utils.c builtins/built_cd.c builtins/built_echo.c \
 				builtins/built_export.c builtins/built_pwd.c builtins/built_export_utils.c \
 				builtins/built_unset.c builtins/built_unset_utils.c \

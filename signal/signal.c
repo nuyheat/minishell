@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 16:16:11 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/12 20:40:59 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 21:31:47 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,10 @@ void	heredoc_mode_sig(void)
 {
 	signal(SIGQUIT, SIG_IGN);
     signal(SIGINT, SIG_DFL);
+}
+
+void	ignore_sigint(int sig)
+{
+	(void)sig;
+	write(2, "\n", 1);
 }

@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:19:47 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 20:01:51 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 21:32:44 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	child_process(t_list *list, t_pipe *pipes, char **envp, struct termios* ter
 {
 	int	pid;
 
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, ignore_sigint);
 	pipe(pipes->next_fd);
 	pid = fork();
 	if (pid == -1)

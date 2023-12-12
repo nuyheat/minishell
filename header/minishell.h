@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 20:06:36 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 21:27:35 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_pipe
 char	*line_creat(void);
 void	copy_envp(char **envp);
 int		pipe_find(t_list *list);
+void	child_wait(void);
 
 /* all utils */
 void	error_end(char *str);
@@ -179,5 +180,6 @@ void	child_mode_sig(void);
 void	heredoc_mode_sig(void);
 void	ctrl_echo_on(struct termios* terminal);
 void	ctrl_echo_off(struct termios* terminal);
+void	ignore_sigint(int sig);
 
 #endif

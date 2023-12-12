@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 12:21:18 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 20:41:20 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 21:32:41 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	heredoc_put_char(t_pipe *pipes, char *eof, int cnt)
 	int		pid;
 	int		status;
 
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, ignore_sigint);
 	pid = fork();
 	if (pid < 0)
 		error_end("fork failed");

@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:10:27 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 16:59:18 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 21:30:30 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	my_free2(char **strs)
 
 void	error_end(char *str)
 {
-	write(2, "Error: ", 7);
+	write(2, "minishell: ", 11);
 	write(2, str, ft_strlen(str));
 	exit(1);
 }

@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 20:41:02 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 21:33:04 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	main(int argc, char **argv, char **envp)
 	t_pipe			pipes;
 	struct termios	terminal;
 
-	interactive_mode_sig();
 	pipes.status = 0;
+	interactive_mode_sig();
 	copy_envp(envp);
 	ctrl_echo_off(&terminal);
 	while (1)
