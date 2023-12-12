@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:19:47 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 21:32:44 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 21:59:57 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,15 @@ void	parent_process(t_list *list, t_pipe *pipes, char **envp)
 		error_end("dup2 failed");
 }
 
-void	execute(t_list *list, t_pipe *pipes, char **envp, int flg, struct termios* terminal)
+void	execute(t_list *list, t_pipe *pipes, \
+				char **envp, struct termios *terminal)
 {
 	char	*command;
+	int		flg;
 
 	pipes->prev_fd[0] = -1;
 	pipes->prev_fd[1] = -1;
+	flg = pipe_find(list);
 	if (syntax_error(list, &(pipes->status)) == ERROR)
 		return ;
 	if (heredoc_make(list, pipes))

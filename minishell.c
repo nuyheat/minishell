@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 21:33:04 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 21:39:04 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int argc, char **argv, char **envp)
 			list = parse(line, envp, pipes.status);
 			if (list != NULL)
 			{
-				execute(list, &pipes, envp, pipe_find(list), &terminal);
+				execute(list, &pipes, envp, &terminal);
 				list_free(&list);
 			}
 		}

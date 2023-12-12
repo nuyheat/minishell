@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 21:27:35 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 21:34:43 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,8 @@ void	quote_skip(char *str, int *idx);
 int		row_cnt(char **str);
 
 /* execute */
-void	execute(t_list *list, t_pipe *pipes, char **envp, int flg, struct termios *terminal);
+void	execute(t_list *list, t_pipe *pipes, \
+				char **envp, struct termios *terminal);
 
 /* excute parent */
 /* error */
@@ -178,8 +179,8 @@ void	handle_sigint(int sig);
 void	interactive_mode_sig(void);
 void	child_mode_sig(void);
 void	heredoc_mode_sig(void);
-void	ctrl_echo_on(struct termios* terminal);
-void	ctrl_echo_off(struct termios* terminal);
+void	ctrl_echo_on(struct termios *terminal);
+void	ctrl_echo_off(struct termios *terminal);
 void	ignore_sigint(int sig);
 
 #endif
