@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 20:07:31 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 20:41:02 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		interactive_mode_sig();
 		line = line_creat();
-		if (line[0] != '\0')
+		if (line != NULL && line[0] != '\0')
 		{
 			add_history(line);
 			list = parse(line, envp, pipes.status);
@@ -37,6 +37,7 @@ int	main(int argc, char **argv, char **envp)
 				list_free(&list);
 			}
 		}
-		free(line);
+		if (line != NULL)
+			free(line);
 	}
 }

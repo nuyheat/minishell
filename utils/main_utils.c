@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:25:40 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 20:27:28 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 20:41:16 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ char	*line_creat(void)
 {
 	char	*line;
 	char	*tmp;
+	int		pid;
+	int		pipes[2];
+	int		status;
 
 	child_wait();
 	line = readline("minishell$ ");
@@ -66,17 +69,31 @@ char	*line_creat(void)
 		my_exit(NULL);
 	else if (line[0] == '\0')
 		return (line);
-	while (1)
+	if (pipe(pipes) == -1)
+		error_end("pipe failed");
+	signal(SIGINT, SIG_IGN);
+	pid = fork();
+	if (pid < 0)
+		error_end("fork failed");
+	else if (pid == 0)
 	{
-		if (line_check(line))
-			break ;
-		tmp = readline("> ");
-		if (tmp == NULL)
-			error_end("readline failed");
-		line = my_strjoin(&line, tmp);
-		if (line == NULL)
-			error_end("malloc failed");
-		free(tmp);
+		heredoc_mode_sig();
+		while (1)
+		{
+			if (line_check(line))
+				break ;
+			tmp = readline("> ");
+			if (tmp == NULL)
+				error_end("readline failed");
+			write(pipes[1], tmp, ft_strlen(tmp));
+			free(tmp);
+		}
+	}
+	else if (pid > 0)
+	{
+		waitpid(pid, &status, 0);
+		if (status > -1)
+			return (NULL);
 	}
 	return (line);
 }
