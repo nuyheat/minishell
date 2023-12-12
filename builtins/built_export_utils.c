@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_export_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:50:45 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 17:51:30 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 01:39:09 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,13 @@ int	comparename(const char *have_to_find, const char *now_im_at)
 
 int	name_ok(const char *str)
 {
-	int	name_len;
-	int	str_idx;
+	int		name_len;
+	int		str_idx;
+	char	*equal;
 
 	name_len = namelen(str, '=');
-	if (name_len == 0 || countchar(str, '=') > 1)
+	equal = ft_strchr(str, '=');
+	if (name_len == 0 || ((equal != NULL) && (equal[1] == '\0')))
 		return (0);
 	str_idx = 0;
 	while (str_idx < name_len)
