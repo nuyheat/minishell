@@ -42,6 +42,8 @@ SRCS		= minishell.c \
 				execute/child/ft_child.c \
 				execute/child/ft_simple_command.c \
 				execute/child/child_utils.c \
+				signal/signal.c \
+				signal/terminal.c \
 
 
 

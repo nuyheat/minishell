@@ -6,7 +6,7 @@
 /*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:24:56 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/11 16:03:32 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/12 12:04:45 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	my_exit(char **argv)
 	argv_idx = 2;
 	exit_num = 0;
 	printf("exit\n");
-	if (argv[1] == NULL)
+	if (argv == NULL || argv[1] == NULL)
 		exit(exit_num); // 이거 이전 $? 리턴값으로 exit_num을 넘겨줘야함
 	else if (argv[2] == NULL)
 	{

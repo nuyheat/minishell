@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_simple_command.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:52:44 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 01:06:19 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/12 17:30:53 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_it_minishell(char *command)
+{
+	if (ft_strncmp(command, "./minishell", 12) == 0)
+		return (1);
+	return (0);
+}
 
 char	*make_path(char *path, char *filename)
 {
@@ -58,11 +65,18 @@ void	simple_command(char **args, char **envp)
 {
 	char	*command;
 	char	*filename;
+	char	*path;
 
 	if (ft_strchr(args[0], '/') != NULL)
 		filename = get_filename(args[0]);
 	else
 		filename = args[0];
-	command = get_external_path(filename, envp);
+	path = get_path(args[0]);
+	if ((path != NULL) && is_it_path(args[0], path, filename))
+		command = args[0];
+	else
+		command = get_external_path(filename, envp);
+	if (is_it_minishell(command))
+		interactive_mode_sig();
 	execve(command, args, envp);
 }

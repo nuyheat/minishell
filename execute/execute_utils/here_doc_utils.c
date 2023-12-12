@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 12:21:18 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 17:36:29 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:53:02 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	heredoc_put_char(t_pipe *pipes, char *eof, int cnt)
 	{
 		line = readline("> ");
 		if (line == NULL)
-			exit(1);
+			break ;
 		if (ft_strncmp(line, eof, ft_strlen(eof) + 1) == 0)
 		{
 			close(pipes->heredoc[cnt][1]);
@@ -77,6 +77,7 @@ void	heredoc_make(t_list *list, t_pipe *pipes)
 	t_list	*head;
 	int		cnt;
 
+	heredoc_mode_sig();
 	pipes->heredoc_cnt = 0;
 	pipes->heredoc_fl_cnt = 1;
 	head = list;
@@ -90,4 +91,5 @@ void	heredoc_make(t_list *list, t_pipe *pipes)
 	if (pipes->heredoc == NULL)
 		error_end("malloc failed");
 	heredoc_init(head, pipes);
+	interactive_mode_sig();
 }

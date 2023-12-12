@@ -3,32 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:19:47 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 19:14:12 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:14:56 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	child_process(t_list *list, t_pipe *pipes, char **envp)
+// static	int child_signal_occured = 0;
+
+// void	handle_sigint(int sig)
+// {
+// 	if (child_signal_occured == 0)
+// 	{
+// 		printf("\n");
+// 		rl_on_new_line();
+// 		rl_replace_line("", 0); // 현재 버퍼를 비워줌
+// 		rl_redisplay(); // readline 메시지를 다시 출력
+// 	}
+// 	else
+// 	{
+// 		printf("\n");
+// 		child_signal_occured = 0;
+// 	}
+// }
+
+void	child_process(t_list *list, t_pipe *pipes, char **envp, struct termios* terminal)
 {
 	int	pid;
 	int	status;
 
+	signal(SIGINT, handle_sigint2);
 	pipe(pipes->next_fd);
 	pid = fork();
 	if (pid == -1)
 		return ;
 	else if (pid == 0)
+	{
+		child_mode_sig();
+		ctrl_echo_on(terminal);
 		child(list, pipes, envp);
+	}
 	else if (pid > 0)
 	{
 		pipe_setting_for_parent(pipes);
 		if (is_it_last_order(list))
 			waitpid(pid, &status, 0);
+			// printf("status is %d\n", status);
 	}
+	ctrl_echo_off(terminal);
 }
 
 void	parent_process(t_list *list, t_pipe *pipes, char **envp)
@@ -45,7 +70,7 @@ void	parent_process(t_list *list, t_pipe *pipes, char **envp)
 		error_end("dup2 failed");
 }
 
-void	execute(t_list *list, char **envp, int flg)
+void	execute(t_list *list, char **envp, int flg, struct termios* terminal)
 {
 	t_pipe	pipes;
 	char	*command;
@@ -63,7 +88,7 @@ void	execute(t_list *list, char **envp, int flg)
 			if (flg != F_PIPE && is_it_builtin(command))
 				parent_process(list, &pipes, envp);
 			else
-				child_process(list, &pipes, envp);
+				child_process(list, &pipes, envp, terminal);
 		}
 		pipes.heredoc_cnt++;
 		args_next(&list);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:25:40 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/11 17:54:54 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:10:45 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ char	*line_creat(void)
 	child_wait();
 	line = readline("minishell$ ");
 	if (line == NULL)
-		error_end("readline failed");
-	if (line[0] == '\0')
+		my_exit(NULL);
+	else if (line[0] == '\0')
 		return (line);
 	while (1)
 	{
