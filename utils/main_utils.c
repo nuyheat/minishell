@@ -6,9 +6,10 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:25:40 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 17:36:19 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:50:50 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -62,8 +63,8 @@ char	*line_creat(void)
 	child_wait();
 	line = readline("minishell$ ");
 	if (line == NULL)
-		error_end("readline failed");
-	if (line[0] == '\0')
+		my_exit(NULL);
+	else if (line[0] == '\0')
 		return (line);
 	while (1)
 	{

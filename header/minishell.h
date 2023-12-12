@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 17:36:38 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:49:20 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@
 # include <readline/history.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <signal.h>
+# include <termios.h>
 
-# include "../libft/libft.h"
+# include "libft.h"
+// # include "../libft/libft.h"
 # include "../builtins/builtins.h"
 
 typedef struct s_token_info
@@ -48,12 +51,14 @@ typedef struct s_pipe
 	int	status;
 }	t_pipe;
 
-# define NOT_QUOTED			0
-# define QUOTED				1
-
+/* return value */
 # define ERROR				-1
 # define NEXT				0
 # define END				1
+
+/* token flags */
+# define NOT_QUOTED			0
+# define QUOTED				1
 
 # define START				1
 # define F_QUOTED			2
@@ -64,6 +69,12 @@ typedef struct s_pipe
 # define F_DGRATE			128
 # define F_LESS				256
 # define F_DLESS			512
+
+/* signal macro */
+# define HANDLER_SETUP_ERR "\nError: Unable to set up signal handlers\n"
+# define HANDLING_ERR "\nError: Unable to handle signal\n"
+# define ACK_RECV_ERR "\nError: Unable to receive ACK from server\n"
+# define END_MSG "\nMessage sended to server successfully\n"
 
 /* main utils */
 char	*line_creat(void);
@@ -119,13 +130,14 @@ void	quote_skip(char *str, int *idx);
 int		row_cnt(char **str);
 
 /* execute */
-void	execute(t_list *list, t_pipe *pipes, char **envp, int flg);
+void	execute(t_list *list, t_pipe *pipes, char **envp, int flg, struct termios *terminal);
 
 /* excute parent */
 /* error */
 int		syntax_error(t_list *list, int *status);
 int		redirection_error(t_list *list, int *status);
 int		command_error(char *token, char **envp);
+int	is_it_path(char *command, char *path, char *filename);
 /* utils */
 char	*command_find(t_list *list);
 void	pipe_setting_for_parent(t_pipe *pipes);
@@ -159,5 +171,14 @@ void	heredoc_close(t_pipe *pipes);
 /* excute utils path */
 char	*get_path(char *command);
 char	*get_filename(char *command);
+
+/* signal */
+void	handle_sigint1(int sig);
+void	handle_sigint2(int sig);
+void	interactive_mode_sig(void);
+void	child_mode_sig(void);
+void	heredoc_mode_sig(void);
+void	ctrl_echo_on(struct termios* terminal);
+void	ctrl_echo_off(struct termios* terminal);
 
 #endif
