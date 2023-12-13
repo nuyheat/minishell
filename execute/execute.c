@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:19:47 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 16:17:18 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/13 18:28:56 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	execute(t_list *list, t_pipe *pipes, \
 	pipes->prev_fd[1] = -1;
 	flg = pipe_find(list);
 	if (syntax_error(list, &(pipes->status)) == ERROR || \
-		heredoc_creat(list, pipes))
+		heredoc_creat(list, pipes, envp))
 		return ;
 	while (list != NULL)
 	{
