@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:25:40 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 13:31:58 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:36:36 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,24 @@ void	copy_envp(char **envp)
 		envp[idx] = ft_strdup(envp[idx]);
 		idx++;
 	}
+}
+
+void	minishell_init(t_pipe *pipes, struct termios *terminal, char **envp)
+{
+	pipes->status = 0;
+	ctrl_echo_off(terminal);
+	copy_envp(envp);
+}
+
+int	status_check(int *status, int status_tmp)
+{
+	if (status_tmp == 2 || status_tmp == 256)
+	{
+		if (status_tmp == 2)
+			*status = 1 * 256;
+		else if (status_tmp == 256)
+			*status = 258 * 256;
+		return (END);
+	}
+	return (NEXT);
 }

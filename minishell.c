@@ -6,23 +6,11 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 13:52:33 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 15:38:41 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	minishell_init(t_pipe *pipes, struct termios *terminal, char **envp)
-{
-	pipes->status = 0;
-	ctrl_echo_off(terminal);
-	copy_envp(envp);
-}
-
-void	le()
-{
-	system("leaks minishell");
-}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -33,7 +21,6 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	atexit(le);
 	interactive_mode_sig();
 	minishell_init(&pipes, &terminal, envp);
 	while (1)
@@ -44,12 +31,12 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(line);
 			list = parse(line, envp, pipes.status);
+			free(line);
 			if (list != NULL)
 			{
 				execute(list, &pipes, envp, &terminal);
 				list_free(&list);
 			}
-			free(line);
 		}
 	}
 }

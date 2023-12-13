@@ -6,13 +6,13 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 20:44:43 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 13:36:52 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:49:06 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_end_char_pipe(char *line)
+int	end_char_is_pipe(char *line)
 {
 	int	len;
 
@@ -41,7 +41,7 @@ void	line_remake_child(char *line, int *line_pipes)
 	close(line_pipes[0]);
 	while (1)
 	{
-		if (is_end_char_pipe(line))
+		if (end_char_is_pipe(line))
 			break ;
 		tmp = readline("> ");
 		if (tmp == NULL)
@@ -56,7 +56,7 @@ void	line_remake_child(char *line, int *line_pipes)
 	exit(0);
 }
 
-char	*line_make(int *line_pipes)
+char	*pull_line_to_pipe(int *line_pipes)
 {
 	char	*line;
 	char	tmp[11];
@@ -64,7 +64,6 @@ char	*line_make(int *line_pipes)
 
 	line = NULL;
 	ft_bzero(tmp, 10);
-	close(line_pipes[1]);
 	while (1)
 	{
 		bytes = read(line_pipes[0], tmp, 10);
@@ -75,11 +74,10 @@ char	*line_make(int *line_pipes)
 			error_end("malloc failed");
 		ft_bzero(tmp, 10);
 	}
-	close(line_pipes[0]);
 	return (line);
 }
 
-void	line_remake(char **line, int *status)
+void	line_recreat(char **line, int *status)
 {
 	int	line_pipes[2];
 	int	status_tmp;
@@ -98,17 +96,13 @@ void	line_remake(char **line, int *status)
 	{
 		waitpid(pid, &status_tmp, 0);
 		free(*line);
-		if (status_tmp == 2 || status_tmp == 256)
-		{
-			if (status_tmp == 2)
-				*status = 1 * 256;
-			else if (status_tmp == 256)
-				*status = 258 * 256;
+		if (status_check(status, status_tmp) == END)
 			*line = NULL;
-		}
 		else
-			*line = line_make(line_pipes);
+			*line = pull_line_to_pipe(line_pipes);
 	}
+	close(line_pipes[0]);
+	close(line_pipes[1]);
 }
 
 char	*line_creat(int *status)
@@ -124,7 +118,7 @@ char	*line_creat(int *status)
 		free(line);
 		return (NULL);
 	}
-	if (is_end_char_pipe(line) == 0)
-		line_remake(&line, status);
+	if (end_char_is_pipe(line) == 0)
+		line_recreat(&line, status);
 	return (line);
 }

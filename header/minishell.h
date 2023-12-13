@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 13:37:38 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 15:11:18 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ char	*line_creat(int *status);
 void	copy_envp(char **envp);
 int		pipe_find(t_list *list);
 void	child_wait(void);
+void	minishell_init(t_pipe *pipes, struct termios *terminal, char **envp);
+int		status_check(int *status, int status_tmp);
 
 /* all utils */
 void	error_end(char *str);

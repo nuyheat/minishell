@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 21:39:38 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 13:33:31 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:10:43 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,16 @@ void	heredoc_child(t_pipe *pipes, char *eof, int cnt)
 	char	*line;
 
 	heredoc_mode_sig();
-	if (pipes->heredoc[cnt][0] != -1 && pipes->heredoc[cnt][1] != -1)
-		close(pipes->heredoc[cnt][0]);
-	if (pipe(pipes->heredoc[cnt]) == -1)
-		error_end("pipe failed");
 	while (1)
 	{
 		line = readline("> ");
 		if (line == NULL)
-		{
-			heredoc_close(pipes);
 			exit(1);
-		}
 		if (ft_strncmp(line, eof, ft_strlen(eof) + 1) == 0)
+		{
+			free(line);
 			break ;
+		}
 		write(pipes->heredoc[cnt][1], line, ft_strlen(line));
 		write(pipes->heredoc[cnt][1], "\n", 1);
 		free(line);
@@ -45,6 +41,10 @@ int	heredoc_put_char(t_pipe *pipes, char *eof, int cnt)
 	int	status_tmp;
 
 	signal(SIGINT, ignore_sigint);
+	if (pipes->heredoc[cnt][0] != -1 && pipes->heredoc[cnt][1] != -1)
+		close(pipes->heredoc[cnt][0]);
+	if (pipe(pipes->heredoc[cnt]) == -1)
+		error_end("pipe failed");
 	pid = fork();
 	if (pid < 0)
 		error_end("fork failed");
@@ -53,15 +53,10 @@ int	heredoc_put_char(t_pipe *pipes, char *eof, int cnt)
 	else if (pid > 0)
 	{
 		waitpid(pid, &status_tmp, 0);
-		if (status_tmp == 2 || status_tmp == 256)
-		{
-			if (status_tmp == 2)
-				pipes->status = 1 * 256;
-			else if (status_tmp == 256)
-				pipes->status = 0;
+		if (status_check(&(pipes->status), status_tmp) == END)
 			return (END);
-		}
 	}
+	close(pipes->heredoc[cnt][1]);
 	return (NEXT);
 }
 
