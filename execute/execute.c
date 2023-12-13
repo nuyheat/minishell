@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:19:47 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 19:39:59 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 19:53:42 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ void	child_process(t_list *list, t_pipe *pipes, \
 		pipe_setting_for_parent(pipes);
 		if (is_it_last_order(list))
 			waitpid(pid, &(pipes->status), 0);
-		printf("%d\n", pipes->status);
+		if (pipes->status == 2)
+			pipes->status = 130 * 256;
+		if (pipes->status == 3)
+			pipes->status = 131 * 256;
 	}
 	ctrl_echo_off(terminal);
 }
