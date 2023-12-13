@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_command_error.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 14:20:44 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/13 14:14:13 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:26:00 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int	is_it_external(char *filename, char **envp)
 	found = NEXT;
 	table_idx = 0;
 	path = ft_getenv("PATH", envp);
-	// free(path);
+	if (path != NULL)
+		free(path);
 	path_table = ft_split(path, ':');
 	path = getcwd(current_path, BUFSIZ);
 	while (path_table[table_idx] != NULL)

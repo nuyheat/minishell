@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_simple_command.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:52:44 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 14:14:16 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:25:45 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,20 @@ char	*get_external_path(char *command, char **envp)
 	char	current_path[BUFSIZ];
 
 	found = NULL;
-	table_idx = 0;
+	table_idx = -1;
 	path = ft_getenv("PATH", envp);
+	if (path != NULL)
+		free(path);
 	path_table = ft_split(path, ':');
-	// free(path);
 	path = getcwd(current_path, BUFSIZ);
-	while (path_table[table_idx] != NULL)
+	while (path_table[++table_idx] != NULL)
 	{
 		chdir(path_table[table_idx]);
 		if (access(command, F_OK) == 0)
+		{
 			found = make_path(path_table[table_idx], command);
-		table_idx++;
+			break ;
+		}
 	}
 	my_free2(path_table);
 	chdir(path);
