@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:19:47 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 19:53:42 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 21:43:22 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ void	execute(t_list *list, t_pipe *pipes, \
 		pipes->heredoc_cnt++;
 		args_next(&list);
 	}
+	child_wait();
 	heredoc_close(pipes);
 }

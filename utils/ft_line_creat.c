@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 20:44:43 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 19:33:08 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 21:41:52 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ char	*pull_line_to_pipe(int *line_pipes)
 
 	line = NULL;
 	ft_bzero(tmp, 10);
+	close(line_pipes[1]);
 	while (1)
 	{
 		bytes = read(line_pipes[0], tmp, 10);
@@ -74,6 +75,7 @@ char	*pull_line_to_pipe(int *line_pipes)
 			error_end("malloc failed");
 		ft_bzero(tmp, 10);
 	}
+	close(line_pipes[0]);
 	return (line);
 }
 
@@ -83,7 +85,6 @@ void	line_recreat(char **line, int *status)
 	int	status_tmp;
 	int	pid;
 
-	(void)status;
 	if (pipe(line_pipes) == -1)
 		error_end("pipe failed");
 	signal(SIGINT, SIG_IGN);
@@ -101,15 +102,12 @@ void	line_recreat(char **line, int *status)
 		else
 			*line = pull_line_to_pipe(line_pipes);
 	}
-	close(line_pipes[0]);
-	close(line_pipes[1]);
 }
 
 char	*line_creat(int *status)
 {
 	char	*line;
 
-	child_wait();
 	line = readline("minishell$ ");
 	if (line == NULL)
 		my_exit(NULL, status);
