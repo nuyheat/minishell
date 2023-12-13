@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:24:56 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/13 12:37:23 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 17:54:42 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ long long	check_exit_num(char *num, int *error_flag)
 {
 	int		idx;
 
+	if (num[0] == '\0')
+	{
+		*error_flag = 1;
+		return (255);
+	}
 	if ((ft_strchr(num, '-') == NULL && \
 		ft_strncmp(num, "9223372036854775808", 20) >= 0)
 		|| (ft_strchr(num, '-') != NULL && \
