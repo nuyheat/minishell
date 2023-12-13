@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:19:47 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 16:05:29 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:17:18 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	child_process(t_list *list, t_pipe *pipes, \
 {
 	int	pid;
 
-	signal(SIGINT, ignore_sigint);
+	signal(SIGINT, SIG_IGN);
 	pipe(pipes->next_fd);
 	pid = fork();
 	if (pid == -1)

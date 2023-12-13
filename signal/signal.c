@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 16:16:11 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/13 13:34:35 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:18:01 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,4 @@ void	heredoc_mode_sig(void)
 {
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, SIG_DFL);
-}
-
-void	ignore_sigint(int sig)
-{
-	(void)sig;
-	write(2, "\n", 1);
 }
