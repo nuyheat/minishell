@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:52:44 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 20:07:14 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:14:16 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char	*get_external_path(char *command, char **envp)
 	table_idx = 0;
 	path = ft_getenv("PATH", envp);
 	path_table = ft_split(path, ':');
+	// free(path);
 	path = getcwd(current_path, BUFSIZ);
 	while (path_table[table_idx] != NULL)
 	{

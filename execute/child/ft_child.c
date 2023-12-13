@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:54:15 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 13:29:34 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:05:48 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,18 @@ int	child(t_list *list, t_pipe *pipes, char **envp)
 	heredoc_close(pipes);
 	pipe_setting_for_child(pipes, last_flag);
 	args = args_make(list);
+	list_free(&list);
 	if (args != NULL)
 	{
 		if (command_error(args[0], envp) == ERROR)
+		{
+			args_free(&args);
 			exit(127);
+		}
 		if (builtin(args, envp, pipes->status) == 0)
 			simple_command(args, envp);
+		dup2(pipes->std_fds[0], STDIN_FILENO);
+		dup2(pipes->std_fds[1], STDOUT_FILENO);
 	}
 	args_free(&args);
 	exit(0);

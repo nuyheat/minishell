@@ -57,13 +57,13 @@ all: pre_make $(NAME)
 bonus : pre_make $(NAME_BONUS)
 
 $(NAME): $(MINISHELL)
-	$(CC) $(CFLAGS) $(LINKS_LIBRARY) -fsanitize=address -lreadline $^ -o $@ -g
+	$(CC) $(CFLAGS) $(LINKS_LIBRARY) -lreadline $^ -o $@ -g
 
 $(MINISHELL): $(OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 
 %.o: %.c
-	$(CC) $(CFLAGS) -fsanitize=address $(INCLUDES_HEADER) -c $^ -o $@ -g
+	$(CC) $(CFLAGS) $(INCLUDES_HEADER) -c $^ -o $@ -g
 
 $(NAME_BONUS): $(MINISHELL_BONUS)
 	$(CC) $(CFLAGS) $(LINKS_LIBRARY) -lreadline $^ -o $@

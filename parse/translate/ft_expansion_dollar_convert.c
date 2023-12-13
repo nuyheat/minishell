@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 18:50:37 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/12 14:28:17 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 13:44:26 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	dollar_convert(char **token, char **envp, int status)
 	while (buf != NULL && buf[buf_idx] != '\0')
 		(*token)[token_idx++] = buf[buf_idx++];
 	(*token)[token_idx] = '\0';
+	free(buf);
 }
 
 void	dquoted_handling(char ***splited_token, int *idx, \

@@ -6,31 +6,14 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:19:47 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 13:31:56 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 13:36:42 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static	int child_signal_occured = 0;
-
-// void	handle_sigint(int sig)
-// {
-// 	if (child_signal_occured == 0)
-// 	{
-// 		printf("\n");
-// 		rl_on_new_line();
-// 		rl_replace_line("", 0); // 현재 버퍼를 비워줌
-// 		rl_redisplay(); // readline 메시지를 다시 출력
-// 	}
-// 	else
-// 	{
-// 		printf("\n");
-// 		child_signal_occured = 0;
-// 	}
-// }
-
-void	child_process(t_list *list, t_pipe *pipes, char **envp, struct termios* terminal)
+void	child_process(t_list *list, t_pipe *pipes, \
+					char **envp, struct termios *terminal)
 {
 	int	pid;
 

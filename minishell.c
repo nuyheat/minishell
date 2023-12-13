@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 13:32:14 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 13:52:33 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ void	minishell_init(t_pipe *pipes, struct termios *terminal, char **envp)
 	copy_envp(envp);
 }
 
+void	le()
+{
+	system("leaks minishell");
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char			*line;
@@ -28,6 +33,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	atexit(le);
 	interactive_mode_sig();
 	minishell_init(&pipes, &terminal, envp);
 	while (1)

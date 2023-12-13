@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 14:10:27 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 12:56:42 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:15:36 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	my_free2(char **strs)
 		my_free(strs[idx]);
 		idx++;
 	}
+	free(strs);
 }
 
 void	error_end(char *str)

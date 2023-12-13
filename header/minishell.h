@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 13:24:00 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 13:37:38 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <termios.h>
 
 # include "libft.h"
-// # include "../libft/libft.h"
 # include "../builtins/builtins.h"
 
 typedef struct s_token_info

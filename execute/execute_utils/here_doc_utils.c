@@ -6,12 +6,11 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 12:21:18 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 12:50:36 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 13:34:49 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	heredoc_close(t_pipe *pipes)
 {
