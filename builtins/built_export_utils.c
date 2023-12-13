@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_export_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:50:45 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 01:39:09 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/13 17:43:31 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	name_ok(const char *str)
 
 	name_len = namelen(str, '=');
 	equal = ft_strchr(str, '=');
-	if (name_len == 0 || ((equal != NULL) && (equal[1] == '\0')))
+	if (name_len == 0)
 		return (0);
 	str_idx = 0;
 	while (str_idx < name_len)
