@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_child.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:54:15 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 16:05:53 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:35:57 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	child(t_list *list, t_pipe *pipes, char **envp)
 	pipe_init(pipes);
 	last_flag = is_it_last_order(list);
 	redirection_handling(list, pipes);
-	// heredoc_close(pipes);
 	pipe_setting_for_child(pipes, last_flag);
 	args = args_make(list);
 	if (args != NULL)
