@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 01:22:43 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/13 13:24:00 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_pipe
 # define END_MSG "\nMessage sended to server successfully\n"
 
 /* main utils */
-char	*line_creat(int status);
+char	*line_creat(int *status);
 void	copy_envp(char **envp);
 int		pipe_find(t_list *list);
 void	child_wait(void);
@@ -167,7 +167,7 @@ void	redirection_handling(t_list *list, t_pipe *pipes);
 void	pipe_init(t_pipe *pipes);
 
 /* excute utils heredoc */
-int		heredoc_make(t_list *list, t_pipe *pipes);
+int		heredoc_creat(t_list *list, t_pipe *pipes);
 void	heredoc_close(t_pipe *pipes);
 
 /* excute utils path */

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_line_creat.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 20:44:43 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 01:11:05 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/13 13:32:10 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	line_check(char *line)
+int	is_end_char_pipe(char *line)
 {
 	int	len;
 
@@ -33,7 +33,7 @@ int	line_check(char *line)
 	return (END);
 }
 
-void	line_creat_child(char *line, int *line_pipes)
+void	line_remake_child(char *line, int *line_pipes)
 {
 	char	*tmp;
 
@@ -41,7 +41,7 @@ void	line_creat_child(char *line, int *line_pipes)
 	close(line_pipes[0]);
 	while (1)
 	{
-		if (line_check(line))
+		if (is_end_char_pipe(line))
 			break ;
 		tmp = readline("> ");
 		if (tmp == NULL)
@@ -79,12 +79,13 @@ char	*line_make(int *line_pipes)
 	return (line);
 }
 
-char	*end_char_is_pipe(char **line)
+void	line_remake(char **line, int *status)
 {
 	int	line_pipes[2];
-	int	status;
+	int	status_tmp;
 	int	pid;
 
+	(void)status;
 	if (pipe(line_pipes) == -1)
 		error_end("pipe failed");
 	signal(SIGINT, ignore_sigint);
@@ -92,28 +93,38 @@ char	*end_char_is_pipe(char **line)
 	if (pid < 0)
 		error_end("fork failed");
 	else if (pid == 0)
-		line_creat_child(*line, line_pipes);
+		line_remake_child(*line, line_pipes);
 	else if (pid > 0)
 	{
-		waitpid(pid, &status, 0);
+		waitpid(pid, &status_tmp, 0);
 		free(*line);
-		if (status == 1)
-			return (NULL);
+		if (status_tmp == 2 || status_tmp == 256)
+		{
+			if (status_tmp == 2)
+				*status = 1 * 256;
+			else if (status_tmp == 256)
+				*status = 258 * 256;
+			*line = NULL;
+		}
+		else
+			*line = line_make(line_pipes);
 	}
-	*line = line_make(line_pipes);
-	return (*line);
 }
 
-char	*line_creat(int status)
+char	*line_creat(int *status)
 {
 	char	*line;
 
 	child_wait();
 	line = readline("minishell$ ");
 	if (line == NULL)
-		my_exit(NULL, status);
+		my_exit(NULL, *status);
 	else if (line[0] == '\0')
-		return (line);
-	line = end_char_is_pipe(&line);
+	{
+		free(line);
+		return (NULL);
+	}
+	if (is_end_char_pipe(line) == 0)
+		line_remake(&line, status);
 	return (line);
 }

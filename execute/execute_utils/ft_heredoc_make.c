@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc_make.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 21:39:38 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 01:22:49 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/13 13:30:53 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ void	heredoc_child(t_pipe *pipes, char *eof, int cnt)
 	exit(0);
 }
 
-void	heredoc_put_char(t_pipe *pipes, char *eof, int cnt)
+int	heredoc_put_char(t_pipe *pipes, char *eof, int cnt)
 {
 	int	pid;
+	int	status_tmp;
 
 	signal(SIGINT, ignore_sigint);
 	pid = fork();
@@ -50,7 +51,18 @@ void	heredoc_put_char(t_pipe *pipes, char *eof, int cnt)
 	else if (pid == 0)
 		heredoc_child(pipes, eof, cnt);
 	else if (pid > 0)
-		waitpid(pid, &(pipes->status), 0);
+	{
+		waitpid(pid, &status_tmp, 0);
+		if (status_tmp == 2 || status_tmp == 256)
+		{
+			if (status_tmp == 2)
+				pipes->status = 1 * 256;
+			else if (status_tmp == 256)
+				pipes->status = 0;
+			return (END);
+		}
+	}
+	return (NEXT);
 }
 
 int	heredoc_init(t_list *list, t_pipe *pipes, int cnt)
@@ -65,20 +77,21 @@ int	heredoc_init(t_list *list, t_pipe *pipes, int cnt)
 	while (list != NULL)
 	{
 		if (list->info.flgs == F_DLESS)
-			heredoc_put_char(pipes, list->next->info.token, cnt);
+		{
+			if (heredoc_put_char(pipes, list->next->info.token, cnt))
+			{
+				heredoc_close(pipes);
+				return (END);
+			}
+		}
 		else if (list->info.flgs == F_PIPE)
 			cnt++;
-		if (pipes->status == 1)
-		{
-			heredoc_close(pipes);
-			return (END);
-		}
 		list = list->next;
 	}
 	return (NEXT);
 }
 
-int	heredoc_make(t_list *list, t_pipe *pipes)
+int	heredoc_creat(t_list *list, t_pipe *pipes)
 {
 	t_list	*head;
 
