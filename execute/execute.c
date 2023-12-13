@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:19:47 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 18:28:56 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 19:39:59 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	child_process(t_list *list, t_pipe *pipes, \
 		pipe_setting_for_parent(pipes);
 		if (is_it_last_order(list))
 			waitpid(pid, &(pipes->status), 0);
+		printf("%d\n", pipes->status);
 	}
 	ctrl_echo_off(terminal);
 }
@@ -44,7 +45,7 @@ void	parent_process(t_list *list, t_pipe *pipes, char **envp)
 	pipe_init(pipes);
 	redirection_handling(list, pipes);
 	args = args_make(list);
-	builtin(args, envp, pipes->status);
+	builtin(args, envp, &(pipes->status));
 	args_free(&args);
 	if (dup2(pipes->std_fds[0], STDIN_FILENO) == -1 \
 		|| dup2(pipes->std_fds[1], STDOUT_FILENO) == -1)

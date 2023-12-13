@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:24:56 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/11 17:53:04 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 19:22:23 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,13 @@ int	ft_putenv(const char *str, char **envp)
 	return (0);
 }
 
-void	export(char **argv, char **envp)
+void	export(char **argv, char **envp, int *status)
 {
-	int		argv_idx;
+	int	argv_idx;
+	int	error_flg;
 
 	argv_idx = 1;
+	error_flg = 0;
 	sortenv(envp);
 	if (argv[argv_idx] == NULL)
 		printexport(envp);
@@ -98,8 +100,10 @@ void	export(char **argv, char **envp)
 				write(2, "minishell: export: `", 20);
 				write(2, argv[argv_idx], ft_strlen(argv[argv_idx]));
 				write(2, "': not a valid identifier\n", 26);
+				error_flg = 257;
 			}
 			argv_idx++;
 		}
 	}
+	*status = error_flg;
 }

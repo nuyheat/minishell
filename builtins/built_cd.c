@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   built_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:59:35 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/01 20:14:00 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/13 19:24:27 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-void	cd(char **argv)
+void	cd(char **argv, int *status)
 {
 	int		idx;
 	int		flg;
@@ -30,8 +30,11 @@ void	cd(char **argv)
 			else
 			{
 				perror(str);
+				*status = 257;
 				free(str);
 			}
 		}
+		else
+			*status = 0;
 	}
 }

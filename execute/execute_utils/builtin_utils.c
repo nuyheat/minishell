@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:55:16 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 01:10:06 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/13 18:58:16 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	is_it_builtin(char *command)
 	return (NEXT);
 }
 
-int	builtin(char **args, char **envp, int status)
+int	builtin(char **args, char **envp, int *status)
 {
 	char	*command;
 
@@ -35,11 +35,11 @@ int	builtin(char **args, char **envp, int status)
 	if (ft_strncmp(command, "echo", 5) == 0)
 		echo(args);
 	else if (ft_strncmp(command, "cd", 3) == 0)
-		cd(args);
+		cd(args, status);
 	else if (ft_strncmp(command, "pwd", 4) == 0)
 		pwd(args);
 	else if (ft_strncmp(command, "export", 7) == 0)
-		export(args, envp);
+		export(args, envp, status);
 	else if (ft_strncmp(command, "unset", 6) == 0)
 		unset(args, envp);
 	else if (ft_strncmp(command, "env", 4) == 0)

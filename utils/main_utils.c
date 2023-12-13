@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:25:40 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 14:36:36 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 19:28:53 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	status_check(int *status, int status_tmp)
 		if (status_tmp == 2)
 			*status = 1 * 256;
 		else if (status_tmp == 256)
-			*status = 258 * 256;
+			*status = 0;
 		return (END);
 	}
 	return (NEXT);

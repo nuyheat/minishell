@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 18:28:45 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 18:49:42 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void	args_free(char ***args);
 char	**args_make(t_list *list);
 
 /* excute utils builtin */
-int		builtin(char **args, char **envp, int status);
+int		builtin(char **args, char **envp, int *status);
 int		is_it_builtin(char *command);
 
 /* excute utils redirection */

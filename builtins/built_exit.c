@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:24:56 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/13 17:54:42 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 19:24:11 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,16 @@ long long	check_exit_num(char *num, int *error_flag)
 	return (ft_atol(num));
 }
 
-void	my_exit(char **argv, int status)
+void	my_exit(char **argv, int *status)
 {
-	int				error_flag;
-	long long		exit_num;
+	int		error_flag;
+	char	exit_num;
 
 	exit_num = 0;
 	error_flag = 0;
 	printf("exit\n");
 	if (argv == NULL || argv[1] == NULL)
-		exit(status);
+		exit(*status);
 	else
 	{
 		exit_num = check_exit_num(argv[1], &error_flag);
@@ -85,10 +85,11 @@ void	my_exit(char **argv, int status)
 			write(2, "minishell: exit: ", 17);
 			write(2, argv[1], ft_strlen(argv[1]));
 			write(2, ": numeric argument required\n", 28);
+			exit(255);
 		}
 		else if (argv[2] == NULL)
 			exit(exit_num);
-		else
-			write(2, "minishell: exit: too many arguments\n", 36);
+		write(2, "minishell: exit: too many arguments\n", 36);
+		*status = 257;
 	}
 }
