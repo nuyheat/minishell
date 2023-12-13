@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 15:11:18 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:39:38 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,5 @@ void	child_mode_sig(void);
 void	heredoc_mode_sig(void);
 void	ctrl_echo_on(struct termios *terminal);
 void	ctrl_echo_off(struct termios *terminal);
-void	ignore_sigint(int sig);
 
 #endif

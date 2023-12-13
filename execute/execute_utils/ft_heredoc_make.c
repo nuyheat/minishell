@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc_make.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 21:39:38 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 16:10:43 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:39:34 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	heredoc_put_char(t_pipe *pipes, char *eof, int cnt)
 	int	pid;
 	int	status_tmp;
 
-	signal(SIGINT, ignore_sigint);
+	signal(SIGINT, SIG_IGN);
 	if (pipes->heredoc[cnt][0] != -1 && pipes->heredoc[cnt][1] != -1)
 		close(pipes->heredoc[cnt][0]);
 	if (pipe(pipes->heredoc[cnt]) == -1)

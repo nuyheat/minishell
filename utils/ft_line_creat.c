@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_line_creat.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 20:44:43 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 14:49:06 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:39:22 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	line_recreat(char **line, int *status)
 	(void)status;
 	if (pipe(line_pipes) == -1)
 		error_end("pipe failed");
-	signal(SIGINT, ignore_sigint);
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid < 0)
 		error_end("fork failed");
