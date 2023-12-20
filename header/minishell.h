@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:16:01 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 18:49:42 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/16 14:50:48 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 
 # include "libft.h"
 # include "../builtins/builtins.h"
+
+extern int	g_signal;
 
 typedef struct s_token_info
 {
@@ -79,9 +81,11 @@ typedef struct s_pipe
 char	*line_creat(int *status);
 void	copy_envp(char **envp);
 int		pipe_find(t_list *list);
-void	child_wait(void);
+void	child_wait(struct termios *terminal);
 void	minishell_init(t_pipe *pipes, struct termios *terminal, char **envp);
-int		status_check(int *status, int status_tmp);
+void	status_check_child(int *status);
+void	status_check_heredoc(int *status);
+void	status_check_line_creat(int *status);
 
 /* all utils */
 void	error_end(char *str);
@@ -93,7 +97,6 @@ char	*my_strjoin(char **s1, char *s2);
 void	list_node_add(t_list **list);
 t_list	*list_init(t_list **list);
 void	list_free(t_list **list);
-t_list	*list_delete(t_list **list, t_list **trash);
 
 /* parse tokenize*/
 t_list	*parse(char *line, char **envp, int status);
@@ -115,7 +118,8 @@ int		rules_space(char *line, int now_idx);
 int		rules_comment(char *line, int now_idx);
 
 int		is_char(char *line, int now_idx);
-int		is_quoted(char *token, int idx, char quote);
+int		is_quoted1(char *token, int idx, char quote);
+int		is_quoted2(char *token, int idx, char quote);
 int		have_quoted(char *buf);
 int		operator_check(char prev_char);
 
@@ -130,6 +134,7 @@ char	**splited_token_init(char *token);
 void	trans_quoted_remove(char **token);
 void	quote_skip(char *str, int *idx);
 int		row_cnt(char **str);
+int		set_find(char c, char *set);
 
 /* execute */
 void	execute(t_list *list, t_pipe *pipes, \
@@ -168,7 +173,7 @@ void	redirection_handling(t_list *list, t_pipe *pipes);
 void	pipe_init(t_pipe *pipes);
 
 /* excute utils heredoc */
-int		heredoc_creat(t_list *list, t_pipe *pipes, char **envp);
+int		heredoc_creat(t_list *list, t_pipe *pipes);
 void	heredoc_close(t_pipe *pipes);
 
 /* excute utils path */
@@ -176,10 +181,20 @@ char	*get_path(char *command);
 char	*get_filename(char *command);
 
 /* signal */
-void	handle_sigint(int sig);
-void	interactive_mode_sig(void);
-void	child_mode_sig(void);
-void	heredoc_mode_sig(void);
+void	child_mode(void);
+void	heredoc_mode(void);
+void	interactive_mode(void);
+void	line_creat_mode(void);
+
+void	sigint_print_newline(int sig);
+void	sigint_print_rl(int sig);
+
+void	sigquit_print_quit(int sig);
+
+void	eof_in_interactive(void);
+void	eof_in_heredoc(void);
+void	eof_in_line_creat(void);
+/* terminal */
 void	ctrl_echo_on(struct termios *terminal);
 void	ctrl_echo_off(struct termios *terminal);
 

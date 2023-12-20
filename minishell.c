@@ -6,11 +6,13 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:12:56 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 21:38:33 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:48:53 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_signal;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -24,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 	minishell_init(&pipes, &terminal, envp);
 	while (1)
 	{
-		interactive_mode_sig();
+		interactive_mode();
 		line = line_creat(&(pipes.status));
 		if (line != NULL)
 		{

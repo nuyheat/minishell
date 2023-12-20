@@ -6,14 +6,18 @@ RM			= rm -f
 AR			= ar
 ARFLAGS		= rcs
 
-INCLUDES_HEADER = -I$(LIBFT_DIR) -I header
+INCLUDES_HEADER  = -I$(LIBFT_DIR) -I header
 LINKS_LIBRARY    = -L$(LIBFT_DIR) -lft
 
 LIBFT_DIR		 = ./libft
 MINISHELL		 = minishell.a
 
 SRCS		= minishell.c \
-				utils/all_utils.c utils/list_handling.c utils/main_utils.c utils/ft_line_creat.c \
+				utils/all_utils.c \
+				utils/ft_line_creat.c \
+				utils/list_handling.c \
+				utils/main_utils.c \
+				utils/status_check.c \
 				builtins/builtins_utils.c builtins/built_cd.c builtins/built_echo.c \
 				builtins/built_export.c builtins/built_pwd.c builtins/built_export_utils.c \
 				builtins/built_unset.c builtins/built_unset_utils.c \
@@ -42,7 +46,10 @@ SRCS		= minishell.c \
 				execute/child/ft_simple_command.c \
 				execute/child/child_utils.c \
 				signal/signal.c \
-				signal/terminal.c \
+				signal/handle_sigint.c \
+				signal/handle_sigquit.c \
+				signal/handle_eof.c \
+				signal/terminal_setting.c \
 
 OBJS        = $(SRCS:.c=.o)
 
@@ -60,10 +67,8 @@ $(MINISHELL): $(OBJS)
 clean: pre_clean
 	$(RM) $(OBJS) $(OBJS_BONUS)
 	$(RM) $(MINISHELL)
-	$(RM) $(MINISHELL_BONUS)
 
 fclean: clean pre_fclean
-	$(RM) $(NAME_BONUS)
 	$(RM) $(NAME)
 
 re: fclean all
