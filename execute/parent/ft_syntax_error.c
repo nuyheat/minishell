@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_syntax_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 13:02:15 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 13:35:16 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/15 16:45:01 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,11 @@ int	syntax_error_redirection(t_list *list, int redirection)
 		if ((list->info.flgs & redirection) && \
 			(list->next->info.flgs & redirection))
 		{
-			printf("minishell: syntax error near unexpected token");
-			printf(" `%s'\n", list->next->info.token);
+			write(STDERR_FILENO, "syntax error near unexpected token", 34);
+			write(STDERR_FILENO, " `", 2);
+			write(STDERR_FILENO, list->next->info.token, \
+				ft_strlen(list->next->info.token));
+			write(STDERR_FILENO, "'\n", 2);
 			return (END);
 		}
 		list = list->next;
@@ -62,19 +65,20 @@ int	syntax_error(t_list *list, int *status)
 	redirection = F_GRATE | F_DGRATE | F_LESS | F_DLESS;
 	if (syntax_error_pipe(list, redirection))
 	{
-		printf("minishell: syntax error near unexpected token `|'\n");
-		*status = 256 * 258;
+		write(STDERR_FILENO, "syntax error near unexpected token `|'\n", 40);
+		*status = 258;
 		return (ERROR);
 	}
 	else if (syntax_error_redirection(list, redirection))
 	{
-		*status = 256 * 258;
+		*status = 258;
 		return (ERROR);
 	}
 	else if (syntax_error_newline(list, redirection))
 	{
-		printf("minishell: syntax error near unexpected token `newline'\n");
-		*status = 256 * 258;
+		write(STDERR_FILENO, "syntax error near unexpected token `newline'\n", \
+			46);
+		*status = 258;
 		return (ERROR);
 	}
 	return (NEXT);
