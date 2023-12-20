@@ -56,7 +56,7 @@ int	rules_operator_start(char *line, int now_idx)
 
 int	rules_space(char *line, int now_idx)
 {
-	if (line[now_idx] == ' ')
+	if (line[now_idx] == ' ' || line[now_idx] == '\t')
 	{
 		if (is_char(line, now_idx))
 			return (END);

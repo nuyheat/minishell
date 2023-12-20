@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:24:31 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 19:48:15 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/16 11:51:04 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	parse_translate(t_list *list, t_list **new_list, \
 	new_list_head = *new_list;
 	while (list != NULL)
 	{
-		if (list->info.flgs & F_DOLLAR)
+		if ((*new_list)->info.flgs != F_DLESS && (list->info.flgs & F_DOLLAR))
 		{
 			new_token = trans_param_expansion(list->info.token, envp, status);
 			parse_tokenize(new_list, new_token);

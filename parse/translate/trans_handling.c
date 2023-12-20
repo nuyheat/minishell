@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 19:41:25 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 13:43:39 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/16 14:26:04 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	trans_quoted_remove(char **token)
 		error_end("malloc failed");
 	while ((*token)[idx] != '\0')
 	{
-		if (is_quoted(*token, idx, '\'') || is_quoted(*token, idx, '\"'))
+		if (is_quoted1(*token, idx, '\'') || is_quoted1(*token, idx, '\"'))
 		{
 			quote = (*token)[idx++];
 			while ((*token)[idx] != quote)

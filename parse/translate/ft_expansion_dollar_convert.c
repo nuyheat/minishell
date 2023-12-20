@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 18:50:37 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 13:44:26 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/16 12:15:07 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	dollar_convert(char **token, char **envp, int status)
 	buf_idx = 0;
 	token_idx = 0;
 	if ((*token)[1] == '?')
-		buf = ft_itoa(status / 256);
+		buf = ft_itoa(status);
 	else
 		buf = ft_getenv((*token) + 1, envp);
 	if (buf != NULL)
@@ -80,7 +80,8 @@ void	expansion_dollar_convert(char ***splited_token, char **envp, int status)
 			if ((*splited_token)[idx][1] == '\0')
 			{
 				if ((*splited_token)[idx + 1] != NULL && \
-					(*splited_token)[idx + 1][0] != '/')
+					(*splited_token)[idx + 1][0] != '/' && \
+					(*splited_token)[idx + 1][0] != '=')
 					(*splited_token)[idx][0] = '\0';
 			}
 			else if ((*splited_token)[idx][1] != '.')
