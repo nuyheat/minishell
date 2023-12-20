@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 20:44:43 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 21:41:52 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/15 13:53:21 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	line_remake_child(char *line, int *line_pipes)
 {
 	char	*tmp;
 
-	heredoc_mode_sig();
+	line_creat_mode();
 	close(line_pipes[0]);
 	while (1)
 	{
@@ -45,7 +45,7 @@ void	line_remake_child(char *line, int *line_pipes)
 			break ;
 		tmp = readline("> ");
 		if (tmp == NULL)
-			error_end("syntax error: unexpected end of file\n");
+			eof_in_line_creat();
 		line = my_strjoin(&line, tmp);
 		if (line == NULL)
 			error_end("malloc failed");
@@ -82,7 +82,6 @@ char	*pull_line_to_pipe(int *line_pipes)
 void	line_recreat(char **line, int *status)
 {
 	int	line_pipes[2];
-	int	status_tmp;
 	int	pid;
 
 	if (pipe(line_pipes) == -1)
@@ -95,10 +94,15 @@ void	line_recreat(char **line, int *status)
 		line_remake_child(*line, line_pipes);
 	else if (pid > 0)
 	{
-		waitpid(pid, &status_tmp, 0);
+		waitpid(pid, status, 0);
+		status_check_line_creat(status);
 		free(*line);
-		if (status_check(status, status_tmp) == END)
+		if (*status != 0)
+		{
+			close(line_pipes[0]);
+			close(line_pipes[1]);
 			*line = NULL;
+		}
 		else
 			*line = pull_line_to_pipe(line_pipes);
 	}
@@ -109,8 +113,16 @@ char	*line_creat(int *status)
 	char	*line;
 
 	line = readline("minishell$ ");
+	if (g_signal == 2)
+	{
+		g_signal = 0;
+		*status = 1;
+	}
 	if (line == NULL)
-		my_exit(NULL, status);
+	{
+		eof_in_interactive();
+		exit(*status);
+	}
 	else if (line[0] == '\0')
 	{
 		free(line);
@@ -118,7 +130,5 @@ char	*line_creat(int *status)
 	}
 	if (end_char_is_pipe(line) == 0)
 		line_recreat(&line, status);
-	if (line == NULL)
-		*status = 258 * 256;
 	return (line);
 }
