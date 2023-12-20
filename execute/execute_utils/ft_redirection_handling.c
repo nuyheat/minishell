@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:23:43 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 15:36:45 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:28:09 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	case_grate(t_list *list, t_pipe *pipes, char *file)
 
 	pipes->redir_grate_occured = 1;
 	dup2(pipes->std_fds[1], STDOUT_FILENO);
-	fd = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	fd = open(file, O_WRONLY);
 	if (fd == -1)
 		error_end("open failed");
 	else if (dup2(fd, STDOUT_FILENO) == -1)
@@ -60,7 +60,7 @@ void	case_dgrate(t_list *list, t_pipe *pipes, char *file)
 
 	pipes->redir_grate_occured = 1;
 	dup2(pipes->std_fds[1], STDOUT_FILENO);
-	fd = open(file, O_RDWR | O_CREAT | O_APPEND, 0644);
+	fd = open(file, O_WRONLY | O_APPEND);
 	if (fd == -1)
 		error_end("open failed");
 	else if (dup2(fd, STDOUT_FILENO) == -1)

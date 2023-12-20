@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 15:13:03 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/11 17:48:34 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/15 14:57:08 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ char	*get_filename(char *command)
 	command_len = ft_strlen(command);
 	while (command_len > 0 && command[command_len] != '/')
 		command_len--;
+	if (command_len == 0)
+		return (NULL);
 	filename = malloc(sizeof(char) * (ft_strlen(command) - command_len + 1));
 	if (!filename)
 		return (NULL);
