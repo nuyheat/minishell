@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_unset.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:59:35 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/01 20:17:13 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/15 19:07:23 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	cleanenv(char **envp)
 	envp[idx] = NULL;
 }
 
-void	unset(char **argv, char **envp)
+void	unset(char **argv, char **envp, int *status)
 {
 	int		idx;
 	int		envp_idx;
@@ -44,4 +44,5 @@ void	unset(char **argv, char **envp)
 		idx++;
 	}
 	sortenv(envp);
+	*status = 0;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:24:56 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/03 14:38:37 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/15 19:06:45 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	printenv(char **envp)
 	}
 }
 
-void	env(char **argv, char **envp)
+void	env(char **argv, char **envp, int *status)
 {
 	int		argv_idx;
 
@@ -35,4 +35,5 @@ void	env(char **argv, char **envp)
 	sortenv(envp);
 	if (argv[argv_idx] == NULL)
 		printenv(envp);
+	*status = 0;
 }

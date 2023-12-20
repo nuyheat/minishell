@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 16:24:56 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/13 20:38:10 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/15 14:08:02 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ long long	ft_atol(const char *str)
 	flag = 1;
 	result = 0;
 	i = 0;
-	if (ft_strncmp(str, "-9223372036854775808", 21) == 0)
-		return (-9223372036854775807LL - 1LL);
 	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
 		i++;
 	if (str[i] == '-' || str[i] == '+')
@@ -41,29 +39,38 @@ long long	ft_atol(const char *str)
 	return (result * flag);
 }
 
+int	is_it_longlong(char *num)
+{
+	long long	value;
+	int			num_len;
+
+	num_len = ft_strlen(num);
+	if (num_len != 1 && (num[0] == '-' || num[0] == '+'))
+		num++;
+	while (*num && (*num == '0'))
+		num++;
+	num_len = ft_strlen(num);
+	value = ft_atol(num);
+	while (num_len--)
+	{
+		if ((value % 10LL) != (num[num_len] - '0'))
+			return (0);
+		value /= 10;
+	}
+	return (1);
+}
+
 long long	check_exit_num(char *num, int *error_flag)
 {
-	int		idx;
-
 	if (num[0] == '\0')
 	{
 		*error_flag = 1;
 		return (255);
 	}
-	if ((ft_strchr(num, '-') == NULL && \
-		ft_strncmp(num, "9223372036854775808", 20) >= 0)
-		|| (ft_strchr(num, '-') != NULL && \
-		ft_strncmp(num, "-9223372036854775809", 21) >= 0))
+	if (ft_strncmp(num, "-9223372036854775808", 21) == 0)
+		return (-9223372036854775807LL - 1LL);
+	else if (!is_it_longlong(num))
 		*error_flag = 1;
-	idx = 0;
-	if (num[0] == '-')
-		idx++;
-	while (num[idx])
-	{
-		if (ft_isdigit(num[idx]) == 0)
-			*error_flag = 1;
-		idx++;
-	}
 	return (ft_atol(num));
 }
 
@@ -90,6 +97,6 @@ void	my_exit(char **argv, int *status)
 		else if (argv[2] == NULL)
 			exit(exit_num);
 		write(2, "minishell: exit: too many arguments\n", 36);
-		*status = 257;
+		*status = 1;
 	}
 }

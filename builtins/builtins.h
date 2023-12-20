@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 15:17:36 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/13 18:57:54 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/15 19:04:53 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 # include "../libft/libft.h"
 
 void	cd(char **argv, int *status);
-void	echo(char **argv);
+void	echo(char **argv, int *status);
 void	export(char **argv, char **envp, int *status);
-void	pwd(char **argv);
-void	unset(char **argv, char **envp);
-void	env(char **argv, char **envp);
+void	pwd(char **argv, int *status);
+void	unset(char **argv, char **envp, int *status);
+void	env(char **argv, char **envp, int *status);
 void	my_exit(char **argv, int *status);
 
 int		countchar(const char *str, char find);

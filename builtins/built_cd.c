@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_cd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:59:35 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/13 19:24:27 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/15 10:44:14 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,9 @@ void	cd(char **argv, int *status)
 			else
 			{
 				perror(str);
-				*status = 257;
+				*status = 1;
 				free(str);
 			}
 		}
-		else
-			*status = 0;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 13:59:35 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/13 20:20:36 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/15 19:06:41 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	newline_check(char **argv, int *idx, int *newline)
 	}
 }
 
-void	echo(char **argv)
+void	echo(char **argv, int *status)
 {
 	int	idx;
 	int	newline;
@@ -56,4 +56,5 @@ void	echo(char **argv)
 	}
 	if (newline)
 		printf("\n");
+	*status = 0;
 }
