@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:55:16 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 18:58:16 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/15 19:05:01 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@ int	builtin(char **args, char **envp, int *status)
 
 	command = args[0];
 	if (ft_strncmp(command, "echo", 5) == 0)
-		echo(args);
+		echo(args, status);
 	else if (ft_strncmp(command, "cd", 3) == 0)
 		cd(args, status);
 	else if (ft_strncmp(command, "pwd", 4) == 0)
-		pwd(args);
+		pwd(args, status);
 	else if (ft_strncmp(command, "export", 7) == 0)
 		export(args, envp, status);
 	else if (ft_strncmp(command, "unset", 6) == 0)
-		unset(args, envp);
+		unset(args, envp, status);
 	else if (ft_strncmp(command, "env", 4) == 0)
-		env(args, envp);
+		env(args, envp, status);
 	else if (ft_strncmp(command, "exit", 5) == 0)
 		my_exit(args, status);
 	else
