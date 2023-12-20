@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:25:40 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 21:11:47 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/15 11:03:22 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,19 @@ int	pipe_find(t_list *list)
 	return (END);
 }
 
-void	child_wait(void)
+void	child_wait(struct termios *terminal)
 {
+	int	status;
+
 	while (1)
 	{
-		if (wait(0) == -1)
+		if (wait(&status) == -1)
+		{
+			if (status == 2)
+				ft_putstr_fd("\n", STDERR_FILENO);
+			ctrl_echo_off(terminal);
 			break ;
+		}
 	}
 }
 
@@ -49,17 +56,4 @@ void	minishell_init(t_pipe *pipes, struct termios *terminal, char **envp)
 	pipes->status = 0;
 	ctrl_echo_off(terminal);
 	copy_envp(envp);
-}
-
-int	status_check(int *status, int status_tmp)
-{
-	if (status_tmp == 2 || status_tmp == 256)
-	{
-		if (status_tmp == 2)
-			*status = 1 * 256;
-		else if (status_tmp == 256)
-			*status = 0;
-		return (END);
-	}
-	return (NEXT);
 }

@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   handle_sigint.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 16:16:11 by sihlee            #+#    #+#             */
-/*   Updated: 2023/12/15 11:12:51 by sihlee           ###   ########.fr       */
+/*   Updated: 2023/12/15 13:49:54 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	child_mode(void)
+void	sigint_print_newline(int sig)
 {
-	signal(SIGQUIT, sigquit_print_quit);
-	signal(SIGINT, sigint_print_newline);
+	g_signal = sig;
+	ft_putstr_fd("\n", STDERR_FILENO);
+	exit(sig);
 }
 
-void	heredoc_mode(void)
+void	sigint_print_rl(int sig)
 {
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, sigint_print_newline);
-}
-
-void	interactive_mode(void)
-{
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, sigint_print_rl);
-}
-
-void	line_creat_mode(void)
-{
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, sigint_print_newline);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	g_signal = sig;
 }
