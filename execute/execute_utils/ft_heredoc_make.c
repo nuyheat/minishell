@@ -3,65 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   ft_heredoc_make.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sihlee <sihlee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 21:39:38 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 18:23:50 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/14 19:27:37 by sihlee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	heredoc_dollar_expansion(t_pipe *pipes, char **line, \
-									char **envp, int cnt)
-{
-	int		idx;
-	char	*new_line;
-
-	idx = 0;
-	while ((*line)[idx] != '\0')
-	{
-		if ((*line)[idx] == '$')
-		{
-			new_line = trans_param_expansion(*line, envp, pipes->status);
-			write(pipes->heredoc[cnt][1], new_line, ft_strlen(new_line));
-			write(pipes->heredoc[cnt][1], "\n", 1);
-			free(new_line);
-			free(*line);
-			return ;
-		}
-		idx++;
-	}
-	write(pipes->heredoc[cnt][1], *line, idx);
-	write(pipes->heredoc[cnt][1], "\n", 1);
-	free(*line);
-}
-
-void	heredoc_child(t_pipe *pipes, char *eof, int cnt, char **envp)
+void	heredoc_child(t_pipe *pipes, char *eof, int cnt)
 {
 	char	*line;
 
-	heredoc_mode_sig();
+	heredoc_mode();
 	while (1)
 	{
 		line = readline("> ");
 		if (line == NULL)
-			exit(1);
+			eof_in_heredoc();
 		if (ft_strncmp(line, eof, ft_strlen(eof) + 1) == 0)
 		{
 			free(line);
 			break ;
 		}
-		heredoc_dollar_expansion(pipes, &line, envp, cnt);
+		write(pipes->heredoc[cnt][1], line, ft_strlen(line));
+		write(pipes->heredoc[cnt][1], "\n", 1);
+		free(line);
 	}
 	heredoc_close(pipes);
 	exit(0);
 }
 
-int	heredoc_put_char(t_pipe *pipes, char *eof, int cnt, char **envp)
+int	heredoc_put_char(t_pipe *pipes, char *eof, int cnt)
 {
 	int	pid;
-	int	status_tmp;
 
 	signal(SIGINT, SIG_IGN);
 	if (pipes->heredoc[cnt][0] != -1 && pipes->heredoc[cnt][1] != -1)
@@ -72,18 +48,19 @@ int	heredoc_put_char(t_pipe *pipes, char *eof, int cnt, char **envp)
 	if (pid < 0)
 		error_end("fork failed");
 	else if (pid == 0)
-		heredoc_child(pipes, eof, cnt, envp);
+		heredoc_child(pipes, eof, cnt);
 	else if (pid > 0)
 	{
-		waitpid(pid, &status_tmp, 0);
-		if (status_check(&(pipes->status), status_tmp) == END)
+		waitpid(pid, &(pipes->status), 0);
+		status_check_heredoc(&(pipes->status));
+		if (pipes->status != 0)
 			return (END);
 	}
 	close(pipes->heredoc[cnt][1]);
 	return (NEXT);
 }
 
-int	heredoc_init(t_list *list, t_pipe *pipes, int cnt, char **envp)
+int	heredoc_init(t_list *list, t_pipe *pipes, int cnt)
 {
 	while (cnt < pipes->heredoc_fl_cnt)
 	{
@@ -96,7 +73,7 @@ int	heredoc_init(t_list *list, t_pipe *pipes, int cnt, char **envp)
 	{
 		if (list->info.flgs == F_DLESS)
 		{
-			if (heredoc_put_char(pipes, list->next->info.token, cnt, envp))
+			if (heredoc_put_char(pipes, list->next->info.token, cnt))
 			{
 				heredoc_close(pipes);
 				return (END);
@@ -109,7 +86,7 @@ int	heredoc_init(t_list *list, t_pipe *pipes, int cnt, char **envp)
 	return (NEXT);
 }
 
-int	heredoc_creat(t_list *list, t_pipe *pipes, char **envp)
+int	heredoc_creat(t_list *list, t_pipe *pipes)
 {
 	t_list	*head;
 
@@ -126,7 +103,7 @@ int	heredoc_creat(t_list *list, t_pipe *pipes, char **envp)
 	(int (*)[2])malloc(sizeof(int [2]) * pipes->heredoc_fl_cnt);
 	if (pipes->heredoc == NULL)
 		error_end("malloc failed");
-	if (heredoc_init(head, pipes, 0, envp))
+	if (heredoc_init(head, pipes, 0))
 		return (END);
 	return (NEXT);
 }

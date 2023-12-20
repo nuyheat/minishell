@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:54:15 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 19:48:31 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/15 12:01:31 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	child(t_list *list, t_pipe *pipes, char **envp)
 	char	**args;
 	int		last_flag;
 
+	child_mode();
 	pipe_init(pipes);
 	last_flag = is_it_last_order(list);
 	redirection_handling(list, pipes);
@@ -72,5 +73,5 @@ int	child(t_list *list, t_pipe *pipes, char **envp)
 		if (builtin(args, envp, &(pipes->status)) == 0)
 			simple_command(args, envp);
 	}
-	exit(pipes->status);
+	exit(0);
 }

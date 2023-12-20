@@ -6,7 +6,7 @@
 /*   By: taehkim2 <taehkim2@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:19:47 by taehkim2          #+#    #+#             */
-/*   Updated: 2023/12/13 21:43:22 by taehkim2         ###   ########.fr       */
+/*   Updated: 2023/12/15 19:02:50 by taehkim2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	child_process(t_list *list, t_pipe *pipes, \
 		return ;
 	else if (pid == 0)
 	{
-		child_mode_sig();
 		ctrl_echo_on(terminal);
 		child(list, pipes, envp);
 	}
@@ -32,13 +31,12 @@ void	child_process(t_list *list, t_pipe *pipes, \
 	{
 		pipe_setting_for_parent(pipes);
 		if (is_it_last_order(list))
+		{
 			waitpid(pid, &(pipes->status), 0);
-		if (pipes->status == 2)
-			pipes->status = 130 * 256;
-		if (pipes->status == 3)
-			pipes->status = 131 * 256;
+			if (pipes->status != 0)
+				status_check_child(&(pipes->status));
+		}
 	}
-	ctrl_echo_off(terminal);
 }
 
 void	parent_process(t_list *list, t_pipe *pipes, char **envp)
@@ -65,7 +63,7 @@ void	execute(t_list *list, t_pipe *pipes, \
 	pipes->prev_fd[1] = -1;
 	flg = pipe_find(list);
 	if (syntax_error(list, &(pipes->status)) == ERROR || \
-		heredoc_creat(list, pipes, envp))
+		heredoc_creat(list, pipes) == END)
 		return ;
 	while (list != NULL)
 	{
@@ -80,6 +78,7 @@ void	execute(t_list *list, t_pipe *pipes, \
 		pipes->heredoc_cnt++;
 		args_next(&list);
 	}
-	child_wait();
+	g_signal = 0;
+	child_wait(terminal);
 	heredoc_close(pipes);
 }
